@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="./asset/icon.png?v=2" />
+  <link rel="icon" type="image/x-icon" href="./asset/icon.png?v=2" />
+  <link rel="shortcut icon" type="image/x-icon" href="./asset/icon.png?v=2" />
+  <link rel="apple-touch-icon" href="./asset/icon.png?v=2" />
+  <title>Diki Permana — Graphic Designer | E-commerce & Print Specialist</title>
+  <meta name="description" content="Portfolio Diki Permana — Graphic Designer dengan 4+ tahun pengalaman di industri E-commerce & Print. Berbasis di Jakarta Barat." />
+  <meta property="og:title" content="Diki Permana — Graphic Designer" />
+  <meta property="og:description" content="E-commerce & Print Specialist berbasis di Jakarta Barat. Lihat karya terbaru di Behance dan Instagram." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="security.js"></script>
+</head>
+<body>
+
+  <!-- GRAIN OVERLAY -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="main-nav">
+    <div class="nav-inner container">
+      <a href="#hero" class="nav-logo">
+        <img src="asset/header.png" alt="Diki Permana Logo" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
+        <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+        <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+        <li>
+          <div class="lang-toggle" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="id" aria-pressed="true">ID</button>
+            <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+          </div>
+        </li>
+        <li><a href="#contact" class="nav-cta" data-i18n="nav.contact">Hubungi Saya</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <ul>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
+        <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+        <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Hubungi Saya</a></li>
+      </ul>
+      <div class="mobile-lang-wrap">
+        <span class="mobile-lang-label">Bahasa / Language</span>
+        <div class="lang-toggle" role="group" aria-label="Language selector">
+          <button class="lang-btn active" data-lang="id" aria-pressed="true">ID</button>
+          <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-logo" aria-hidden="true">
+      <img src="asset/bg1.jpg" alt="" class="hero-bg-logo-img" />
+    </div>
+    <div class="hero-bg-grid" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span data-i18n="hero.badge">Available for Work</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="hero-name">Diki Permana</span>
+        <span class="hero-line-divider" aria-hidden="true">—</span>
+        <span class="hero-role" data-i18n="hero.role">Graphic Designer</span>
+      </h1>
+      <p class="hero-spec">
+        <span class="tag tag-green" data-i18n="hero.tag_ecommerce">E-commerce Specialist</span>
+        <span class="tag tag-outline" data-i18n="hero.tag_print">Print & Branding</span>
+        <span class="tag tag-outline" data-i18n="hero.tag_prepress">Prepress & Produksi</span>
+      </p>
+      <p class="hero-location">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span data-i18n="hero.location">Jakarta Barat, Indonesia</span>
+      </p>
+      <div class="hero-cta-group">
+        <a href="https://www.behance.net/ikirieyu" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-behance">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 1.2.836 1.9 2.032 1.9.449 0 .836-.21 1.139-.497l.586.626zm-7.718-4h5.908c-.118-1.14-.73-2.1-2.077-2.1-1.32 0-2.203.88-2.462 2.1h.631zm-9.645 4.5c-.58 0-1.079-.267-1.329-.68.208-.424.623-.68 1.329-.68.709 0 1.108.264 1.108.68 0 .42-.4.68-1.108.68zm0-5.5c-.626 0-1.108-.24-1.108-.68 0-.43.482-.68 1.108-.68.7 0 1.108.25 1.108.68s-.408.68-1.108.68zm4.318 2.5c0 .22-.14.4-.349.5H7.025c-.207-.1-.349-.28-.349-.5v-5h-.027c0 2.5-2.2 3.5-4.025 3.5H0V7h3.5c1.675 0 3.027.7 3.5 2.1V7h3.4c1.925 0 3.1 1 3.1 2.5 0 .8-.376 1.5-1.025 2 .875.42 1.525 1.2 1.525 2.5z"/></svg>
+          <span data-i18n="hero.btn_behance">Lihat di Behance</span>
+        </a>
+        <a href="https://github.com/ikirieyu" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="btn-github">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.instagram.com/iki.rieyu" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="btn-instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @iki.rieyu
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span data-i18n="hero.scroll">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ========== MARQUEE ========== -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group">
+        <span data-i18n="marquee.ecommerce">E-commerce Design</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.print">Print Production</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.brand">Brand Identity</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.shopee">Shopee Campaign</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.prepress">Prepress</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.layout">Layout &amp; Editorial</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.ecommerce">E-commerce Design</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.print">Print Production</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.brand">Brand Identity</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.shopee">Shopee Campaign</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.prepress">Prepress</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.layout">Layout &amp; Editorial</span><span class="marquee-dot">✦</span>
+      </div>
+      <div class="marquee-group" aria-hidden="true">
+        <span data-i18n="marquee.ecommerce">E-commerce Design</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.print">Print Production</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.brand">Brand Identity</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.shopee">Shopee Campaign</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.prepress">Prepress</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.layout">Layout &amp; Editorial</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.ecommerce">E-commerce Design</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.print">Print Production</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.brand">Brand Identity</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.shopee">Shopee Campaign</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.prepress">Prepress</span><span class="marquee-dot">✦</span>
+        <span data-i18n="marquee.layout">Layout &amp; Editorial</span><span class="marquee-dot">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ABOUT ========== -->
+  <section class="section about-section" id="about">
+    <div class="container about-grid">
+      <div class="about-label-col">
+        <span class="section-label" data-i18n="about.label">About</span>
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-num">4+</span>
+            <span class="stat-desc" data-i18n="about.stat1_desc">Tahun Pengalaman</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">20+</span>
+            <span class="stat-desc" data-i18n="about.stat2_desc">Desain / Minggu</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">100+</span>
+            <span class="stat-desc" data-i18n="about.stat3_desc">Produk Dikelola</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-content">
+        <h2 class="about-heading" data-i18n="about.heading">
+          Desainer yang hidup di antara piksel, cetak, dan deadline.
+        </h2>
+        <div class="about-body">
+          <p data-i18n="about.p1">
+            Saya Diki — graphic designer dengan <strong>4+ tahun pengalaman</strong> di industri printing dan e-commerce. Terbiasa memproduksi <strong>20+ desain promosi per minggu</strong> dengan kualitas konsisten, mengelola visual toko online dari konsep sampai siap produksi.
+          </p>
+          <p data-i18n="about.p2">
+            Dari layout brosur dan banner cetak, hingga campaign Shopee yang harus hidup dalam hitungan jam — saya tahu cara kerja di dua dunia sekaligus: <em>layar dan mesin cetak</em>.
+          </p>
+          <p data-i18n="about.p3">
+            Yang bikin saya berbeda dari kebanyakan desainer? Saya juga punya background <strong>IT &amp; app development</strong>. Saya bisa ngobrol soal spesifikasi mesin, bangun tools internal sederhana, dan paham alur kerja digital dari ujung ke ujung — bukan cuma soal estetika.
+          </p>
+        </div>
+        <a href="#contact" class="btn btn-primary about-cta" data-i18n="about.cta">Mari Berkolaborasi</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PORTFOLIO ========== -->
+  <section class="section portfolio-section" id="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label" data-i18n="portfolio.label">Portfolio</span>
+        <h2 class="section-title" data-i18n="portfolio.title">Karya Pilihan</h2>
+        <a href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" id="btn-behance-all" data-i18n="portfolio.all_behance">
+          Semua Karya di Behance →
+        </a>
+      </div>
+
+      <!-- Dynamic Category Tabs -->
+      <div class="portfolio-tabs" id="portfolio-tabs-container" role="tablist"></div>
+
+      <!-- Dynamic Portfolio Grid Container -->
+      <div class="portfolio-grid" id="portfolio-cards-grid"></div>
+
+
+      <div class="behance-cta-block">
+        <p data-i18n="portfolio.bottom_cta">Lihat semua karya desain di Behance &amp; project dev di GitHub</p>
+        <div class="cta-block-btns">
+          <a href="https://www.behance.net/ikirieyu" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-behance-bottom">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 1.2.836 1.9 2.032 1.9.449 0 .836-.21 1.139-.497l.586.626zm-7.718-4h5.908c-.118-1.14-.73-2.1-2.077-2.1-1.32 0-2.203.88-2.462 2.1h.631zm-9.645 4.5c-.58 0-1.079-.267-1.329-.68.208-.424.623-.68 1.329-.68.709 0 1.108.264 1.108.68 0 .42-.4.68-1.108.68zm0-5.5c-.626 0-1.108-.24-1.108-.68 0-.43.482-.68 1.108-.68.7 0 1.108.25 1.108.68s-.408.68-1.108.68zm4.318 2.5c0 .22-.14.4-.349.5H7.025c-.207-.1-.349-.28-.349-.5v-5h-.027c0 2.5-2.2 3.5-4.025 3.5H0V7h3.5c1.675 0 3.027.7 3.5 2.1V7h3.4c1.925 0 3.1 1 3.1 2.5 0 .8-.376 1.5-1.025 2 .875.42 1.525 1.2 1.525 2.5z"/></svg>
+            <span data-i18n="portfolio.btn_behance_bottom">Behance Portfolio</span>
+          </a>
+          <a href="https://github.com/ikirieyu" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="btn-github-cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            <span data-i18n="portfolio.btn_github_bottom">GitHub Repos</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== INSTAGRAM ========== -->
+  <section class="section instagram-section" id="instagram">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label" data-i18n="ig.label">Instagram</span>
+        <h2 class="section-title" data-i18n="ig.title">Aktivitas Terbaru</h2>
+        <a href="https://www.instagram.com/iki.rieyu" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" id="btn-ig-follow" data-i18n="ig.follow">
+          Follow @iki.rieyu →
+        </a>
+      </div>
+      <div class="ig-embed-wrapper">
+        <behold-widget feed-id="lJ9FjEJKfkFE6bsyhN7O"></behold-widget>
+        <script>
+          (() => {
+            if(window.__bhldScript)return;window.__bhldScript=true;
+            const d=document,s=d.createElement("script");s.type="module";
+            s.src="https://w.behold.so/widget.js";setTimeout(()=>{d.head.append(s);},0);
+          })();
+        </script>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCE ========== -->
+  <section class="section experience-section" id="experience">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label" data-i18n="exp.label">Experience</span>
+        <h2 class="section-title" data-i18n="exp.title">Perjalanan Karir</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline-item" data-aos="fade-up">
+          <div class="timeline-left">
+            <span class="timeline-year" data-i18n="exp.present">2025–sekarang</span>
+          </div>
+          <div class="timeline-connector">
+            <div class="timeline-dot current"></div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-right">
+            <div class="timeline-card">
+              <div class="tc-header">
+                <h3 data-i18n="exp.job1_title">Graphic Designer</h3>
+                <span class="company-badge" data-i18n="exp.job1_company">Image Print / Printup</span>
+              </div>
+              <ul class="tc-list">
+                <li data-i18n="exp.job1_li1">Desain materi cetak harian: banner, spanduk, stiker, brosur, neon box</li>
+                <li data-i18n="exp.job1_li2">Produksi desain untuk kebutuhan digital printing skala komersial</li>
+                <li data-i18n="exp.job1_li3">Persiapan file prepress dan quality control sebelum naik cetak</li>
+                <li data-i18n="exp.job1_li4">Operasi dan koordinasi dengan mesin printing &amp; cutting</li>
+              </ul>
+              <div class="tc-tools">
+                <span>CorelDraw</span><span>Photoshop</span><span>Illustrator</span><span>Digital Printing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-up">
+          <div class="timeline-left">
+            <span class="timeline-year">2023–2025</span>
+          </div>
+          <div class="timeline-connector">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-right">
+            <div class="timeline-card">
+              <div class="tc-header">
+                <h3 data-i18n="exp.job2_title">E-commerce Specialist</h3>
+                <span class="company-badge" data-i18n="exp.job2_company">DW Group</span>
+              </div>
+              <ul class="tc-list">
+                <li data-i18n="exp.job2_li1">Mengelola <strong>100+ produk</strong> di platform Shopee end-to-end</li>
+                <li data-i18n="exp.job2_li2">Memproduksi <strong>20+ desain promosi per minggu</strong> secara konsisten</li>
+                <li data-i18n="exp.job2_li3">Mengembangkan visual toko online dari konsep hingga siap produksi</li>
+                <li data-i18n="exp.job2_li4">Optimasi konten dan materi kampanye untuk meningkatkan konversi</li>
+              </ul>
+              <div class="tc-tools">
+                <span>Photoshop</span><span>Illustrator</span><span>Shopee Seller Center</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-up">
+          <div class="timeline-left">
+            <span class="timeline-year">2022–2023</span>
+          </div>
+          <div class="timeline-connector">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-right">
+            <div class="timeline-card">
+              <div class="tc-header">
+                <h3 data-i18n="exp.job3_title">Graphic Designer</h3>
+                <span class="company-badge" data-i18n="exp.job3_company">Ruang Print</span>
+              </div>
+              <ul class="tc-list">
+                <li data-i18n="exp.job3_li1">Desain brosur, banner, dan materi promosi cetak</li>
+                <li data-i18n="exp.job3_li2">Layout buku dan majalah dengan InDesign</li>
+                <li data-i18n="exp.job3_li3">Persiapan file prepress siap cetak</li>
+              </ul>
+              <div class="tc-tools">
+                <span>InDesign</span><span>Illustrator</span><span>Photoshop</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-up">
+          <div class="timeline-left">
+            <span class="timeline-year">2020–2022</span>
+          </div>
+          <div class="timeline-connector">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-right">
+            <div class="timeline-card">
+              <div class="tc-header">
+                <h3 data-i18n="exp.job4_title">Graphic Designer</h3>
+                <span class="company-badge" data-i18n="exp.job4_company">Dstar Digital Printing</span>
+              </div>
+              <ul class="tc-list">
+                <li data-i18n="exp.job4_li1">Desain materi cetak (stiker, spanduk, kemasan, neon box)</li>
+                <li data-i18n="exp.job4_li2">Operasi langsung mesin printing dan cutting</li>
+                <li data-i18n="exp.job4_li3">Quality control hasil cetak dan finishing</li>
+              </ul>
+              <div class="tc-tools">
+                <span>CorelDraw</span><span>Photoshop</span><span>Cutting Machine</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-up">
+          <div class="timeline-left">
+            <span class="timeline-year">2019–2020</span>
+          </div>
+          <div class="timeline-connector">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-right">
+            <div class="timeline-card">
+              <div class="tc-header">
+                <h3 data-i18n="exp.job5_title">Graphic Designer</h3>
+                <span class="company-badge" data-i18n="exp.job5_company">Abi Kreasindo</span>
+              </div>
+              <ul class="tc-list">
+                <li data-i18n="exp.job5_li1">Produksi materi promosi harian untuk klien retail</li>
+                <li data-i18n="exp.job5_li2">Desain cetak: brosur, kartu nama, x-banner</li>
+              </ul>
+              <div class="tc-tools">
+                <span>CorelDraw</span><span>Photoshop</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS ========== -->
+  <section class="section skills-section" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label" data-i18n="skills.label">Skills</span>
+        <h2 class="section-title" data-i18n="skills.title">Keahlian</h2>
+      </div>
+      <div class="skills-grid">
+
+        <div class="skill-card" data-aos="fade-up">
+          <div class="skill-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <h3 data-i18n="skills.cat1_title">Desain Grafis</h3>
+          <ul>
+            <li>Adobe Photoshop</li>
+            <li>Adobe Illustrator</li>
+            <li>Adobe InDesign</li>
+            <li>CorelDraw</li>
+          </ul>
+        </div>
+
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="skill-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3 data-i18n="skills.cat2_title">Office &amp; Produktivitas</h3>
+          <ul>
+            <li>Microsoft Word</li>
+            <li>Microsoft Excel</li>
+            <li>Microsoft PowerPoint</li>
+          </ul>
+        </div>
+
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="160">
+          <div class="skill-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3 data-i18n="skills.cat3_title">Web</h3>
+          <ul>
+            <li>HTML / CSS</li>
+            <li>js / Next.js / Vite</li>
+            <li>Capacitor (Mobile)</li>
+            <li>Electron (Desktop)</li>
+          </ul>
+        </div>
+
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="240">
+          <div class="skill-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 data-i18n="skills.cat4_title">IT Support</h3>
+          <ul>
+            <li data-i18n="skills.it_pc">Servis &amp; Rakit PC</li>
+            <li data-i18n="skills.it_os">Instalasi OS</li>
+            <li data-i18n="skills.it_lan">Jaringan LAN</li>
+            <li data-i18n="skills.it_hw">Troubleshooting Hardware</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="section contact-section" id="contact">
+    <div class="container contact-inner">
+      <div class="contact-left">
+        <span class="section-label" data-i18n="contact.label">Contact</span>
+        <h2 class="contact-heading" data-i18n="contact.heading">Ada project? <br/><em>Ayo ngobrol.</em></h2>
+        <p class="contact-sub" data-i18n="contact.sub">Terbuka untuk freelance, full-time, maupun kolaborasi kreatif. Response biasanya dalam 24 jam.</p>
+        <div class="contact-links">
+          <a href="mailto:diki@example.com" class="contact-item" id="link-email">
+            <div class="ci-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="ci-text">
+              <span class="ci-label">Email</span>
+              <span class="ci-value">diki@example.com</span>
+            </div>
+            <span class="ci-arrow">→</span>
+          </a>
+          <a href="https://wa.me/6282297385614" target="_blank" rel="noopener noreferrer" class="contact-item" id="link-whatsapp">
+            <div class="ci-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            </div>
+            <div class="ci-text">
+              <span class="ci-label">WhatsApp</span>
+              <span class="ci-value">0822-9738-5614</span>
+            </div>
+            <span class="ci-arrow">→</span>
+          </a>
+          <a href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" class="contact-item" id="link-behance">
+            <div class="ci-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 1.2.836 1.9 2.032 1.9.449 0 .836-.21 1.139-.497l.586.626zm-7.718-4h5.908c-.118-1.14-.73-2.1-2.077-2.1-1.32 0-2.203.88-2.462 2.1h.631zm-9.645 4.5c-.58 0-1.079-.267-1.329-.68.208-.424.623-.68 1.329-.68.709 0 1.108.264 1.108.68 0 .42-.4.68-1.108.68zm0-5.5c-.626 0-1.108-.24-1.108-.68 0-.43.482-.68 1.108-.68.7 0 1.108.25 1.108.68s-.408.68-1.108.68zm4.318 2.5c0 .22-.14.4-.349.5H7.025c-.207-.1-.349-.28-.349-.5v-5h-.027c0 2.5-2.2 3.5-4.025 3.5H0V7h3.5c1.675 0 3.027.7 3.5 2.1V7h3.4c1.925 0 3.1 1 3.1 2.5 0 .8-.376 1.5-1.025 2 .875.42 1.525 1.2 1.525 2.5z"/></svg>
+            </div>
+            <div class="ci-text">
+              <span class="ci-label">Behance</span>
+              <span class="ci-value">behance.net/dikipermana</span>
+            </div>
+            <span class="ci-arrow">→</span>
+          </a>
+          <a href="https://www.instagram.com/iki.rieyu" target="_blank" rel="noopener noreferrer" class="contact-item" id="link-instagram">
+            <div class="ci-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <div class="ci-text">
+              <span class="ci-label">Instagram</span>
+              <span class="ci-value">@iki.rieyu</span>
+            </div>
+            <span class="ci-arrow">→</span>
+          </a>
+          <a href="https://github.com/ikirieyu" target="_blank" rel="noopener noreferrer" class="contact-item" id="link-github">
+            <div class="ci-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            </div>
+            <div class="ci-text">
+              <span class="ci-label">GitHub</span>
+              <span class="ci-value">github.com/ikirieyu</span>
+            </div>
+            <span class="ci-arrow">→</span>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="contact-card-deco">
+          <div class="ccd-text">Let's<br/>Create</div>
+          <div class="ccd-star">✦</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <img src="asset/footer.png" alt="Diki Permana Logo" class="footer-logo-img" />
+      </div>
+      <p class="footer-copy" data-i18n="footer.copy">© 2025 Diki Permana. Graphic Designer — Jakarta Barat.</p>
+      <div class="footer-links">
+        <a href="https://www.behance.net/ikirieyu" target="_blank" rel="noopener noreferrer" id="footer-behance">Behance</a>
+        <a href="https://github.com/ikirieyu" target="_blank" rel="noopener noreferrer" id="footer-github">GitHub</a>
+        <a href="https://www.instagram.com/iki.rieyu" target="_blank" rel="noopener noreferrer" id="footer-ig">Instagram</a>
+        <a href="https://wa.me/6282297385614" target="_blank" rel="noopener noreferrer" id="footer-wa">WhatsApp</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script src="portfolio-data.js"></script>
+  <script src="main.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+
+</html>
