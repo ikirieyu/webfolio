@@ -105,7 +105,7 @@ const TRANSLATIONS = {
     // Experience Section
     "exp.label": "Experience",
     "exp.title": "Perjalanan Karir",
-    "exp.present": "2025–sekarang",
+    "exp.present": "2026–sekarang",
 
     "exp.job1_title": "Graphic Designer",
     "exp.job1_company": "Image Print / Printup",
@@ -269,7 +269,7 @@ const TRANSLATIONS = {
     // Experience Section
     "exp.label": "Experience",
     "exp.title": "Career Journey",
-    "exp.present": "2025–present",
+    "exp.present": "2026–present",
 
     "exp.job1_title": "Graphic Designer",
     "exp.job1_company": "Image Print / Printup",
