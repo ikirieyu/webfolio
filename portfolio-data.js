@@ -262,20 +262,20 @@ const PORTFOLIO_DATA = [
   {
     id: "gh-1",
     category: "github",
-    label: "Frontend Dev",
+    label: "Mobile Apps",
     year: "2025",
     theme: "gh-1",
-    image: "",
-    link: "https://github.com/ikirieyu",
+    image: "asset/ZiQi.jpg",
+    link: "https://github.com/ikirieyu/pos-app-ziqi",
     title: {
-      id: "Webfolio Interactive Platform",
-      en: "Webfolio Interactive Platform"
+      id: "ZiQi Point of Sale (POS)",
+      en: "ZiQi Point of Sale (POS)"
     },
     description: {
-      id: "Website portofolio interaktif dibangun dengan HTML5, Vanilla CSS, JS, dan integrasi AI chatbot.",
-      en: "Interactive portfolio platform built with HTML5, Vanilla CSS, JS, and AI chatbot integration."
+      id: "Aplikasi Kasir & Pencatatan Hutang Pelanggan Kekinian. Solusi kasir dan pencatatan hutang pelanggan untuk warung, toko, dan UMKM — praktis, rapi, gak pakai buku tulis lagi.",
+      en: "Modern Point of Sale & Debt Tracking Application. A state-of-the-art POS & Hutang Tracking solution for small businesses, retail stores, and warungs."
     },
-    tags: ["HTML/CSS", "JavaScript", "Portfolio"]
+    tags: ["React 18 + TypeScript", "Tailwind CSS + shadcn/ui + Radix UI", "PostgreSQL + RLS + Storage Buckets"]
   },
   {
     id: "gh-2",
