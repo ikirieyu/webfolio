@@ -10,7 +10,7 @@
 
 const PORTFOLIO_CATEGORIES = [
   {
-    id: "ecommerce",
+    id: "Design",
     name: { id: "Desain Logo", en: "Logo Design" }
   },
   {
@@ -41,7 +41,7 @@ const PORTFOLIO_DATA = [
   // --- CATEGORY: E-COMMERCE & PROMO ---
   {
     id: "ec-1",
-    category: "ecommerce",
+    category: "Design",
     label: "Shopee Campaign",
     year: "2024",
     theme: "ec-1",
@@ -59,7 +59,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "ec-2",
-    category: "ecommerce",
+    category: "Design",
     label: "Product Visual",
     year: "2024",
     theme: "ec-2",
@@ -77,7 +77,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "ec-3",
-    category: "ecommerce",
+    category: "Design",
     label: "Store Decoration",
     year: "2023",
     theme: "ec-3",
@@ -95,7 +95,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "ec-4",
-    category: "ecommerce",
+    category: "Design",
     label: "Social Media",
     year: "2024",
     theme: "ec-4",
@@ -113,7 +113,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "ec-5",
-    category: "ecommerce",
+    category: "Design",
     label: "Voucher Design",
     year: "2023",
     theme: "ec-5",
@@ -131,7 +131,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "ec-6",
-    category: "ecommerce",
+    category: "Design",
     label: "Packaging Label",
     year: "2023",
     theme: "ec-6",
