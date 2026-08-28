@@ -11,7 +11,7 @@
 const PORTFOLIO_CATEGORIES = [
   {
     id: "ecommerce",
-    name: { id: "E-commerce & Promo", en: "E-commerce & Promo" }
+    name: { id: "Desain Logo", en: "Logo Design" }
   },
   {
     id: "print",
