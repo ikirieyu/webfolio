@@ -15,7 +15,7 @@ const PORTFOLIO_CATEGORIES = [
   },
   {
     id: "print",
-    name: { id: "Print & Branding", en: "Print & Branding" }
+    name: { id: "Mockup & Branding", en: "Mockup & Branding" }
   },
   {
     id: "github",
