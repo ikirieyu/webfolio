@@ -14,7 +14,7 @@ const PORTFOLIO_CATEGORIES = [
     name: { id: "Desain Logo", en: "Logo Design" }
   },
   {
-    id: "print",
+    id: "Mockup",
     name: { id: "Mockup & Branding", en: "Mockup & Branding" }
   },
   {
@@ -151,7 +151,7 @@ const PORTFOLIO_DATA = [
   // --- CATEGORY: PRINT & BRANDING ---
   {
     id: "print-1",
-    category: "print",
+    category: "Mockup",
     label: "Print Design",
     year: "2022",
     theme: "print-1",
@@ -169,7 +169,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "print-2",
-    category: "print",
+    category: "Mockup",
     label: "Book Layout",
     year: "2022",
     theme: "print-2",
@@ -187,7 +187,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "print-3",
-    category: "print",
+    category: "Mockup",
     label: "Branding Kit",
     year: "2023",
     theme: "print-3",
@@ -205,7 +205,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "print-4",
-    category: "print",
+    category: "Mockup",
     label: "Banner & Poster",
     year: "2024",
     theme: "print-4",
@@ -223,7 +223,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "print-5",
-    category: "print",
+    category: "Mockup",
     label: "Stationery",
     year: "2023",
     theme: "print-5",
@@ -241,7 +241,7 @@ const PORTFOLIO_DATA = [
   },
   {
     id: "print-6",
-    category: "print",
+    category: "Mockup",
     label: "Flyer & Menu",
     year: "2023",
     theme: "print-6",
