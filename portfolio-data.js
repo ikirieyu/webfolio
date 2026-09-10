@@ -152,14 +152,14 @@ const PORTFOLIO_DATA = [
   {
     id: "print-1",
     category: "Mockup",
-    label: "Print Design",
-    year: "2022",
+    label: "Bungakebaya",
+    year: "2025",
     theme: "print-1",
-    image: "",
-    link: "https://www.behance.net/ikirieyu",
+    image: "/asset/bungakebaya.png",
+    link: "https://www.behance.net/gallery/255517091/Bungakebaya-Fashion-Shop?platform=direct",
     title: {
-      id: "Company Profile Brosur",
-      en: "Company Profile Brochure"
+      id: "Bungakebaya Fashion Shop | Shopee Template",
+      en: "Toko Busana Bungakebaya | Shopee Template"
     },
     description: {
       id: "Desain brosur perusahaan dengan layout editorial — 24 halaman, ready-to-print dalam CMYK.",
