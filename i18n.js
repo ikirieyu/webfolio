@@ -152,11 +152,11 @@ const TRANSLATIONS = {
 
     // Contact Section
     "contact.label": "Contact",
-    "contact.heading": "Ada project? <br/><em>Ayo ngobrol.</em>",
-    "contact.sub": "Terbuka untuk freelance, full-time, maupun kolaborasi kreatif. Response biasanya dalam 24 jam.",
+    "contact.heading": "Butuh orang yang paham marketplace dan visual? <br/><em>Mari ngobrol.</em>",
+    "contact.sub": "Terbuka untuk full-time, freelance, dan kolaborasi e-commerce — marketplace operations, catalog, campaign, visual content, dan digital workflow.",
 
     // Footer
-    "footer.copy": "© 2025 Diki Permana. Graphic Designer — Jakarta Barat.",
+    "footer.copy": "© 2026 Diki Permana — E-commerce & Marketplace Specialist · Jakarta, Indonesia.",
 
     // Chatbot UI
     "chatbot.title": "Diki AI Assistant",
@@ -316,11 +316,11 @@ const TRANSLATIONS = {
 
     // Contact Section
     "contact.label": "Contact",
-    "contact.heading": "Have a project? <br/><em>Let's talk.</em>",
-    "contact.sub": "Open for freelance, full-time, or creative collaboration. Response usually within 24 hours.",
+    "contact.heading": "Need someone who understands marketplaces and visuals? <br/><em>Let's talk.</em>",
+    "contact.sub": "Open to full-time, freelance, and e-commerce collaborations across marketplace operations, catalog, campaigns, visual content, and digital workflows.",
 
     // Footer
-    "footer.copy": "© 2025 Diki Permana. Graphic Designer — West Jakarta.",
+    "footer.copy": "© 2026 Diki Permana — E-commerce & Marketplace Specialist · Jakarta, Indonesia.",
 
     // Chatbot UI
     "chatbot.title": "Diki AI Assistant",
