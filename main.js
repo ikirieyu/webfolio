@@ -54,6 +54,31 @@ if (hamburger && mobileMenu) {
 /* ---- PORTFOLIO DYNAMIC SYSTEM (TABS + CASE STUDY GALLERY) ---- */
 let activeCategory = 'ecommerce';
 
+function getProjectAssets(item) {
+  return item?.assets || item?.caseStudy?.assets || null;
+}
+
+function getProjectCover(item) {
+  if (item?.image) return item.image;
+
+  const explicitCover = item?.cover || item?.caseStudy?.cover;
+  if (typeof explicitCover === 'string') return explicitCover;
+  if (explicitCover?.src) return explicitCover.src;
+
+  const assets = getProjectAssets(item);
+  if (assets?.folder && Array.isArray(assets.files)) {
+    const coverFile = assets.files.find(file => /^00-cover\./i.test(file));
+    if (coverFile) return `${assets.folder.replace(/\/$/, '')}/${coverFile}`;
+  }
+
+  const firstGallery = item?.caseStudy?.gallery?.[0];
+  return firstGallery?.src || '';
+}
+
+function isInternalProject(item) {
+  return Boolean(item?.caseStudy || getProjectAssets(item));
+}
+
 function updatePortfolioIntro() {
   const section = document.getElementById('portfolio');
   if (!section) return;
@@ -126,13 +151,27 @@ function renderPortfolioCards(category = activeCategory) {
 
   const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'id';
 
-  // E-commerce harus visual-first. Placeholder lama tanpa visual/case study
-  // sengaja tidak ditampilkan agar halaman recruiter-ready, bukan terlihat dummy.
-  const filtered = PORTFOLIO_DATA.filter(item => {
-    if (item.category !== category || item.published === false) return false;
-    if (category === 'ecommerce' && !item.image && !item.caseStudy) return false;
-    return true;
-  });
+  // Semua kartu ditarik langsung dari PORTFOLIO_DATA.
+  // Untuk case study baru cukup tambah data + aset; HTML/CSS/JS tidak perlu disentuh.
+  const filtered = PORTFOLIO_DATA
+    .filter(item => {
+      if (item.category !== category || item.published === false) return false;
+      if (category === 'ecommerce' && !getProjectCover(item) && !isInternalProject(item)) return false;
+      return true;
+    })
+    .map((item, sourceIndex) => ({ item, sourceIndex }))
+    .sort((a, b) => {
+      const aFeatured = a.item.featured === true ? 0 : 1;
+      const bFeatured = b.item.featured === true ? 0 : 1;
+      if (aFeatured !== bFeatured) return aFeatured - bFeatured;
+
+      const aOrder = Number.isFinite(a.item.order) ? a.item.order : Number.MAX_SAFE_INTEGER;
+      const bOrder = Number.isFinite(b.item.order) ? b.item.order : Number.MAX_SAFE_INTEGER;
+      if (aOrder !== bOrder) return aOrder - bOrder;
+
+      return a.sourceIndex - b.sourceIndex;
+    })
+    .map(entry => entry.item);
 
   if (!filtered.length) {
     container.innerHTML = `
@@ -145,22 +184,23 @@ function renderPortfolioCards(category = activeCategory) {
   }
 
   container.innerHTML = filtered.map((item, index) => {
-    const titleText = item.title[currentLang] || item.title.id;
-    const descText  = item.description[currentLang] || item.description.id;
-    const hasCaseStudy = Boolean(item.caseStudy);
+    const titleText = item.title?.[currentLang] || item.title?.id || item.title || item.id;
+    const descText  = item.description?.[currentLang] || item.description?.id || item.description || '';
+    const hasCaseStudy = isInternalProject(item);
     const targetLink = hasCaseStudy
       ? `project.html?id=${encodeURIComponent(item.id)}`
       : item.link;
     const externalAttrs = hasCaseStudy ? '' : 'target="_blank" rel="noopener noreferrer"';
     const delay = (index % 3) * 80;
-    const featuredClass = index === 0 ? 'is-featured' : '';
+    const featuredClass = item.featured === false ? '' : (item.featured === true || index === 0 ? 'is-featured' : '');
+    const coverImage = getProjectCover(item);
 
     const isCustomBg = item.theme && (item.theme.includes('#') || item.theme.includes('gradient') || item.theme.includes('rgb'));
     const styleAttr  = isCustomBg ? `style="background: ${item.theme};"` : '';
-    const themeClass = (!item.image && !isCustomBg) ? (item.theme || 'ec-1') : '';
+    const themeClass = (!coverImage && !isCustomBg) ? (item.theme || 'ec-1') : '';
 
-    const thumbContent = item.image
-      ? `<img src="${item.image}" alt="${titleText}" class="card-thumb-img" loading="lazy" />`
+    const thumbContent = coverImage
+      ? `<img src="${coverImage}" alt="${titleText}" class="card-thumb-img" loading="lazy" />`
       : `<div class="card-thumb-inner">
            <span class="thumb-label">${item.label || ''}</span>
            <span class="thumb-year">${item.year || ''}</span>
@@ -175,8 +215,8 @@ function renderPortfolioCards(category = activeCategory) {
 
     return `
       <article class="portfolio-card ${featuredClass} aos-animate" data-aos="fade-up" data-aos-delay="${delay}">
-        <a href="${targetLink}" ${externalAttrs} class="portfolio-card-link" aria-label="${titleText}">
-          <div class="card-thumb ${item.image ? 'has-img' : themeClass}" ${styleAttr}>
+        <a href="${targetLink || '#'}" ${externalAttrs} class="portfolio-card-link" aria-label="${titleText}">
+          <div class="card-thumb ${coverImage ? 'has-img' : themeClass}" ${styleAttr}>
             ${thumbContent}
             <span class="case-badge">${badgeText}</span>
             <span class="case-open" aria-hidden="true">↗</span>
