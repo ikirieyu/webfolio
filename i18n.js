@@ -22,23 +22,23 @@ const TRANSLATIONS = {
     "hero.btn_behance": "Lihat di Behance",
     "hero.scroll": "Scroll",
 
-    // Marquee
-    "marquee.ecommerce": "E-commerce Design",
-    "marquee.print": "Print Production",
-    "marquee.brand": "Brand Identity",
-    "marquee.shopee": "Shopee Campaign",
-    "marquee.prepress": "Prepress",
-    "marquee.layout": "Layout & Editorial",
+    // Marquee — fokus ke target role e-commerce / marketplace
+    "marquee.ecommerce": "Marketplace Operations",
+    "marquee.print": "Product & Catalog Management",
+    "marquee.brand": "Campaign & Promotion",
+    "marquee.shopee": "Marketplace Ads",
+    "marquee.prepress": "Store Optimization",
+    "marquee.layout": "E-commerce Visuals",
 
     // About Section
     "about.label": "About",
-    "about.stat1_desc": "Tahun Pengalaman",
-    "about.stat2_desc": "Desain / Minggu",
-    "about.stat3_desc": "Produk Dikelola",
-    "about.heading": "Desainer yang hidup di antara piksel, cetak, dan deadline.",
-    "about.p1": "Saya Diki — graphic designer dengan <strong>4+ tahun pengalaman</strong> di industri printing dan e-commerce. Terbiasa memproduksi <strong>20+ desain promosi per minggu</strong> dengan kualitas konsisten, mengelola visual toko online dari konsep sampai siap produksi.",
-    "about.p2": "Dari layout brosur dan banner cetak, hingga campaign Shopee yang harus hidup dalam hitungan jam — saya tahu cara kerja di dua dunia sekaligus: <em>layar dan mesin cetak</em>.",
-    "about.p3": "Yang bikin saya berbeda dari kebanyakan desainer? Saya juga punya background <strong>IT & app development</strong>. Saya bisa ngobrol soal spesifikasi mesin, bangun tools internal sederhana, dan paham alur kerja digital dari ujung ke ujung — bukan cuma soal estetika.",
+    "about.stat1_desc": "Tahun Pengalaman Kerja",
+    "about.stat2_desc": "Desain Promosi / Minggu",
+    "about.stat3_desc": "Produk / SKU Dikelola",
+    "about.heading": "E-commerce specialist yang paham operasi, visual, dan cara produk dijual.",
+    "about.p1": "Saya Diki — punya pengalaman di <strong>e-commerce, marketplace operations, dan graphic design</strong>. Saya terbiasa menangani listing produk, campaign, materi promosi, customer/order flow, serta menjaga tampilan toko tetap konsisten. Dalam pengalaman sebelumnya saya mengelola <strong>100+ produk</strong> dan memproduksi <strong>20+ desain promosi per minggu</strong>.",
+    "about.p2": "Buat saya, e-commerce bukan sekadar upload produk atau menyalakan iklan. <strong>Produk, stok, visual, promo, harga, dan operasional harus bekerja sebagai satu sistem.</strong> Kalau salah satu lemah, budget iklan saja tidak akan menyelesaikan masalah.",
+    "about.p3": "Background saya di <strong>graphic design dan web/app development</strong> membantu saya menjembatani kebutuhan komersial dan teknis — dari visual campaign dan reporting, sampai memahami workflow digital dan membangun tools internal sederhana.",
     "about.cta": "Mari Berkolaborasi",
 
     // Portfolio Section
@@ -140,15 +140,15 @@ const TRANSLATIONS = {
 
     // Skills Section
     "skills.label": "Skills",
-    "skills.title": "Keahlian",
-    "skills.cat1_title": "Desain Grafis",
-    "skills.cat2_title": "Office & Produktivitas",
-    "skills.cat3_title": "Web",
-    "skills.cat4_title": "IT Support",
-    "skills.it_pc": "Servis & Rakit PC",
-    "skills.it_os": "Instalasi OS",
-    "skills.it_lan": "Jaringan LAN",
-    "skills.it_hw": "Troubleshooting Hardware",
+    "skills.title": "Keahlian Utama",
+    "skills.cat1_title": "E-commerce & Marketplace",
+    "skills.cat2_title": "Visual & Campaign",
+    "skills.cat3_title": "Data & Operations",
+    "skills.cat4_title": "Web & Technical",
+    "skills.it_pc": "HTML / CSS / JavaScript",
+    "skills.it_os": "React / TypeScript / Vite",
+    "skills.it_lan": "Supabase / Local Storage",
+    "skills.it_hw": "Capacitor / Electron",
 
     // Contact Section
     "contact.label": "Contact",
@@ -187,22 +187,22 @@ const TRANSLATIONS = {
     "hero.scroll": "Scroll",
 
     // Marquee
-    "marquee.ecommerce": "E-commerce Design",
-    "marquee.print": "Print Production",
-    "marquee.brand": "Brand Identity",
-    "marquee.shopee": "Shopee Campaign",
-    "marquee.prepress": "Prepress",
-    "marquee.layout": "Layout & Editorial",
+    "marquee.ecommerce": "Marketplace Operations",
+    "marquee.print": "Product & Catalog Management",
+    "marquee.brand": "Campaign & Promotion",
+    "marquee.shopee": "Marketplace Ads",
+    "marquee.prepress": "Store Optimization",
+    "marquee.layout": "E-commerce Visuals",
 
     // About Section
     "about.label": "About",
-    "about.stat1_desc": "Years Experience",
-    "about.stat2_desc": "Designs / Week",
-    "about.stat3_desc": "Products Managed",
-    "about.heading": "A designer living between pixels, print, and deadlines.",
-    "about.p1": "I'm Diki — a graphic designer with <strong>4+ years of experience</strong> in the printing and e-commerce industry. Accustomed to producing <strong>20+ promotional designs per week</strong> with consistent quality, managing online store visuals from concept to production-ready.",
-    "about.p2": "From brochure layouts and printed banners to Shopee campaigns launched within hours — I know how to work seamlessly across both worlds: <em>screens and print presses</em>.",
-    "about.p3": "What sets me apart from most designers? I also have a background in <strong>IT & app development</strong>. I can discuss machine specs, build simple internal tools, and understand end-to-end digital workflows — beyond just aesthetics.",
+    "about.stat1_desc": "Years of Work Experience",
+    "about.stat2_desc": "Promo Designs / Week",
+    "about.stat3_desc": "Products / SKUs Managed",
+    "about.heading": "An e-commerce specialist who understands operations, visuals, and how products sell.",
+    "about.p1": "I'm Diki — experienced in <strong>e-commerce, marketplace operations, and graphic design</strong>. I'm used to handling product listings, campaigns, promotional assets, customer/order flow, and keeping storefront visuals consistent. In a previous role, I managed <strong>100+ products</strong> and produced <strong>20+ promotional designs per week</strong>.",
+    "about.p2": "To me, e-commerce is more than uploading products or turning on ads. <strong>Product, stock, visuals, promotions, pricing, and operations need to work as one system.</strong> If one part is weak, ad spend alone will not fix it.",
+    "about.p3": "My background in <strong>graphic design and web/app development</strong> helps me bridge commercial and technical needs — from campaign visuals and reporting to understanding digital workflows and building simple internal tools.",
     "about.cta": "Let's Collaborate",
 
     // Portfolio Section
@@ -304,15 +304,15 @@ const TRANSLATIONS = {
 
     // Skills Section
     "skills.label": "Skills",
-    "skills.title": "Technical Skills",
-    "skills.cat1_title": "Graphic Design",
-    "skills.cat2_title": "Office & Productivity",
-    "skills.cat3_title": "Web Development",
-    "skills.cat4_title": "IT Support",
-    "skills.it_pc": "PC Service & Assembly",
-    "skills.it_os": "OS Installation",
-    "skills.it_lan": "LAN Networking",
-    "skills.it_hw": "Hardware Troubleshooting",
+    "skills.title": "Core Skills",
+    "skills.cat1_title": "E-commerce & Marketplace",
+    "skills.cat2_title": "Visual & Campaign",
+    "skills.cat3_title": "Data & Operations",
+    "skills.cat4_title": "Web & Technical",
+    "skills.it_pc": "HTML / CSS / JavaScript",
+    "skills.it_os": "React / TypeScript / Vite",
+    "skills.it_lan": "Supabase / Local Storage",
+    "skills.it_hw": "Capacitor / Electron",
 
     // Contact Section
     "contact.label": "Contact",
@@ -331,6 +331,61 @@ const TRANSLATIONS = {
     "chatbot.chip3": "How to contact Diki?",
     "chatbot.chip4": "Diki's latest projects?",
   }
+};
+
+const SKILL_ITEMS = {
+  id: [
+    [
+      "Shopee / Tokopedia / Lazada / TikTok Shop",
+      "Product Listing & Catalog",
+      "Campaign / Voucher / Promotion",
+      "Marketplace Ads & Optimization"
+    ],
+    [
+      "Adobe Photoshop / Illustrator",
+      "Product & Store Visual",
+      "Banner / Social Media Content",
+      "Print & Prepress"
+    ],
+    [
+      "Microsoft Excel",
+      "Order & Customer Management",
+      "SKU / Stock Monitoring",
+      "Sales & Campaign Reporting"
+    ],
+    [
+      "HTML / CSS / JavaScript",
+      "React / TypeScript / Vite",
+      "Supabase / Local Storage",
+      "Capacitor / Electron"
+    ]
+  ],
+  en: [
+    [
+      "Shopee / Tokopedia / Lazada / TikTok Shop",
+      "Product Listing & Catalog",
+      "Campaign / Voucher / Promotion",
+      "Marketplace Ads & Optimization"
+    ],
+    [
+      "Adobe Photoshop / Illustrator",
+      "Product & Store Visuals",
+      "Banner / Social Media Content",
+      "Print & Prepress"
+    ],
+    [
+      "Microsoft Excel",
+      "Order & Customer Management",
+      "SKU / Stock Monitoring",
+      "Sales & Campaign Reporting"
+    ],
+    [
+      "HTML / CSS / JavaScript",
+      "React / TypeScript / Vite",
+      "Supabase / Local Storage",
+      "Capacitor / Electron"
+    ]
+  ]
 };
 
 let currentLang = localStorage.getItem('webfolio_lang') || 'id';
@@ -353,6 +408,15 @@ function setLanguage(lang) {
         el.innerHTML = translation;
       }
     }
+  });
+
+  // Skills use structured lists so the four cards stay focused on the target role.
+  const skillLists = document.querySelectorAll('.skill-card ul');
+  const localizedSkills = SKILL_ITEMS[lang] || SKILL_ITEMS.id;
+  skillLists.forEach((list, index) => {
+    const items = localizedSkills[index];
+    if (!items) return;
+    list.innerHTML = items.map(item => `<li>${item}</li>`).join('');
   });
 
   // Update active state on all toggle buttons (desktop & mobile)
