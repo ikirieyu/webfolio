@@ -7,6 +7,49 @@ const params = new URLSearchParams(window.location.search);
 const projectId = params.get('id');
 let projectLang = localStorage.getItem('webfolio-lang') || 'id';
 
+let projectRegistryPromise = null;
+
+function loadProjectRegistry() {
+  if (window.PORTFOLIO_READY) return window.PORTFOLIO_READY;
+  if (projectRegistryPromise) return projectRegistryPromise;
+
+  projectRegistryPromise = new Promise((resolve) => {
+    const existing = document.querySelector('script[data-project-registry]');
+    if (existing) {
+      const wait = () => Promise.resolve(window.PORTFOLIO_READY || []).then(resolve).catch(() => resolve([]));
+      if (existing.dataset.loaded === 'true') wait();
+      else existing.addEventListener('load', wait, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'projects/registry.js';
+    script.dataset.projectRegistry = 'true';
+    script.onload = () => {
+      script.dataset.loaded = 'true';
+      Promise.resolve(window.PORTFOLIO_READY || []).then(resolve).catch(() => resolve([]));
+    };
+    script.onerror = () => resolve([]);
+    document.head.appendChild(script);
+  });
+
+  return projectRegistryPromise;
+}
+
+function getPortfolioItems() {
+  if (Array.isArray(window.MODULAR_PORTFOLIO_DATA) && window.MODULAR_PORTFOLIO_DATA.length) {
+    return window.MODULAR_PORTFOLIO_DATA;
+  }
+  return typeof PORTFOLIO_DATA !== 'undefined' ? PORTFOLIO_DATA : [];
+}
+
+function getPortfolioCategories() {
+  if (Array.isArray(window.MODULAR_PORTFOLIO_CATEGORIES) && window.MODULAR_PORTFOLIO_CATEGORIES.length) {
+    return window.MODULAR_PORTFOLIO_CATEGORIES;
+  }
+  return typeof PORTFOLIO_CATEGORIES !== 'undefined' ? PORTFOLIO_CATEGORIES : [];
+}
+
 function tr(value) {
   if (value == null) return '';
   if (typeof value === 'string' || typeof value === 'number') return String(value);
@@ -27,17 +70,16 @@ function getProjectAssets(project) {
 }
 
 function getProject() {
-  if (typeof PORTFOLIO_DATA === 'undefined') return null;
-  return PORTFOLIO_DATA.find(item =>
+  return getPortfolioItems().find(item =>
     item.id === projectId &&
     item.published !== false &&
     (item.caseStudy || getProjectAssets(item))
-  );
+  ) || null;
 }
 
 function getCategoryName(project) {
-  if (typeof PORTFOLIO_CATEGORIES === 'undefined') return project?.category || 'Case Study';
-  const category = PORTFOLIO_CATEGORIES.find(item => item.id === project?.category);
+  const categories = getPortfolioCategories();
+  const category = categories.find(item => item.id === project?.category);
   return category ? tr(category.name) : (project?.category || 'Case Study');
 }
 
@@ -61,7 +103,7 @@ function renderError() {
    FILENAME-DRIVEN MEDIA SYSTEM
 
    assets: {
-     folder: 'asset/case-studies/nova-desk',
+     folder: 'projects/nova-desk/assets',
      files: [
        '00-cover.webp',
        '01-brand.webp',
@@ -270,7 +312,7 @@ function renderStory(project, cs) {
 
   if (overviewBody) {
     stories.push({
-      title: tr(cs.overview?.title) || (projectLang === 'en' ? 'Overview' : 'Overview'),
+      title: tr(cs.overview?.title) || 'Overview',
       body: overviewBody,
       lead: true
     });
@@ -316,11 +358,8 @@ function renderProject() {
 
   const explicitCover = normalizeMediaItem(cs.cover || project.cover);
   const projectImageCover = project.image ? { src: project.image, alt: title } : null;
-
-  // Priority: explicit cover -> 00-cover file -> first legacy gallery item -> project image.
   const cover = explicitCover || generatedMedia.cover || gallery[0] || projectImageCover || null;
 
-  // Priority: explicit blocks -> filename-driven blocks -> legacy gallery fallback.
   const explicitBlocks = cs.blocks || project.blocks || [];
   const blocks = explicitBlocks.length
     ? explicitBlocks
@@ -410,5 +449,10 @@ document.addEventListener('click', (event) => {
   renderProject();
 });
 
-syncLanguageButtons();
-renderProject();
+async function bootProject() {
+  syncLanguageButtons();
+  await loadProjectRegistry();
+  renderProject();
+}
+
+bootProject();
