@@ -12,6 +12,50 @@
   document.head.appendChild(link);
 })();
 
+/* ---- MODULAR PROJECT REGISTRY ---- */
+let projectRegistryPromise = null;
+
+function loadProjectRegistry() {
+  if (window.PORTFOLIO_READY) return window.PORTFOLIO_READY;
+  if (projectRegistryPromise) return projectRegistryPromise;
+
+  projectRegistryPromise = new Promise((resolve) => {
+    const existing = document.querySelector('script[data-project-registry]');
+    if (existing) {
+      const wait = () => Promise.resolve(window.PORTFOLIO_READY || []).then(resolve).catch(() => resolve([]));
+      if (existing.dataset.loaded === 'true') wait();
+      else existing.addEventListener('load', wait, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'projects/registry.js';
+    script.dataset.projectRegistry = 'true';
+    script.onload = () => {
+      script.dataset.loaded = 'true';
+      Promise.resolve(window.PORTFOLIO_READY || []).then(resolve).catch(() => resolve([]));
+    };
+    script.onerror = () => resolve([]);
+    document.head.appendChild(script);
+  });
+
+  return projectRegistryPromise;
+}
+
+function getPortfolioItems() {
+  if (Array.isArray(window.MODULAR_PORTFOLIO_DATA) && window.MODULAR_PORTFOLIO_DATA.length) {
+    return window.MODULAR_PORTFOLIO_DATA;
+  }
+  return typeof PORTFOLIO_DATA !== 'undefined' ? PORTFOLIO_DATA : [];
+}
+
+function getPortfolioCategories() {
+  if (Array.isArray(window.MODULAR_PORTFOLIO_CATEGORIES) && window.MODULAR_PORTFOLIO_CATEGORIES.length) {
+    return window.MODULAR_PORTFOLIO_CATEGORIES;
+  }
+  return typeof PORTFOLIO_CATEGORIES !== 'undefined' ? PORTFOLIO_CATEGORIES : [];
+}
+
 /* ---- SNAPWIDGET: Deteksi apakah Widget ID sudah diisi ---- */
 (function () {
   const iframe   = document.getElementById('snapwidget-iframe');
@@ -106,11 +150,12 @@ function updatePortfolioIntro() {
 
 function renderPortfolioTabs() {
   const tabsContainer = document.getElementById('portfolio-tabs-container');
-  if (!tabsContainer || typeof PORTFOLIO_CATEGORIES === 'undefined') return;
+  const categories = getPortfolioCategories();
+  if (!tabsContainer || !categories.length) return;
 
   const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'id';
 
-  tabsContainer.innerHTML = PORTFOLIO_CATEGORIES.map(cat => {
+  tabsContainer.innerHTML = categories.map(cat => {
     const isActive = cat.id === activeCategory;
     const catName  = cat.name[currentLang] || cat.name.id;
     const iconHtml = cat.icon ? `${cat.icon} ` : '';
@@ -147,13 +192,12 @@ function renderPortfolioTabs() {
 function renderPortfolioCards(category = activeCategory) {
   activeCategory = category;
   const container = document.getElementById('portfolio-cards-grid');
-  if (!container || typeof PORTFOLIO_DATA === 'undefined') return;
+  const portfolioItems = getPortfolioItems();
+  if (!container || !portfolioItems.length) return;
 
   const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'id';
 
-  // Semua kartu ditarik langsung dari PORTFOLIO_DATA.
-  // Untuk case study baru cukup tambah data + aset; HTML/CSS/JS tidak perlu disentuh.
-  const filtered = PORTFOLIO_DATA
+  const filtered = portfolioItems
     .filter(item => {
       if (item.category !== category || item.published === false) return false;
       if (category === 'ecommerce' && !getProjectCover(item) && !isInternalProject(item)) return false;
@@ -236,11 +280,14 @@ function renderPortfolioCards(category = activeCategory) {
   }).join('');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+async function initPortfolio() {
+  await loadProjectRegistry();
   updatePortfolioIntro();
   renderPortfolioTabs();
   renderPortfolioCards(activeCategory);
-});
+}
+
+document.addEventListener('DOMContentLoaded', initPortfolio);
 
 window.addEventListener('languageChanged', () => {
   updatePortfolioIntro();
