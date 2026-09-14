@@ -1,6 +1,6 @@
 # Modular Portfolio Projects
 
-Semua project portfolio sekarang dipisah per folder.
+Semua project portfolio dipisah per folder.
 
 ## Struktur
 
@@ -33,6 +33,31 @@ projects/
 6. Set `published: true` ketika siap tayang.
 
 Homepage dan halaman case study otomatis membaca data project tersebut.
+
+## Project GitHub
+
+Project pada kategori `github` sebaiknya tetap membuka halaman penjelasan internal terlebih dahulu, bukan langsung keluar ke GitHub.
+
+Flow:
+
+```text
+Homepage
+→ klik project GitHub
+→ project.html?id=...
+→ overview / challenge / approach / visual / technical notes
+→ tombol menuju repository GitHub
+```
+
+Di file `project.js` project tersebut, isi:
+
+```js
+category: 'github',
+repoUrl: 'https://github.com/USER/REPO',
+externalLink: 'https://github.com/USER/REPO',
+caseStudy: {}
+```
+
+`caseStudy: {}` menjaga project tetap memakai halaman detail internal walaupun visualnya masih sedikit. Tambahkan `overview`, `challenge`, `approach`, dan `blocks` untuk menjelaskan project dengan lebih lengkap.
 
 ## Kenapa tetap ada registry.js?
 
