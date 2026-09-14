@@ -1,18 +1,51 @@
-# Case Study Asset Naming
+# Case Study System — Tambah Project Cukup dari Data + Aset
 
-Gunakan satu folder per project supaya aset rapi dan urutannya gampang dikontrol.
+Sistem portfolio sekarang dibuat **data-driven**.
 
-Contoh folder:
+Artinya untuk project baru kamu **tidak perlu edit `index.html`, `project.html`, `main.js`, `project.js`, atau CSS**.
+
+Cukup:
+
+1. Buat folder aset project.
+2. Masukkan gambar dengan nama yang mengikuti format di bawah.
+3. Tambahkan satu object project di `portfolio-data.js`.
+4. Set `published: true`.
+
+Project otomatis:
+
+- masuk ke daftar portfolio di homepage,
+- masuk ke tab sesuai `category`,
+- memakai `00-cover.*` sebagai thumbnail homepage,
+- punya URL case study sendiri melalui `project.html?id=PROJECT_ID`,
+- menyusun gambar berdasarkan nomor file,
+- membuat pair dan slider berdasarkan nama file,
+- responsive di desktop dan mobile.
+
+---
+
+## 1. Folder per project
+
+Gunakan satu folder per project:
 
 ```text
 asset/case-studies/nova-desk/
 ```
 
-## Naming yang direkomendasikan
+Project lain tinggal buat folder baru:
+
+```text
+asset/case-studies/kopi-kita/
+asset/case-studies/office-store/
+asset/case-studies/campaign-ramadan/
+```
+
+---
+
+## 2. Naming aset
 
 Jangan pakai `a.png`, `b.png`, `c.png`.
 
-Pakai prefix angka dua digit supaya urutan selalu jelas:
+Pakai prefix angka dua digit:
 
 ```text
 00-cover.webp
@@ -24,21 +57,26 @@ Pakai prefix angka dua digit supaya urutan selalu jelas:
 06-final-mockup.webp
 ```
 
-Format `webp` direkomendasikan untuk web karena ukuran file lebih kecil. PNG/JPG tetap bisa dipakai.
+`webp` direkomendasikan untuk web karena lebih ringan. PNG/JPG tetap didukung.
 
-## Cover
-
-File dengan nama:
+### Cover otomatis
 
 ```text
 00-cover.webp
 ```
 
-akan dipakai sebagai visual cover case study jika project memakai sistem `caseStudy.assets`.
+File `00-cover.*` otomatis digunakan untuk:
 
-## Gambar biasa
+- thumbnail project di homepage,
+- cover besar di halaman case study.
 
-Nama seperti:
+Jadi field `image` tidak wajib untuk project internal yang sudah punya `00-cover.*`.
+
+---
+
+## 3. Gambar full-width
+
+File biasa:
 
 ```text
 01-brand-overview.webp
@@ -46,24 +84,32 @@ Nama seperti:
 03-product-detail.webp
 ```
 
-akan tampil satu per satu sesuai urutan angkanya.
+akan tampil berurutan sebagai block gambar full-width.
 
-## Dua gambar berdampingan
+---
 
-Gunakan prefix block yang sama + `pair`:
+## 4. Dua gambar berdampingan
+
+Gunakan prefix angka yang sama + `pair`:
 
 ```text
 04-pair-01.webp
 04-pair-02.webp
 ```
 
-Keduanya otomatis dianggap satu block 2 kolom.
+Hasil desktop:
 
-Di mobile otomatis menjadi 1 kolom.
+```text
+[ image 01 ] [ image 02 ]
+```
 
-## Slider / carousel
+Di mobile otomatis menjadi satu kolom.
 
-Gunakan prefix block yang sama + `slider`:
+---
+
+## 5. Slider / carousel
+
+Gunakan prefix angka yang sama + `slider`:
 
 ```text
 05-slider-01.webp
@@ -72,18 +118,23 @@ Gunakan prefix block yang sama + `slider`:
 05-slider-04.webp
 ```
 
-Semua file dengan prefix `05-slider-` otomatis dianggap satu slider.
+Semua file `05-slider-*` otomatis menjadi satu carousel.
 
 Desktop:
-- tombol kiri / kanan
-- counter slide
+
+- tombol kiri / kanan,
+- nomor slide,
+- satu slide per viewport.
 
 Mobile:
-- swipe horizontal
-- tombol kiri / kanan tetap tersedia
-- scroll snap aktif
 
-## Contoh struktur lengkap
+- swipe horizontal,
+- scroll snap,
+- tombol kiri / kanan tetap tersedia.
+
+---
+
+## 6. Contoh struktur lengkap
 
 ```text
 asset/case-studies/nova-desk/
@@ -100,50 +151,226 @@ asset/case-studies/nova-desk/
 └── 07-final-mockup.webp
 ```
 
-Urutan tampil:
+Urutan otomatis:
 
 1. Cover
 2. Brand overview
-3. Pair 2 gambar
+3. Pair dua gambar
 4. Storefront
-5. Slider 3 gambar
+5. Slider tiga gambar
 6. Campaign
 7. Social media
 8. Final mockup
 
-## Hubungkan ke project
+---
 
-Di `portfolio-data.js`, isi `caseStudy.assets` seperti ini:
+# 7. Template Project Baru
+
+Tambahkan object berikut ke `PORTFOLIO_DATA` di `portfolio-data.js`.
+
+Ini sudah cukup untuk membuat project muncul di homepage **dan** membuat halaman case study internal.
 
 ```js
-assets: {
-  folder: "asset/case-studies/nova-desk",
-  files: [
-    "00-cover.webp",
-    "01-brand-overview.webp",
-    "02-pair-01.webp",
-    "02-pair-02.webp",
-    "03-storefront.webp",
-    "04-slider-01.webp",
-    "04-slider-02.webp",
-    "04-slider-03.webp",
-    "05-campaign.webp",
-    "06-social-media.webp",
-    "07-final-mockup.webp"
-  ],
-  sliderTitles: {
-    "04": {
-      id: "Product Presentation",
-      en: "Product Presentation"
+{
+  id: "nova-desk",
+  category: "ecommerce",
+  published: true,
+  featured: true,
+  order: 1,
+
+  label: "Marketplace Campaign",
+  year: "2026",
+  role: "E-commerce & Visual Design",
+
+  title: {
+    id: "NOVA DESK — Marketplace Launch",
+    en: "NOVA DESK — Marketplace Launch"
+  },
+
+  description: {
+    id: "Sistem visual marketplace untuk brand desk accessories.",
+    en: "Marketplace visual system for a desk accessories brand."
+  },
+
+  tags: ["Marketplace", "Campaign", "Social Media", "Ads"],
+
+  subtitle: {
+    id: "Dari storefront, product visual, campaign sampai advertising dalam satu sistem visual.",
+    en: "From storefront and product visuals to campaigns and advertising in one visual system."
+  },
+
+  overview: {
+    id: "Project konsep untuk menunjukkan workflow e-commerce end-to-end.",
+    en: "A concept project demonstrating an end-to-end e-commerce workflow."
+  },
+
+  challenge: {
+    id: "Membuat banyak format campaign tanpa kehilangan konsistensi brand.",
+    en: "Creating multiple campaign formats without losing brand consistency."
+  },
+
+  approach: {
+    id: "Menggunakan layout modular dan design system yang reusable.",
+    en: "Using modular layouts and a reusable design system."
+  },
+
+  assets: {
+    folder: "asset/case-studies/nova-desk",
+    files: [
+      "00-cover.webp",
+      "01-brand-overview.webp",
+      "02-pair-01.webp",
+      "02-pair-02.webp",
+      "03-storefront.webp",
+      "04-slider-01.webp",
+      "04-slider-02.webp",
+      "04-slider-03.webp",
+      "05-campaign.webp",
+      "06-social-media.webp",
+      "07-final-mockup.webp"
+    ],
+
+    sliderTitles: {
+      "04": {
+        id: "Product Presentation",
+        en: "Product Presentation"
+      }
+    },
+
+    blockTitles: {
+      "03": {
+        id: "Marketplace Storefront",
+        en: "Marketplace Storefront"
+      },
+      "05": {
+        id: "Campaign System",
+        en: "Campaign System"
+      }
     }
   }
 }
 ```
 
-Renderer akan mengurutkan file berdasarkan nomor dan mengelompokkan `pair` / `slider` otomatis.
+Tidak perlu membuat object `caseStudy` kalau tidak butuh konfigurasi khusus. Adanya `assets` saja sudah membuat project dianggap sebagai internal case study.
 
-## Penting
+---
 
-GitHub Pages adalah static hosting. Browser tidak bisa membaca isi folder repository secara otomatis dengan aman tanpa GitHub API. Karena itu daftar `files` tetap perlu ditulis di `portfolio-data.js`.
+# 8. Mengatur urutan project
 
-Keuntungannya: urutan visual tetap deterministic, tidak tergantung API, lebih cepat, dan tidak terkena rate limit GitHub.
+Gunakan:
+
+```js
+featured: true,
+order: 1,
+```
+
+`featured: true` membuat project diprioritaskan sebagai featured card.
+
+`order` mengatur urutan dalam kategori:
+
+```text
+order: 1
+order: 2
+order: 3
+```
+
+Kalau `order` tidak ditulis, urutannya mengikuti posisi object di `portfolio-data.js`.
+
+---
+
+# 9. Draft project
+
+Untuk project yang belum siap tayang:
+
+```js
+published: false,
+```
+
+Project tetap ada di data tetapi tidak muncul di website.
+
+Setelah selesai:
+
+```js
+published: true,
+```
+
+langsung muncul otomatis.
+
+---
+
+# 10. External project saja
+
+Kalau project cuma ingin diarahkan ke Behance atau GitHub dan tidak membutuhkan halaman internal:
+
+```js
+{
+  id: "logo-project",
+  category: "branding",
+  published: true,
+  title: {
+    id: "Brand Identity Project",
+    en: "Brand Identity Project"
+  },
+  description: {
+    id: "Branding project.",
+    en: "Branding project."
+  },
+  image: "asset/project-cover.webp",
+  link: "https://www.behance.net/...",
+  tags: ["Branding"]
+}
+```
+
+Tanpa `assets` / `caseStudy`, card otomatis dianggap external project.
+
+---
+
+# 11. Tambah kategori baru
+
+Kalau suatu saat ingin kategori baru seperti `Social Media`, cukup tambahkan ke `PORTFOLIO_CATEGORIES`:
+
+```js
+{
+  id: "social",
+  name: {
+    id: "Social Media",
+    en: "Social Media"
+  }
+}
+```
+
+Lalu project cukup memakai:
+
+```js
+category: "social"
+```
+
+Tab baru otomatis muncul.
+
+---
+
+# Penting
+
+GitHub Pages adalah static hosting. Browser tidak bisa membaca isi folder repository secara otomatis tanpa API tambahan.
+
+Karena itu saat menambah gambar, nama file tetap perlu dimasukkan ke `assets.files` di `portfolio-data.js`.
+
+Itu sengaja dipilih supaya:
+
+- website tidak bergantung pada GitHub API,
+- tidak terkena rate limit,
+- loading lebih cepat,
+- urutan gambar selalu konsisten,
+- tidak perlu backend.
+
+Jadi workflow normal ke depannya hanya:
+
+```text
+Tambah folder/gambar
+        ↓
+Tambah/edit satu object di portfolio-data.js
+        ↓
+Commit
+        ↓
+Project otomatis muncul di homepage + case study page
+```
