@@ -1,13 +1,11 @@
 /**
  * Lightweight client helpers for the public GitHub Pages portfolio.
- * Keeps the site usable, guarantees the floating UI runtime is refreshed,
- * and applies the final compact glass quick-navigation treatment.
+ * Keeps floating UI reliable, refreshes the chatbot runtime, and polishes
+ * the compact glass quick-navigation.
  */
 (function () {
   'use strict';
 
-  // Public GitHub Pages source cannot be hidden. Keep this lightweight and
-  // never run debugger traps or console overrides that can break the UI.
   document.addEventListener('contextmenu', function (event) {
     event.preventDefault();
   }, false);
@@ -19,18 +17,17 @@
   }, false);
 
   function loadFreshFloatingRuntime() {
-    // If the current chatbot.js already booted correctly, do nothing.
     if (window.__DIKI_CHATBOT_RUNTIME__ && document.getElementById('chat-fab')) return;
     if (document.querySelector('script[data-diki-floating-runtime]')) return;
 
     const script = document.createElement('script');
-    script.src = 'chatbot.js?v=20260914-1628';
+    script.src = 'chatbot.js?v=20260914-1640';
     script.dataset.dikiFloatingRuntime = 'true';
     script.async = false;
     script.onload = function () {
       window.setTimeout(function () {
-        // A final visible emergency launcher if something external blocks the runtime.
         if (document.getElementById('chat-fab') || !document.body) return;
+
         const fallback = document.createElement('button');
         fallback.id = 'chat-fab';
         fallback.type = 'button';
@@ -52,6 +49,7 @@
         document.body.appendChild(fallback);
       }, 900);
     };
+
     document.body.appendChild(script);
   }
 
@@ -244,16 +242,84 @@
     return true;
   }
 
+  let navigationFallbackTimer = null;
+
+  function bindReliableQuickNav() {
+    const nav = document.getElementById('quick-nav');
+    if (!nav) return false;
+    if (nav.dataset.reliableScroll === '1') return true;
+    nav.dataset.reliableScroll = '1';
+
+    nav.addEventListener('click', function (event) {
+      const link = event.target && event.target.closest ? event.target.closest('.quick-nav-link') : null;
+      if (!link || !nav.contains(link)) return;
+
+      const id = link.dataset.quickSection;
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+
+      // Capture the click before the older scrollIntoView handler. Native smooth
+      // scrolling can be ignored/interrupted when a previous animation is still
+      // running, which made Experience feel inconsistent.
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      if (navigationFallbackTimer) {
+        window.clearTimeout(navigationFallbackTimer);
+        navigationFallbackTimer = null;
+      }
+
+      nav.querySelectorAll('.quick-nav-link').forEach(function (item) {
+        item.classList.toggle('active', item === link);
+      });
+
+      const header = document.getElementById('main-nav');
+      const headerOffset = (header ? header.getBoundingClientRect().height : 0) + 12;
+      const targetTop = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
+      const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Cancel any scroll already in progress, then start a fresh deterministic one.
+      window.scrollTo({ top: window.scrollY, behavior: 'auto' });
+      window.requestAnimationFrame(function () {
+        window.scrollTo({ top: targetTop, behavior: reducedMotion ? 'auto' : 'smooth' });
+      });
+
+      nav.classList.remove('open');
+      const toggle = document.getElementById('quick-nav-toggle');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+
+      try {
+        window.history.replaceState(null, '', '#' + id);
+      } catch (_) {}
+
+      // Safety net: if a browser/extension cancels smooth scrolling, finish it.
+      navigationFallbackTimer = window.setTimeout(function () {
+        const currentTop = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+        if (Math.abs(window.scrollY - currentTop) > 70) {
+          window.scrollTo({ top: Math.max(0, currentTop), behavior: 'auto' });
+        }
+      }, reducedMotion ? 80 : 950);
+    }, true);
+
+    return true;
+  }
+
+  function prepareQuickNav() {
+    if (!enhanceQuickNav()) return false;
+    bindReliableQuickNav();
+    return true;
+  }
+
   function watchQuickNav() {
-    if (enhanceQuickNav()) return;
+    if (prepareQuickNav()) return;
 
     const observer = new MutationObserver(function () {
-      if (enhanceQuickNav()) observer.disconnect();
+      if (prepareQuickNav()) observer.disconnect();
     });
 
     observer.observe(document.documentElement, { childList: true, subtree: true });
     window.setTimeout(function () {
-      enhanceQuickNav();
+      prepareQuickNav();
       observer.disconnect();
     }, 5000);
   }
