@@ -1,6 +1,9 @@
 /* ============================================================
-   VISUAL POLISH — subtle depth without turning the site into a
-   decorative landing page. Pure CSS, no extra image assets.
+   VISUAL POLISH — editorial paper / newspaper texture
+   ------------------------------------------------------------
+   Intentionally partial. The whole site should NOT look like a
+   scrapbook. Paper fragments are used only as visual accents on
+   About, Portfolio, and Contact; the other sections stay clean.
    ============================================================ */
 
 /* Keep decorative layers behind real content. */
@@ -22,207 +25,222 @@
 #skills > .container,
 #contact > .container {
   position: relative;
-  z-index: 2;
+  z-index: 3;
+}
+
+/* Shared newsprint recipe: warm paper + fake columns + ink noise. */
+:root {
+  --paper-warm: #e8e2d7;
+  --paper-light: #f3efe7;
+  --paper-ink: rgba(42, 40, 35, .23);
+  --paper-rule: rgba(42, 40, 35, .095);
 }
 
 /* ============================================================
-   ABOUT — soft commerce / data atmosphere
+   ABOUT — one large newspaper clipping, not a full background
    ============================================================ */
 #about.about-section {
   background:
-    radial-gradient(circle at 86% 18%, rgba(27,77,62,.085), transparent 30%),
-    radial-gradient(circle at 7% 86%, rgba(197,232,74,.08), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,.18), transparent 34%),
     var(--bg);
 }
 
 #about::before {
   content: '';
   position: absolute;
-  inset: 0;
   z-index: 0;
+  width: min(580px, 44vw);
+  height: 76%;
+  right: -6%;
+  top: 12%;
+  transform: rotate(2.1deg);
   pointer-events: none;
-  opacity: .65;
+  opacity: .54;
+  clip-path: polygon(
+    0 4%, 4% 2%, 9% 3%, 14% 1%, 20% 3%, 26% 1%, 32% 2%, 39% 0,
+    46% 2%, 54% 1%, 61% 3%, 68% 1%, 74% 3%, 81% 1%, 88% 2%, 94% 0, 100% 3%,
+    99% 94%, 95% 97%, 90% 96%, 84% 99%, 77% 97%, 70% 99%, 63% 96%, 56% 98%,
+    48% 96%, 41% 99%, 34% 97%, 27% 99%, 20% 96%, 13% 98%, 7% 96%, 1% 98%
+  );
+  background-color: var(--paper-warm);
   background-image:
-    linear-gradient(rgba(27,77,62,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(27,77,62,.025) 1px, transparent 1px);
-  background-size: 58px 58px;
-  mask-image: linear-gradient(90deg, rgba(0,0,0,.9), transparent 78%);
-  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.9), transparent 78%);
+    /* broad headline bars */
+    linear-gradient(var(--paper-ink), var(--paper-ink)),
+    linear-gradient(var(--paper-ink), var(--paper-ink)),
+    /* newspaper columns */
+    repeating-linear-gradient(0deg, transparent 0 9px, var(--paper-rule) 9px 10px),
+    repeating-linear-gradient(90deg, transparent 0 104px, rgba(42,40,35,.075) 104px 105px),
+    /* subtle paper fibres */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+  background-size:
+    58% 14px,
+    34% 8px,
+    100% 100%,
+    100% 100%,
+    180px 180px;
+  background-position:
+    9% 12%,
+    9% 18%,
+    0 0,
+    0 0,
+    0 0;
+  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
+  box-shadow: 0 18px 44px rgba(33,29,24,.08);
 }
 
 #about::after {
-  content: '';
+  content: 'MARKETPLACE  /  CAMPAIGN  /  VISUAL  /  OPERATIONS';
   position: absolute;
-  width: 430px;
-  height: 430px;
-  right: -235px;
-  top: 64px;
-  border: 1px solid rgba(27,77,62,.09);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 56px rgba(27,77,62,.018),
-    0 0 0 112px rgba(27,77,62,.012);
+  left: -42px;
+  bottom: 34px;
+  z-index: 1;
+  width: 410px;
+  padding: 10px 22px 9px;
+  transform: rotate(-2deg);
   pointer-events: none;
+  color: rgba(26,26,25,.54);
+  background: rgba(231,225,214,.86);
+  border-top: 1px solid rgba(26,26,25,.11);
+  border-bottom: 1px solid rgba(26,26,25,.11);
+  font-family: var(--font-main);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  white-space: nowrap;
+  clip-path: polygon(0 17%, 5% 5%, 12% 14%, 18% 3%, 26% 13%, 33% 4%, 42% 13%, 50% 4%, 58% 14%, 67% 2%, 75% 13%, 84% 4%, 92% 13%, 100% 3%, 100% 87%, 94% 96%, 86% 86%, 77% 98%, 69% 87%, 60% 97%, 52% 87%, 43% 98%, 34% 87%, 25% 96%, 16% 87%, 8% 97%, 0 88%);
 }
 
+/* Stats stay readable and clean — only a hint of paper. */
 #about .stat-item {
   position: relative;
-  padding: 18px 18px 17px;
-  border: 1px solid rgba(27,77,62,.10);
-  border-radius: 16px;
-  background: rgba(250,249,248,.58);
-  box-shadow: 0 10px 28px rgba(20,32,27,.035);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  padding: 17px 17px 16px;
+  border: 1px solid rgba(45,42,36,.10);
+  border-radius: 5px;
+  background:
+    linear-gradient(rgba(255,255,255,.58), rgba(255,255,255,.58)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+  box-shadow: 0 9px 24px rgba(33,29,24,.035);
 }
 
 #about .stat-item::after {
   content: '';
   position: absolute;
-  left: 18px;
-  right: 52%;
+  left: 16px;
   bottom: -1px;
+  width: 34%;
   height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--green), var(--lime));
-  opacity: .58;
+  background: var(--green);
+  opacity: .48;
 }
 
 /* ============================================================
-   PORTFOLIO — subtle spotlight + dot field behind showcase
+   PORTFOLIO — partial torn paper strip behind the case studies
    ============================================================ */
 #portfolio.portfolio-section {
-  background:
-    radial-gradient(circle at 8% 5%, rgba(197,232,74,.105), transparent 23%),
-    radial-gradient(circle at 92% 84%, rgba(27,77,62,.09), transparent 29%),
-    #f5f5f2;
+  background: #f3f2ee;
 }
 
 #portfolio::before {
   content: '';
   position: absolute;
-  width: 460px;
-  height: 300px;
-  right: -80px;
-  top: 72px;
   z-index: 0;
-  opacity: .34;
-  background-image: radial-gradient(rgba(27,77,62,.22) 1px, transparent 1.35px);
-  background-size: 15px 15px;
-  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
-  transform: rotate(-7deg);
+  width: 56%;
+  height: 56%;
+  left: -12%;
+  top: 20%;
+  transform: rotate(-2.4deg);
   pointer-events: none;
+  opacity: .42;
+  background-color: #ddd6ca;
+  background-image:
+    linear-gradient(rgba(36,34,30,.18), rgba(36,34,30,.18)),
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(36,34,30,.085) 8px 9px),
+    repeating-linear-gradient(90deg, transparent 0 92px, rgba(36,34,30,.06) 92px 93px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  background-size: 44% 12px, 100% 100%, 100% 100%, 170px 170px;
+  background-position: 12% 12%, 0 0, 0 0, 0 0;
+  background-repeat: no-repeat, repeat, repeat, repeat;
+  clip-path: polygon(
+    0 5%, 5% 2%, 11% 4%, 17% 1%, 23% 3%, 30% 0, 36% 3%, 43% 1%, 50% 4%,
+    58% 1%, 65% 3%, 72% 1%, 80% 4%, 87% 1%, 94% 3%, 100% 1%,
+    98% 93%, 93% 97%, 87% 95%, 81% 99%, 74% 96%, 67% 98%, 59% 95%, 52% 99%,
+    44% 96%, 37% 99%, 29% 95%, 21% 98%, 14% 95%, 7% 98%, 0 95%
+  );
+  box-shadow: 0 20px 50px rgba(32,28,23,.06);
+}
+
+#portfolio::after {
+  content: 'SELECTED / CASE STUDIES / 2026';
+  position: absolute;
+  z-index: 1;
+  right: -54px;
+  bottom: 72px;
+  width: 330px;
+  padding: 9px 22px;
+  transform: rotate(3.4deg);
+  pointer-events: none;
+  color: rgba(255,255,255,.76);
+  background: #1f4f40;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-align: center;
+  clip-path: polygon(0 14%, 7% 4%, 13% 12%, 20% 2%, 28% 13%, 36% 4%, 43% 12%, 51% 3%, 60% 13%, 69% 4%, 78% 13%, 87% 3%, 94% 11%, 100% 4%, 100% 88%, 94% 97%, 86% 87%, 78% 98%, 69% 88%, 60% 97%, 51% 88%, 42% 98%, 33% 87%, 24% 97%, 15% 88%, 7% 98%, 0 87%);
 }
 
 #portfolio .portfolio-feature-stage {
-  box-shadow:
-    0 22px 58px rgba(16,26,22,.12),
-    0 1px 0 rgba(255,255,255,.45) inset;
+  box-shadow: 0 18px 42px rgba(31,29,24,.10);
 }
 
 #portfolio .portfolio-side-link {
-  background: rgba(255,255,255,.78);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(250,249,247,.92);
+  border-color: rgba(44,40,35,.10);
+  box-shadow: 0 9px 24px rgba(31,29,24,.045);
 }
 
 /* ============================================================
-   INSTAGRAM — quieter editorial backdrop
+   INSTAGRAM — deliberately clean to create breathing room
    ============================================================ */
 #instagram.instagram-section {
-  background:
-    linear-gradient(120deg, transparent 0 68%, rgba(27,77,62,.035) 68% 69%, transparent 69% 100%),
-    radial-gradient(circle at 12% 18%, rgba(27,77,62,.07), transparent 26%),
-    var(--bg);
-}
-
-#instagram::after {
-  content: '';
-  position: absolute;
-  width: 360px;
-  height: 360px;
-  left: -190px;
-  bottom: -210px;
-  border-radius: 50%;
-  background: rgba(197,232,74,.055);
-  box-shadow: 0 0 0 42px rgba(27,77,62,.018);
-  pointer-events: none;
+  background: var(--bg);
 }
 
 #instagram .ig-embed-wrapper {
-  background: rgba(255,255,255,.58);
-  box-shadow: 0 18px 42px rgba(20,30,26,.07);
+  background: rgba(255,255,255,.74);
+  box-shadow: 0 12px 32px rgba(31,29,24,.055);
 }
 
 /* ============================================================
-   EXPERIENCE — soft vertical composition around timeline
+   EXPERIENCE — clean editorial section, no decorative texture
    ============================================================ */
 #experience.experience-section {
-  background:
-    radial-gradient(circle at 88% 14%, rgba(27,77,62,.075), transparent 25%),
-    linear-gradient(180deg, var(--bg-alt), #ededeb 60%, var(--bg-alt));
-}
-
-#experience::before {
-  content: '';
-  position: absolute;
-  width: 560px;
-  height: 560px;
-  right: -350px;
-  top: 18%;
-  border: 1px solid rgba(27,77,62,.075);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 70px rgba(27,77,62,.014),
-    0 0 0 140px rgba(27,77,62,.010);
-  pointer-events: none;
+  background: var(--bg-alt);
 }
 
 #experience .timeline-card {
-  background: rgba(250,249,248,.80);
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
-  box-shadow: 0 8px 24px rgba(20,28,24,.035);
+  background: rgba(250,249,248,.92);
+  box-shadow: 0 7px 22px rgba(31,29,24,.035);
 }
 
 #experience .timeline-card:hover {
-  box-shadow: 0 16px 38px rgba(20,28,24,.075);
+  box-shadow: 0 14px 34px rgba(31,29,24,.07);
 }
 
 /* ============================================================
-   SKILLS — light technical grid with stronger cards
+   SKILLS — almost plain, only very subtle paper fibre
    ============================================================ */
 #skills.skills-section {
   background:
-    radial-gradient(circle at 15% 92%, rgba(197,232,74,.08), transparent 24%),
-    radial-gradient(circle at 92% 20%, rgba(27,77,62,.07), transparent 28%),
-    var(--bg);
-}
-
-#skills::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: .72;
-  background-image:
-    linear-gradient(rgba(27,77,62,.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(27,77,62,.022) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: radial-gradient(ellipse at 70% 48%, #000 8%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse at 70% 48%, #000 8%, transparent 70%);
+    linear-gradient(rgba(240,240,239,.94), rgba(240,240,239,.94)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E");
 }
 
 #skills .skill-card {
   position: relative;
   overflow: hidden;
-  background: rgba(250,249,248,.78);
-  border-color: rgba(27,77,62,.11);
-  box-shadow: 0 12px 30px rgba(20,31,26,.04);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(250,249,248,.94);
+  border-color: rgba(44,40,35,.10);
+  box-shadow: 0 9px 24px rgba(31,29,24,.04);
 }
 
 #skills .skill-card::before {
@@ -230,168 +248,203 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--green), var(--lime), transparent 80%);
-  opacity: .66;
-}
-
-#skills .skill-card::after {
-  content: '';
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  right: -72px;
-  bottom: -78px;
-  border-radius: 50%;
-  border: 1px solid rgba(27,77,62,.07);
-  box-shadow: 0 0 0 20px rgba(27,77,62,.015);
-  pointer-events: none;
+  width: 44%;
+  height: 2px;
+  background: var(--green);
+  opacity: .55;
 }
 
 #skills .skill-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 18px 40px rgba(20,31,26,.08);
+  transform: translateY(-4px) rotate(-.15deg);
+  box-shadow: 0 15px 34px rgba(31,29,24,.075);
 }
 
 /* ============================================================
-   CONTACT — strongest visual section before footer
+   CONTACT — torn newspaper clipping behind right-side graphic
    ============================================================ */
 #contact.contact-section {
   background:
-    radial-gradient(circle at 84% 20%, rgba(27,77,62,.12), transparent 26%),
-    radial-gradient(circle at 9% 90%, rgba(197,232,74,.10), transparent 25%),
-    linear-gradient(135deg, #e9e9e7 0%, #efefec 46%, #e7ebe8 100%);
+    linear-gradient(180deg, #ecebe7 0%, #e8e6e0 100%);
 }
 
 #contact::before {
   content: '';
   position: absolute;
-  inset: 0;
   z-index: 0;
+  width: 48%;
+  height: 82%;
+  right: -7%;
+  top: 8%;
+  transform: rotate(-1.7deg);
   pointer-events: none;
+  opacity: .64;
+  background-color: #ded7ca;
   background-image:
-    linear-gradient(rgba(27,77,62,.026) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(27,77,62,.026) 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: linear-gradient(90deg, transparent 12%, #000 58%, #000 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 12%, #000 58%, #000 100%);
+    linear-gradient(rgba(40,37,32,.20), rgba(40,37,32,.20)),
+    linear-gradient(rgba(40,37,32,.11), rgba(40,37,32,.11)),
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(40,37,32,.085) 8px 9px),
+    repeating-linear-gradient(90deg, transparent 0 96px, rgba(40,37,32,.065) 96px 97px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.74' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.17'/%3E%3C/svg%3E");
+  background-size: 58% 15px, 32% 8px, 100% 100%, 100% 100%, 180px 180px;
+  background-position: 10% 10%, 10% 16%, 0 0, 0 0, 0 0;
+  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
+  clip-path: polygon(
+    0 4%, 6% 2%, 12% 4%, 18% 1%, 25% 3%, 31% 1%, 38% 4%, 45% 1%, 52% 3%,
+    59% 1%, 66% 4%, 73% 1%, 80% 3%, 87% 1%, 94% 4%, 100% 2%,
+    99% 94%, 94% 97%, 88% 95%, 81% 98%, 74% 95%, 67% 99%, 60% 96%, 53% 98%,
+    46% 95%, 39% 99%, 32% 96%, 25% 98%, 18% 95%, 11% 98%, 5% 95%, 0 97%
+  );
+  box-shadow: 0 24px 54px rgba(32,28,23,.075);
+}
+
+#contact::after {
+  content: 'OPEN FOR WORK  •  E-COMMERCE  •  MARKETPLACE';
+  position: absolute;
+  left: -24px;
+  top: 26%;
+  z-index: 1;
+  padding: 8px 18px;
+  transform: rotate(-90deg) translateX(-50%);
+  transform-origin: left top;
+  pointer-events: none;
+  color: rgba(26,26,25,.43);
+  border-top: 1px solid rgba(26,26,25,.13);
+  border-bottom: 1px solid rgba(26,26,25,.13);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  white-space: nowrap;
 }
 
 #contact .contact-item {
-  background: rgba(250,249,248,.78);
-  border-color: rgba(27,77,62,.105);
-  box-shadow: 0 8px 22px rgba(20,30,26,.035);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
+  background: rgba(250,249,248,.90);
+  border-color: rgba(44,40,35,.11);
+  box-shadow: 0 7px 20px rgba(31,29,24,.035);
 }
 
 #contact .contact-item:hover {
-  box-shadow: 0 14px 34px rgba(20,30,26,.085);
+  box-shadow: 0 13px 30px rgba(31,29,24,.075);
 }
 
 #contact .contact-card-deco {
-  border: 1px solid rgba(255,255,255,.13);
+  border: 0;
+  border-radius: 10px;
   background:
-    radial-gradient(circle at 75% 20%, rgba(197,232,74,.18), transparent 18%),
-    linear-gradient(145deg, #174637, #1d5a47 72%, #163f34);
-  box-shadow: 0 24px 54px rgba(18,47,38,.20);
-}
-
-#contact .contact-card-deco::before {
-  background-image:
-    linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: linear-gradient(to bottom, #000, rgba(0,0,0,.6));
-  -webkit-mask-image: linear-gradient(to bottom, #000, rgba(0,0,0,.6));
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px),
+    #1b4d3e;
+  background-size: 24px 24px, 24px 24px, auto;
+  box-shadow: 0 18px 40px rgba(23,53,44,.17);
+  transform: rotate(1.4deg);
 }
 
 #contact .contact-card-deco::after {
   content: '';
   position: absolute;
-  width: 220px;
-  height: 220px;
-  right: -88px;
-  bottom: -82px;
-  border: 1px solid rgba(255,255,255,.13);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 30px rgba(255,255,255,.028),
-    0 0 0 60px rgba(197,232,74,.025);
-}
-
-#contact .ccd-text {
-  text-shadow: 0 4px 26px rgba(0,0,0,.16);
+  width: 82px;
+  height: 24px;
+  left: 50%;
+  top: -10px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(221,213,196,.78);
+  border: 1px solid rgba(83,75,63,.08);
+  box-shadow: 0 2px 8px rgba(30,26,22,.08);
 }
 
 /* ============================================================
-   FOOTER — small branded finish
+   FOOTER — plain dark finish with a torn paper top edge
    ============================================================ */
 .footer {
   position: relative;
-  background:
-    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
-    #1a1a19;
-  background-size: 36px 36px;
+  background: #1a1a19;
+  margin-top: 0;
 }
 
 .footer::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -13px;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--green-light), var(--lime), var(--green-light), transparent);
-  opacity: .75;
+  height: 15px;
+  background: #1a1a19;
+  clip-path: polygon(0 62%, 2% 28%, 5% 55%, 8% 20%, 11% 57%, 14% 29%, 17% 62%, 20% 24%, 23% 58%, 26% 19%, 29% 61%, 32% 28%, 35% 55%, 38% 22%, 41% 62%, 44% 26%, 47% 58%, 50% 18%, 53% 61%, 56% 25%, 59% 56%, 62% 21%, 65% 62%, 68% 26%, 71% 57%, 74% 20%, 77% 61%, 80% 26%, 83% 56%, 86% 21%, 89% 62%, 92% 26%, 95% 57%, 98% 22%, 100% 56%, 100% 100%, 0 100%);
 }
 
 /* ============================================================
-   RESPONSIVE — keep decoration restrained on small screens
+   RESPONSIVE — fewer paper fragments on smaller screens
    ============================================================ */
-@media (max-width: 768px) {
-  #about::after,
-  #experience::before {
-    opacity: .6;
-    transform: scale(.8);
+@media (max-width: 900px) {
+  #about::before {
+    width: 56vw;
+    right: -18%;
+    opacity: .38;
   }
 
   #portfolio::before {
-    width: 300px;
-    height: 220px;
-    right: -120px;
+    width: 70%;
+    left: -24%;
+    opacity: .30;
+  }
+
+  #contact::before {
+    width: 60%;
+    right: -20%;
+    opacity: .46;
+  }
+}
+
+@media (max-width: 768px) {
+  #about::after,
+  #portfolio::after,
+  #contact::after {
+    display: none;
+  }
+
+  #about::before {
+    width: 72%;
+    height: 48%;
+    right: -35%;
+    top: 40%;
     opacity: .25;
   }
 
-  #about .stat-item {
-    background: rgba(250,249,248,.74);
+  #portfolio::before {
+    width: 86%;
+    height: 44%;
+    left: -43%;
+    top: 30%;
+    opacity: .22;
   }
 
-  #skills .skill-card,
-  #contact .contact-item {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+  #contact::before {
+    width: 78%;
+    height: 48%;
+    right: -38%;
+    top: 46%;
+    opacity: .30;
+  }
+
+  #contact .contact-card-deco {
+    transform: rotate(.5deg);
   }
 }
 
 @media (max-width: 480px) {
   #about::before,
-  #skills::before,
+  #portfolio::before,
   #contact::before {
-    opacity: .45;
+    opacity: .16;
   }
 
-  #about::after,
-  #experience::before,
-  #instagram::after {
-    display: none;
+  #about .stat-item,
+  #skills .skill-card,
+  #contact .contact-item {
+    box-shadow: none;
   }
 
-  #contact.contact-section {
-    background:
-      radial-gradient(circle at 90% 8%, rgba(27,77,62,.10), transparent 28%),
-      linear-gradient(180deg, #ececea, #e8ebe8);
+  .footer::before {
+    top: -9px;
+    height: 10px;
   }
 }
