@@ -1,684 +1,509 @@
 /* ============================================================
-   CHATBOT — Diki Permana Webfolio
-   Context-aware portfolio assistant + optional remote AI fallback
+   Diki Permana Webfolio — Floating UI Runtime
+   Chatbot + quick section navigation
    ============================================================ */
+(function () {
+  'use strict';
 
-const DIKI = {
-  name: 'Diki Permana',
-  role: 'E-commerce & Marketplace Specialist',
-  secondaryRole: 'Graphic Designer / Digital Product Builder',
-  location: 'Jakarta, Indonesia',
-  experienceYears: '4+',
-  stats: {
-    promoDesignsPerWeek: '20+',
+  if (window.__DIKI_CHATBOT_RUNTIME__) return;
+  window.__DIKI_CHATBOT_RUNTIME__ = true;
+
+  const PROFILE = {
+    name: 'Diki Permana',
+    role: 'E-commerce & Marketplace Specialist',
+    location: 'Jakarta, Indonesia',
+    experience: '4+',
     managedProducts: '100+',
-  },
-  contact: {
-    email: 'ikirieyu@gmail.com',
-    whatsapp: '0822-9738-5614',
-    whatsappUrl: 'https://wa.me/6282297385614',
-    instagram: '@iki.rieyu',
-    instagramUrl: 'https://www.instagram.com/iki.rieyu',
-    behance: 'behance.net/ikirieyu',
-    behanceUrl: 'https://www.behance.net/ikirieyu',
-    github: 'github.com/ikirieyu',
-    githubUrl: 'https://github.com/ikirieyu',
-  },
-  jobs: [
-    {
-      title: 'Graphic Designer',
-      company: 'Image Print / Printup',
-      period: '2026–sekarang',
-      highlights: [
-        'Desain materi cetak harian: banner, spanduk, stiker, brosur, dan neon box',
-        'Produksi desain untuk kebutuhan digital printing skala komersial',
-        'Persiapan file prepress dan quality control sebelum naik cetak',
-        'Koordinasi dengan proses printing dan cutting',
-      ],
+    promoDesigns: '20+',
+    contact: {
+      email: 'ikirieyu@gmail.com',
+      whatsapp: '0822-9738-5614',
+      whatsappUrl: 'https://wa.me/6282297385614',
+      instagram: '@iki.rieyu',
+      instagramUrl: 'https://www.instagram.com/iki.rieyu',
+      behance: 'behance.net/ikirieyu',
+      behanceUrl: 'https://www.behance.net/ikirieyu',
+      github: 'github.com/ikirieyu',
+      githubUrl: 'https://github.com/ikirieyu'
     },
-    {
-      title: 'E-commerce Specialist',
-      company: 'DW Group',
-      period: '2023–2025',
-      highlights: [
-        'Mengelola 100+ produk di marketplace',
-        'Memproduksi 20+ desain promosi per minggu',
-        'Mengelola listing, campaign, materi promosi, dan visual toko online',
-        'Optimasi konten dan materi kampanye untuk mendukung konversi',
-      ],
+    skills: {
+      ecommerce: ['Marketplace Operations', 'Product Listing & Catalog', 'Campaign & Voucher', 'Marketplace Ads', 'Store Optimization', 'Order & Customer Flow'],
+      visual: ['Adobe Photoshop', 'Adobe Illustrator', 'Adobe InDesign', 'CorelDraw', 'Product Visual', 'Campaign Design', 'Prepress & Print Production'],
+      data: ['Microsoft Excel', 'SKU & Stock Monitoring', 'Reporting', 'Catalog Management'],
+      technical: ['HTML / CSS / JavaScript', 'React / TypeScript / Vite', 'Supabase', 'IndexedDB / Local Storage', 'Capacitor', 'Electron']
     },
-    {
-      title: 'Graphic Designer',
-      company: 'Ruang Print',
-      period: '2022–2023',
-      highlights: [
-        'Desain brosur, banner, dan materi promosi cetak',
-        'Layout buku dan majalah dengan InDesign',
-        'Persiapan file prepress siap cetak',
-      ],
-    },
-    {
-      title: 'Graphic Designer',
-      company: 'Dstar Digital Printing',
-      period: '2020–2022',
-      highlights: [
-        'Desain stiker, spanduk, kemasan, dan neon box',
-        'Operasi langsung mesin printing dan cutting',
-        'Quality control hasil cetak dan finishing',
-      ],
-    },
-    {
-      title: 'Graphic Designer',
-      company: 'Abi Kreasindo',
-      period: '2019–2020',
-      highlights: [
-        'Produksi materi promosi harian untuk klien retail',
-        'Desain brosur, kartu nama, dan x-banner',
-      ],
-    },
-  ],
-  skills: {
-    ecommerce: [
-      'Marketplace Operations',
-      'Product Listing & Catalog',
-      'Campaign & Voucher',
-      'Marketplace Ads',
-      'Store Optimization',
-      'Order & Customer Flow',
-    ],
-    visual: [
-      'Adobe Photoshop',
-      'Adobe Illustrator',
-      'Adobe InDesign',
-      'CorelDraw',
-      'Product Visual',
-      'Campaign Design',
-      'Prepress & Print Production',
-    ],
-    data: [
-      'Microsoft Excel',
-      'SKU & Stock Monitoring',
-      'Reporting',
-      'Catalog Management',
-    ],
-    technical: [
-      'HTML / CSS / JavaScript',
-      'React / TypeScript / Vite',
-      'Supabase',
-      'IndexedDB / Local Storage',
-      'Capacitor',
-      'Electron',
-    ],
-  },
-};
+    jobs: [
+      { company: 'Image Print / Printup', title: 'Graphic Designer', period: '2026–sekarang', points: ['Desain kebutuhan digital printing komersial', 'Prepress dan quality control', 'Koordinasi printing dan cutting'] },
+      { company: 'DW Group', title: 'E-commerce Specialist', period: '2023–2025', points: ['Mengelola 100+ produk/SKU', 'Memproduksi 20+ desain promosi per minggu', 'Listing, campaign, visual toko, dan optimasi konten marketplace'] },
+      { company: 'Ruang Print', title: 'Graphic Designer', period: '2022–2023', points: ['Desain brosur, banner, dan materi promosi', 'Layout buku/majalah dan persiapan prepress'] },
+      { company: 'Dstar Digital Printing', title: 'Graphic Designer', period: '2020–2022', points: ['Desain kebutuhan cetak', 'Operasi mesin printing/cutting dan quality control'] },
+      { company: 'Abi Kreasindo', title: 'Graphic Designer', period: '2019–2020', points: ['Produksi materi promosi harian', 'Brosur, kartu nama, dan x-banner'] }
+    ]
+  };
 
-const CHATBOT_CONFIG = {
-  endpoint:
-    (window.DIKI_CHATBOT_CONFIG && window.DIKI_CHATBOT_CONFIG.endpoint) ||
-    window.DIKI_CHATBOT_AI_ENDPOINT ||
-    '',
-  timeoutMs: 15000,
-};
+  const CHAT = {
+    open: false,
+    sending: false,
+    history: [],
+    lastProjectId: null
+  };
 
-const CHAT_STATE = {
-  history: [],
-  lastProjectId: null,
-  sending: false,
-};
-
-const STOPWORDS = new Set([
-  'yang','dan','di','ke','dari','untuk','itu','ini','ada','apa','apakah','gimana','bagaimana',
-  'dengan','atau','bisa','kah','nya','tentang','dong','nih','ya','gue','saya','aku','kamu','diki',
-  'the','a','an','is','are','of','to','for','and','or','about','can','could','please','tell','me',
-  'his','him','he','what','how','does',
-]);
-
-function currentLang() {
-  return typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'id';
-}
-
-function localize(value, lang = currentLang()) {
-  if (value == null) return '';
-  if (typeof value === 'string') return value;
-  return value[lang] || value.id || value.en || '';
-}
-
-function normalizeText(value = '') {
-  return String(value)
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9+#./\-\s]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function tokens(value = '') {
-  return normalizeText(value)
-    .split(' ')
-    .filter(token => token.length > 1 && !STOPWORDS.has(token));
-}
-
-function includesAny(text, phrases) {
-  const q = normalizeText(text);
-  return phrases.some(phrase => q.includes(normalizeText(phrase)));
-}
-
-async function ensureProjectsLoaded() {
-  try {
-    if (Array.isArray(window.MODULAR_PORTFOLIO_DATA) && window.MODULAR_PORTFOLIO_DATA.length) {
-      return window.MODULAR_PORTFOLIO_DATA;
-    }
-    if (window.PORTFOLIO_READY) await window.PORTFOLIO_READY;
-    else if (typeof loadProjectRegistry === 'function') await loadProjectRegistry();
-  } catch (_) {}
-
-  return Array.isArray(window.MODULAR_PORTFOLIO_DATA) ? window.MODULAR_PORTFOLIO_DATA : [];
-}
-
-function publishedProjects() {
-  return (window.MODULAR_PORTFOLIO_DATA || [])
-    .filter(project => project && project.published !== false)
-    .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
-}
-
-function projectSearchText(project, lang) {
-  const blocks = (project.blocks || []).map(block => [
-    localize(block.kicker, lang),
-    localize(block.title, lang),
-    localize(block.body, lang),
-  ].join(' ')).join(' ');
-
-  return [
-    project.id,
-    project.category,
-    project.label,
-    project.year,
-    project.role,
-    localize(project.title, lang),
-    localize(project.description, lang),
-    localize(project.subtitle, lang),
-    localize(project.overview, lang),
-    localize(project.challenge, lang),
-    localize(project.apach, lang),
-    ...(project.tags || []),
-    blocks,
-  ].filter(Boolean).join(' ');
-}
-
-function findBestProject(query, lang) {
-  const qNorm = normalizeText(query);
-  const qTokens = new Set(tokens(query));
-  let best = null;
-  let bestScore = 0;
-
-  publishedProjects().forEach(project => {
-    const title = localize(project.title, lang);
-    const haystack = normalizeText(projectSearchText(project, lang));
-    let score = 0;
-
-    if (project.id && qNorm.includes(normalizeText(project.id))) score += 12;
-    if (title && qNorm.includes(normalizeText(title))) score += 12;
-
-    tokens(title).forEach(token => {
-      if (qTokens.has(token)) score += 3;
-    });
-
-    qTokens.forEach(token => {
-      if (token.length >= 3 && haystack.includes(token)) score += 1;
-    });
-
-    (project.tags || []).forEach(tag => {
-      if (qNorm.includes(normalizeText(tag))) score += 2;
-    });
-
-    if (score > bestScore) {
-      best = project;
-      bestScore = score;
-    }
-  });
-
-  return bestScore >= 4 ? best : null;
-}
-
-function projectAnswer(project, lang, mode = 'overview') {
-  const title = localize(project.title, lang);
-  const overview = localize(project.overview, lang) || localize(project.description, lang);
-  const challenge = localize(project.challenge, lang);
-  const approach = localize(project.approach, lang);
-  const tags = (project.tags || []).join(' · ');
-  const internalUrl = `project.html?id=${encodeURIComponent(project.id)}`;
-  const repoUrl = project.repoUrl || (project.category === 'github' ? project.externalLink : '');
-
-  CHAT_STATE.lastProjectId = project.id;
-
-  if (mode === 'challenge' && challenge) {
-    return lang === 'en'
-      ? `The main challenge in **${title}** was:\n\n${challenge}\n\n[Open the full case study](${internalUrl})`
-      : `Tantangan utama di **${title}**:\n\n${challenge}\n\n[Buka case study lengkap](${internalUrl})`;
-  }
-
-  if (mode === 'approach' && approach) {
-    return lang === 'en'
-      ? `The approach used in **${title}**:\n\n${approach}\n\n[Open the full case study](${internalUrl})`
-      : `Pendekatan yang dipakai di **${title}**:\n\n${approach}\n\n[Buka case study lengkap](${internalUrl})`;
-  }
-
-  const repoLine = repoUrl
-    ? `\n• [${lang === 'en' ? 'Open GitHub repository' : 'Buka repository GitHub'}](${repoUrl})`
-    : '';
-
-  return lang === 'en'
-    ? `**${title}**${project.year ? ` · ${project.year}` : ''}\n\n${overview || 'Project details are available in the case study.'}${tags ? `\n\n**Stack / tags:** ${tags}` : ''}\n\n• [Open case study](${internalUrl})${repoLine}`
-    : `**${title}**${project.year ? ` · ${project.year}` : ''}\n\n${overview || 'Detail project tersedia di halaman case study.'}${tags ? `\n\n**Stack / tags:** ${tags}` : ''}\n\n• [Buka case study](${internalUrl})${repoLine}`;
-}
-
-function projectList(lang, category = null) {
-  const list = publishedProjects().filter(project => !category || project.category === category);
-  if (!list.length) {
-    return lang === 'en' ? 'No published projects in that category yet.' : 'Belum ada project yang dipublikasikan di kategori itu.';
-  }
-
-  const rows = list.slice(0, 8).map(project => {
-    const title = localize(project.title, lang);
-    return `• [${title}](project.html?id=${encodeURIComponent(project.id)})${project.year ? ` — ${project.year}` : ''}`;
-  }).join('\n');
-
-  return lang === 'en'
-    ? `Here are Diki's published projects:\n\n${rows}\n\nAsk about any project by name.`
-    : `Ini project Diki yang sudah dipublikasikan:\n\n${rows}\n\nKalau mau detail, sebut nama project-nya.`;
-}
-
-function experienceAnswer(lang) {
-  const rows = DIKI.jobs.map(job => `• **${job.title}** ${lang === 'en' ? 'at' : 'di'} ${job.company} — ${job.period}`).join('\n');
-  return lang === 'en'
-    ? `Diki has **${DIKI.experienceYears} years of work experience** across e-commerce, design, and print production:\n\n${rows}`
-    : `Diki punya **${DIKI.experienceYears} tahun pengalaman kerja** di e-commerce, desain, dan print production:\n\n${rows}`;
-}
-
-function jobAnswer(job, lang) {
-  const points = job.highlights.map(item => `• ${item}`).join('\n');
-  return lang === 'en'
-    ? `At **${job.company}** (${job.period}), Diki worked as **${job.title}**.\n\n${points}`
-    : `Di **${job.company}** (${job.period}), Diki bekerja sebagai **${job.title}**.\n\n${points}`;
-}
-
-function skillsAnswer(lang) {
-  const groups = [
-    ['E-commerce & Marketplace', DIKI.skills.ecommerce],
-    ['Visual & Campaign', DIKI.skills.visual],
-    ['Data & Operations', DIKI.skills.data],
-    ['Web & Technical', DIKI.skills.technical],
+  const NAV_ITEMS = [
+    ['hero', 'Home', 'H'],
+    ['about', 'About', 'A'],
+    ['portfolio', 'Portfolio', 'P'],
+    ['instagram', 'Activity', 'R'],
+    ['experience', 'Experience', 'E'],
+    ['skills', 'Skills', 'S'],
+    ['contact', 'Contact', 'C']
   ];
 
-  return groups.map(([name, items]) => `**${name}**\n${items.map(item => `• ${item}`).join('\n')}`).join('\n\n');
-}
-
-function contactAnswer(lang) {
-  return lang === 'en'
-    ? `You can contact Diki through:\n\n• **Email:** ${DIKI.contact.email}\n• **WhatsApp:** [${DIKI.contact.whatsapp}](${DIKI.contact.whatsappUrl})\n• **Instagram:** [${DIKI.contact.instagram}](${DIKI.contact.instagramUrl})\n• **Behance:** [${DIKI.contact.behance}](${DIKI.contact.behanceUrl})\n• **GitHub:** [${DIKI.contact.github}](${DIKI.contact.githubUrl})`
-    : `Diki bisa dihubungi lewat:\n\n• **Email:** ${DIKI.contact.email}\n• **WhatsApp:** [${DIKI.contact.whatsapp}](${DIKI.contact.whatsappUrl})\n• **Instagram:** [${DIKI.contact.instagram}](${DIKI.contact.instagramUrl})\n• **Behance:** [${DIKI.contact.behance}](${DIKI.contact.behanceUrl})\n• **GitHub:** [${DIKI.contact.github}](${DIKI.contact.githubUrl})`;
-}
-
-function profileAnswer(lang) {
-  return lang === 'en'
-    ? `**${DIKI.name}** is an **${DIKI.role}** based in ${DIKI.location}. His background also covers graphic design, print production, and web/app development.\n\nHe has managed **${DIKI.stats.managedProducts} products/SKUs** and produced **${DIKI.stats.promoDesignsPerWeek} promotional designs per week** in previous e-commerce work.`
-    : `**${DIKI.name}** adalah **${DIKI.role}** berbasis di ${DIKI.location}. Background-nya juga mencakup graphic design, print production, dan web/app development.\n\nDi pengalaman e-commerce sebelumnya ia pernah menangani **${DIKI.stats.managedProducts} produk/SKU** dan memproduksi **${DIKI.stats.promoDesignsPerWeek} desain promosi per minggu**.`;
-}
-
-function whyHireAnswer(lang) {
-  return lang === 'en'
-    ? `For an e-commerce / marketplace role, Diki's strongest points are:\n\n• Understands operations, catalog, campaigns, and visuals as one system\n• Has handled ${DIKI.stats.managedProducts} products/SKUs\n• Can produce promotional assets at high volume\n• Understands print production and practical production constraints\n• Has technical skills in React, TypeScript, Supabase, local storage, Capacitor, and Electron`
-    : `Untuk role e-commerce / marketplace, kekuatan Diki ada di sini:\n\n• Paham operasional, katalog, campaign, dan visual sebagai satu sistem\n• Pernah menangani ${DIKI.stats.managedProducts} produk/SKU\n• Terbiasa produksi materi promosi dalam volume tinggi\n• Paham print production dan batasan produksi nyata\n• Punya skill React, TypeScript, Supabase, local storage, Capacitor, dan Electron`;
-}
-
-function findJob(query) {
-  const q = normalizeText(query);
-  return DIKI.jobs.find(job => {
-    const aliases = [job.company, ...job.company.split('/'), job.company.includes('DW Group') ? 'dw' : '', job.company.includes('Dstar') ? 'dstar' : ''];
-    return aliases.some(alias => alias && q.includes(normalizeText(alias)));
-  });
-}
-
-function getLastProject() {
-  return publishedProjects().find(project => project.id === CHAT_STATE.lastProjectId) || null;
-}
-
-function localReply(query, lang) {
-  const q = normalizeText(query);
-  const project = findBestProject(query, lang);
-  const job = findJob(query);
-
-  if (includesAny(q, ['halo','hai','hello','hi','hey','selamat pagi','selamat siang','selamat sore','selamat malam'])) {
-    return lang === 'en'
-      ? `Hello! 👋 I'm Diki's portfolio assistant. Ask me about experience, marketplace skills, projects, GitHub work, portfolio, or contact details.`
-      : `Halo! 👋 Saya asisten portfolio Diki. Tanya soal pengalaman kerja, skill marketplace, project, GitHub, portfolio, atau cara menghubungi Diki.`;
+  function lang() {
+    try {
+      return typeof window.getCurrentLanguage === 'function' ? window.getCurrentLanguage() : 'id';
+    } catch (_) {
+      return 'id';
+    }
   }
 
-  if (includesAny(q, ['makasih','terima kasih','thanks','thank you','mantap','sip'])) {
-    return lang === 'en' ? `You're welcome! Ask anything else whenever you want.` : 'Sama-sama! Kalau masih ada yang mau ditanya, lanjut aja.';
+  function localized(value, language = lang()) {
+    if (value == null) return '';
+    if (typeof value === 'string') return value;
+    return value[language] || value.id || value.en || '';
   }
 
-  if (includesAny(q, ['siapa diki','tentang diki','profil diki','who is diki','about diki'])) return profileAnswer(lang);
-  if (includesAny(q, ['kontak','contact','whatsapp','email','instagram','behance','hubungi','nomor'])) return contactAnswer(lang);
-  if (includesAny(q, ['kenapa pilih','kenapa hire','why hire','kelebihan diki','cocok gak','cocok tidak'])) return whyHireAnswer(lang);
-
-  if (job) return jobAnswer(job, lang);
-  if (includesAny(q, ['kerja sekarang','sekarang kerja','current job','currently work','pekerjaan sekarang'])) return jobAnswer(DIKI.jobs[0], lang);
-  if (includesAny(q, ['pengalaman','experience','riwayat kerja','work history','career','karir','cv','resume'])) return experienceAnswer(lang);
-
-  if (project) {
-    if (includesAny(q, ['challenge','tantangan','masalah'])) return projectAnswer(project, lang, 'challenge');
-    if (includesAny(q, ['approach','pendekatan','solusi','arsitektur','architecture'])) return projectAnswer(project, lang, 'approach');
-    return projectAnswer(project, lang);
+  function normalize(value = '') {
+    return String(value)
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9+#./\-\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
-  const lastProject = getLastProject();
-  if (lastProject && includesAny(q, ['tantangannya','challenge nya','challenge-nya','masalahnya'])) return projectAnswer(lastProject, lang, 'challenge');
-  if (lastProject && includesAny(q, ['pendekatannya','solusinya','approach nya','arsitekturnya'])) return projectAnswer(lastProject, lang, 'approach');
-
-  if (includesAny(q, ['github project','project github','digital project','repo','repository','coding project'])) return projectList(lang, 'github');
-  if (includesAny(q, ['project ecommerce','project e-commerce','marketplace project','case study ecommerce','case study e-commerce'])) return projectList(lang, 'ecommerce');
-  if (includesAny(q, ['portfolio','karya','case study','project','projects','lihat karya'])) return projectList(lang);
-  if (includesAny(q, ['skill','skills','keahlian','kemampuan','bisa apa','tools','software'])) return skillsAnswer(lang);
-
-  if (includesAny(q, ['shopee','tokopedia','lazada','tiktok shop','marketplace','ecommerce','e-commerce','catalog','katalog','campaign','voucher','iklan'])) {
-    return lang === 'en'
-      ? `Diki's e-commerce strengths include **marketplace operations, product listing/catalog, campaigns & vouchers, marketplace ads, store optimization, customer/order flow, and e-commerce visual production**.`
-      : `Kekuatan e-commerce Diki mencakup **marketplace operations, listing/katalog produk, campaign & voucher, marketplace ads, store optimization, customer/order flow, dan produksi visual e-commerce**.`;
+  function includesAny(text, phrases) {
+    const q = normalize(text);
+    return phrases.some(phrase => q.includes(normalize(phrase)));
   }
 
-  if (includesAny(q, ['photoshop','illustrator','indesign','coreldraw','desain grafis','graphic design','visual','branding','print','prepress'])) {
-    return lang === 'en'
-      ? `Yes. Diki works with **Photoshop, Illustrator, InDesign, and CorelDraw**, with hands-on experience in e-commerce visuals, campaign assets, branding, prepress, and print production.`
-      : `Ya. Diki menggunakan **Photoshop, Illustrator, InDesign, dan CorelDraw**, dengan pengalaman langsung di visual e-commerce, campaign assets, branding, prepress, dan produksi cetak.`;
+  function escapeHtml(value = '') {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
-  if (includesAny(q, ['react','typescript','javascript','vite','supabase','capacitor','electron','indexeddb','local storage','coding','developer','web app','aplikasi'])) {
-    return lang === 'en'
-      ? `Diki also builds digital products using **HTML/CSS/JavaScript, React, TypeScript, Vite, Supabase, IndexedDB/local storage, Capacitor, and Electron**.`
-      : `Diki juga membangun digital product dengan **HTML/CSS/JavaScript, React, TypeScript, Vite, Supabase, IndexedDB/local storage, Capacitor, dan Electron**.`;
+  function renderMarkdown(text) {
+    let safe = escapeHtml(text);
+    safe = safe.replace(
+      /\[([^\]]+)\]\(((?:https?:\/\/|project\.html\?id=|#[a-z0-9_-]+)[^)]+)\)/gi,
+      (_, label, href) => `<a href="${href}" ${href.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''}>${label}</a>`
+    );
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\n/g, '<br>');
+    return safe;
   }
 
-  if (includesAny(q, ['hire','rekrut','recruit','available for work','open to work','freelance','full time','full-time','kerja sama','kolaborasi'])) {
-    return lang === 'en'
-      ? `Yes. Diki is open to **full-time roles, freelance work, and e-commerce collaborations**.\n\n${contactAnswer(lang)}`
-      : `Ya. Diki terbuka untuk **full-time, freelance, dan kolaborasi e-commerce**.\n\n${contactAnswer(lang)}`;
+  async function ensureProjects() {
+    try {
+      if (Array.isArray(window.MODULAR_PORTFOLIO_DATA) && window.MODULAR_PORTFOLIO_DATA.length) return window.MODULAR_PORTFOLIO_DATA;
+      if (window.PORTFOLIO_READY) await window.PORTFOLIO_READY;
+      else if (typeof window.loadProjectRegistry === 'function') await window.loadProjectRegistry();
+    } catch (_) {}
+
+    if (Array.isArray(window.MODULAR_PORTFOLIO_DATA)) return window.MODULAR_PORTFOLIO_DATA;
+    try {
+      if (typeof PORTFOLIO_DATA !== 'undefined' && Array.isArray(PORTFOLIO_DATA)) return PORTFOLIO_DATA;
+    } catch (_) {}
+    return [];
   }
 
-  if (includesAny(q, ['gaji','salary','expected salary','rate','harga jasa','fee'])) {
-    return lang === 'en'
-      ? `Salary or project rates are not published here. Please discuss the role and scope directly with Diki via [WhatsApp](${DIKI.contact.whatsappUrl}) or email.`
-      : `Ekspektasi gaji atau rate project tidak dipublikasikan di portfolio ini. Diskusikan role dan scope langsung lewat [WhatsApp](${DIKI.contact.whatsappUrl}) atau email.`;
+  function projects() {
+    let list = [];
+    if (Array.isArray(window.MODULAR_PORTFOLIO_DATA) && window.MODULAR_PORTFOLIO_DATA.length) list = window.MODULAR_PORTFOLIO_DATA;
+    else {
+      try { if (typeof PORTFOLIO_DATA !== 'undefined') list = PORTFOLIO_DATA; } catch (_) {}
+    }
+    return (list || []).filter(p => p && p.published !== false).sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
   }
 
-  if (includesAny(q, ['alamat','lokasi','tinggal dimana','berbasis dimana','location','where is diki'])) {
-    return lang === 'en' ? `Diki is based in **${DIKI.location}**.` : `Diki berbasis di **${DIKI.location}**.`;
-  }
+  function findProject(query) {
+    const q = normalize(query);
+    const words = q.split(' ').filter(w => w.length > 2);
+    let best = null;
+    let score = 0;
 
-  return null;
-}
-
-function buildPortfolioContext(lang) {
-  const projectLines = publishedProjects().slice(0, 12).map(project =>
-    `- ${localize(project.title, lang)} | ${project.category} | ${project.year || '-'} | ${localize(project.description, lang)} | tags: ${(project.tags || []).join(', ')}`
-  );
-
-  return [
-    `Name: ${DIKI.name}`,
-    `Role: ${DIKI.role}`,
-    `Location: ${DIKI.location}`,
-    `Experience: ${DIKI.experienceYears} years`,
-    `Skills: ${Object.values(DIKI.skills).flat().join(', ')}`,
-    `Work history: ${DIKI.jobs.map(job => `${job.title} at ${job.company} (${job.period})`).join('; ')}`,
-    `Projects:\n${projectLines.join('\n')}`,
-    `Contact: ${DIKI.contact.email}; ${DIKI.contact.whatsapp}; ${DIKI.contact.behance}; ${DIKI.contact.github}`,
-  ].join('\n');
-}
-
-async function askRemoteAI(message, lang) {
-  if (!CHATBOT_CONFIG.endpoint) return null;
-
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), CHATBOT_CONFIG.timeoutMs);
-
-  try {
-    const response = await fetch(CHATBOT_CONFIG.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message,
-        language: lang,
-        history: CHAT_STATE.history.slice(-8),
-        portfolioContext: buildPortfolioContext(lang),
-      }),
-      signal: controller.signal,
+    projects().forEach(project => {
+      const title = localized(project.title);
+      const hay = normalize([
+        project.id, project.category, project.label, project.year, project.role,
+        title, localized(project.description), localized(project.overview), localized(project.challenge), localized(project.approach),
+        ...(project.tags || [])
+      ].filter(Boolean).join(' '));
+      let current = 0;
+      if (project.id && q.includes(normalize(project.id))) current += 12;
+      if (title && q.includes(normalize(title))) current += 12;
+      words.forEach(word => { if (hay.includes(word)) current += 1; });
+      if (current > score) { score = current; best = project; }
     });
 
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    return typeof data.reply === 'string' && data.reply.trim() ? data.reply.trim() : null;
-  } catch (_) {
+    return score >= 3 ? best : null;
+  }
+
+  function projectAnswer(project, mode = 'overview') {
+    const language = lang();
+    const title = localized(project.title, language);
+    const description = localized(project.description, language);
+    const overview = localized(project.overview, language) || description;
+    const challenge = localized(project.challenge, language);
+    const approach = localized(project.approach, language);
+    const caseUrl = `project.html?id=${encodeURIComponent(project.id)}`;
+    const repoUrl = project.repoUrl || (project.category === 'github' ? project.externalLink : '');
+    CHAT.lastProjectId = project.id;
+
+    if (mode === 'challenge' && challenge) {
+      return language === 'en'
+        ? `The main challenge in **${title}** was:\n\n${challenge}\n\n[Open case study](${caseUrl})`
+        : `Tantangan utama di **${title}**:\n\n${challenge}\n\n[Buka case study](${caseUrl})`;
+    }
+    if (mode === 'approach' && approach) {
+      return language === 'en'
+        ? `The approach used in **${title}**:\n\n${approach}\n\n[Open case study](${caseUrl})`
+        : `Pendekatan yang dipakai di **${title}**:\n\n${approach}\n\n[Buka case study](${caseUrl})`;
+    }
+
+    const repo = repoUrl ? `\n• [${language === 'en' ? 'Open GitHub repository' : 'Buka repository GitHub'}](${repoUrl})` : '';
+    return `**${title}**${project.year ? ` · ${project.year}` : ''}\n\n${overview || description || ''}\n\n• [${language === 'en' ? 'Open case study' : 'Buka case study'}](${caseUrl})${repo}`;
+  }
+
+  function projectList(category = null) {
+    const language = lang();
+    const list = projects().filter(p => !category || p.category === category);
+    if (!list.length) return language === 'en' ? 'No published projects in that category yet.' : 'Belum ada project yang dipublikasikan di kategori itu.';
+    const rows = list.slice(0, 10).map(p => `• [${localized(p.title, language)}](project.html?id=${encodeURIComponent(p.id)})${p.year ? ` — ${p.year}` : ''}`).join('\n');
+    return language === 'en' ? `Published projects:\n\n${rows}` : `Project yang sudah dipublikasikan:\n\n${rows}`;
+  }
+
+  function contactAnswer() {
+    const c = PROFILE.contact;
+    return `• **Email:** ${c.email}\n• **WhatsApp:** [${c.whatsapp}](${c.whatsappUrl})\n• **Instagram:** [${c.instagram}](${c.instagramUrl})\n• **Behance:** [${c.behance}](${c.behanceUrl})\n• **GitHub:** [${c.github}](${c.githubUrl})`;
+  }
+
+  function localAnswer(message) {
+    const language = lang();
+    const q = normalize(message);
+    const project = findProject(message);
+
+    if (includesAny(q, ['halo','hai','hello','hi','hey'])) {
+      return language === 'en'
+        ? `Hello! 👋 I'm Diki's portfolio assistant. Ask about **experience, e-commerce, projects, skills, or contact details**.`
+        : `Halo! 👋 Saya asisten portfolio **Diki Permana**. Tanya soal **pengalaman, e-commerce, project, skill, atau kontak**.`;
+    }
+
+    if (project) {
+      if (includesAny(q, ['tantangan','challenge','masalah'])) return projectAnswer(project, 'challenge');
+      if (includesAny(q, ['solusi','pendekatan','approach','arsitektur','architecture'])) return projectAnswer(project, 'approach');
+      return projectAnswer(project);
+    }
+
+    const last = CHAT.lastProjectId ? projects().find(p => p.id === CHAT.lastProjectId) : null;
+    if (last && includesAny(q, ['tantangannya','challenge nya','masalahnya'])) return projectAnswer(last, 'challenge');
+    if (last && includesAny(q, ['solusinya','pendekatannya','approach nya','arsitekturnya'])) return projectAnswer(last, 'approach');
+
+    if (includesAny(q, ['siapa diki','tentang diki','profil diki','who is diki','about diki'])) {
+      return language === 'en'
+        ? `**${PROFILE.name}** is an **${PROFILE.role}** based in ${PROFILE.location}. He combines marketplace operations, visual production, print knowledge, and technical workflow.`
+        : `**${PROFILE.name}** adalah **${PROFILE.role}** berbasis di ${PROFILE.location}. Kekuatan utamanya adalah menggabungkan operasional marketplace, visual, pengalaman produksi cetak, dan workflow teknis.`;
+    }
+
+    if (includesAny(q, ['pengalaman','experience','riwayat kerja','career','karir','cv','resume'])) {
+      return PROFILE.jobs.map(job => `• **${job.title}** di ${job.company} — ${job.period}`).join('\n');
+    }
+
+    const job = PROFILE.jobs.find(job => q.includes(normalize(job.company.split('/')[0])) || q.includes(normalize(job.company)));
+    if (job) return `**${job.title} — ${job.company}** (${job.period})\n\n${job.points.map(p => `• ${p}`).join('\n')}`;
+
+    if (includesAny(q, ['project github','github project','repo','repository','digital project'])) return projectList('github');
+    if (includesAny(q, ['project ecommerce','project e-commerce','marketplace project','case study ecommerce'])) return projectList('ecommerce');
+    if (includesAny(q, ['portfolio','karya','case study','project','projects'])) return projectList();
+
+    if (includesAny(q, ['skill','skills','keahlian','kemampuan','bisa apa','tools','software'])) {
+      return Object.entries(PROFILE.skills).map(([group, items]) => `**${group.toUpperCase()}**\n${items.map(item => `• ${item}`).join('\n')}`).join('\n\n');
+    }
+
+    if (includesAny(q, ['shopee','tokopedia','lazada','tiktok shop','marketplace','ecommerce','e-commerce','katalog','catalog','campaign','voucher','iklan'])) {
+      return language === 'en'
+        ? `Diki's e-commerce scope includes **marketplace operations, catalog/listing, campaign & voucher, marketplace ads, store optimization, order/customer flow, and e-commerce visual production**. He has handled **${PROFILE.managedProducts} products/SKUs**.`
+        : `Scope e-commerce Diki mencakup **marketplace operations, listing/katalog, campaign & voucher, marketplace ads, store optimization, order/customer flow, dan produksi visual e-commerce**. Ia pernah menangani **${PROFILE.managedProducts} produk/SKU**.`;
+    }
+
+    if (includesAny(q, ['react','typescript','javascript','vite','supabase','capacitor','electron','indexeddb','local storage','coding','developer','web app'])) {
+      return `Stack teknis Diki mencakup **HTML/CSS/JavaScript, React, TypeScript, Vite, Supabase, IndexedDB/local storage, Capacitor, dan Electron**.`;
+    }
+
+    if (includesAny(q, ['photoshop','illustrator','indesign','coreldraw','desain grafis','visual','branding','print','prepress'])) {
+      return `Diki menggunakan **Photoshop, Illustrator, InDesign, dan CorelDraw**, serta berpengalaman di visual e-commerce, campaign assets, branding, prepress, dan produksi cetak.`;
+    }
+
+    if (includesAny(q, ['kontak','contact','whatsapp','wa','email','instagram','behance','hubungi','nomor'])) return contactAnswer();
+
+    if (includesAny(q, ['hire','rekrut','recruit','available','open to work','freelance','full time','full-time','kolaborasi'])) {
+      return language === 'en'
+        ? `Yes. Diki is open to full-time, freelance, and e-commerce collaborations.\n\n${contactAnswer()}`
+        : `Ya. Diki terbuka untuk full-time, freelance, dan kolaborasi e-commerce.\n\n${contactAnswer()}`;
+    }
+
+    if (includesAny(q, ['gaji','salary','rate','fee','harga jasa'])) {
+      return language === 'en'
+        ? `Salary and project rates are discussed based on role and scope. Contact Diki directly via [WhatsApp](${PROFILE.contact.whatsappUrl}).`
+        : `Gaji atau rate project dibicarakan berdasarkan role dan scope. Hubungi Diki langsung lewat [WhatsApp](${PROFILE.contact.whatsappUrl}).`;
+    }
+
     return null;
-  } finally {
-    clearTimeout(timer);
   }
-}
 
-async function getReply(message) {
-  const lang = currentLang();
-  await ensureProjectsLoaded();
-
-  const local = localReply(message, lang);
-  if (local) return local;
-
-  const remote = await askRemoteAI(message, lang);
-  if (remote) return remote;
-
-  return lang === 'en'
-    ? `I can answer almost anything **about Diki and this portfolio**. For unrestricted general-AI questions, this site needs a secure AI backend.\n\nTry asking about projects, marketplace experience, skills, work history, availability, or contact details.`
-    : `Saya bisa jawab hampir semua hal **tentang Diki dan portfolio ini**. Untuk pertanyaan umum tanpa batas seperti AI penuh, website ini perlu backend AI yang aman.\n\nCoba tanya project, pengalaman marketplace, skill, riwayat kerja, availability, atau cara kontak Diki.`;
-}
-
-const SUGGESTIONS = {
-  id: ['Project terbaru Diki apa?', 'Pengalaman marketplace Diki?', 'Skill teknis Diki apa saja?', 'Kenapa cocok untuk role e-commerce?'],
-  en: ["What are Diki's latest projects?", 'What marketplace experience does Diki have?', "What are Diki's technical skills?", 'Why is he a fit for e-commerce roles?'],
-};
-
-function escapeHtml(value = '') {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-function renderMarkdown(text) {
-  let safe = escapeHtml(text);
-  safe = safe.replace(
-    /\[([^\]]+)\]\(((?:https?:\/\/|project\.html\?id=)[^)]+)\)/g,
-    (_, label, href) => `<a href="${href}" ${href.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''}>${label}</a>`
-  );
-  safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
-  safe = safe.replace(/\n/g, '<br>');
-  return safe;
-}
-
-function buildChatbot() {
-  if (document.getElementById('chat-fab')) return;
-
-  const fab = document.createElement('button');
-  fab.id = 'chat-fab';
-  fab.type = 'button';
-  fab.setAttribute('aria-label', 'Chat dengan asisten Diki');
-  fab.setAttribute('aria-expanded', 'false');
-  fab.style.zIndex = '9999';
-  fab.innerHTML = `
-    <span class="fab-icon fab-icon-chat">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-      </svg>
-    </span>
-    <span class="fab-icon fab-icon-close" style="display:none;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
-    </span>
-    <span class="fab-pulse" aria-hidden="true"></span>
-  `;
-
-  const panel = document.createElement('div');
-  panel.id = 'chat-panel';
-  panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-label', 'Chat asisten Diki Permana');
-  panel.setAttribute('aria-hidden', 'true');
-  panel.innerHTML = `
-    <div class="chat-header">
-      <div class="chat-avatar" aria-hidden="true"><img src="asset/header.png" alt="DP Logo" class="chat-avatar-img" /></div>
-      <div class="chat-header-info">
-        <span class="chat-name" data-i18n="chatbot.title">Diki AI Assistant</span>
-        <span class="chat-status"><span class="status-dot"></span> <span data-i18n="chatbot.sub">Online • Tanya apa saja tentang Diki</span></span>
-      </div>
-      <button class="chat-close-btn" id="chat-close-btn" type="button" aria-label="Tutup chat">×</button>
-    </div>
-    <div class="chat-messages" id="chat-messages" role="log" aria-live="polite"></div>
-    <div class="chat-suggestions" id="chat-suggestions"></div>
-    <div class="chat-input-area">
-      <input type="text" id="chat-input" class="chat-input" data-i18n="chatbot.placeholder" placeholder="Tanyakan sesuatu tentang Diki..." autocomplete="off" maxlength="600" aria-label="Tulis pertanyaan" />
-      <button class="chat-send-btn" id="chat-send-btn" type="button" aria-label="Kirim pesan">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </button>
-    </div>
-  `;
-
-  document.body.appendChild(fab);
-  document.body.appendChild(panel);
-}
-
-function appendMessage(role, text, animate = true) {
-  const container = document.getElementById('chat-messages');
-  if (!container) return;
-
-  const wrap = document.createElement('div');
-  wrap.className = `chat-msg chat-msg-${role}${animate ? ' chat-msg-in' : ''}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'chat-bubble';
-  if (role === 'user') bubble.textContent = text;
-  else bubble.innerHTML = renderMarkdown(text);
-  wrap.appendChild(bubble);
-  container.appendChild(wrap);
-  container.scrollTop = container.scrollHeight;
-}
-
-function renderSuggestions() {
-  const container = document.getElementById('chat-suggestions');
-  if (!container) return;
-  container.innerHTML = '';
-  container.style.display = 'flex';
-  (SUGGESTIONS[currentLang()] || SUGGESTIONS.id).forEach(question => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'suggestion-chip';
-    button.textContent = question;
-    button.addEventListener('click', () => sendMessage(question));
-    container.appendChild(button);
-  });
-}
-
-function setTyping(show) {
-  let indicator = document.getElementById('chat-typing-indicator');
-  if (!show) {
-    if (indicator) indicator.remove();
-    return;
+  function buildContext() {
+    const language = lang();
+    return [
+      `Name: ${PROFILE.name}`,
+      `Role: ${PROFILE.role}`,
+      `Location: ${PROFILE.location}`,
+      `Experience: ${PROFILE.experience} years`,
+      `Skills: ${Object.values(PROFILE.skills).flat().join(', ')}`,
+      `Projects: ${projects().map(p => `${localized(p.title, language)} (${p.category})`).join('; ')}`,
+      `Contact: ${PROFILE.contact.email}; ${PROFILE.contact.whatsapp}; ${PROFILE.contact.github}`
+    ].join('\n');
   }
-  if (indicator) return;
-  const container = document.getElementById('chat-messages');
-  if (!container) return;
-  indicator = document.createElement('div');
-  indicator.id = 'chat-typing-indicator';
-  indicator.className = 'chat-msg chat-msg-bot chat-msg-in';
-  indicator.innerHTML = '<div class="chat-bubble chat-typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
-  container.appendChild(indicator);
-  container.scrollTop = container.scrollHeight;
-}
 
-async function sendMessage(forcedText) {
-  if (CHAT_STATE.sending) return;
-  const input = document.getElementById('chat-input');
-  const message = String(forcedText || (input && input.value) || '').trim();
-  if (!message) return;
+  async function remoteAnswer(message) {
+    const endpoint = (window.DIKI_CHATBOT_CONFIG && window.DIKI_CHATBOT_CONFIG.endpoint) || window.DIKI_CHATBOT_AI_ENDPOINT || '';
+    if (!endpoint) return null;
 
-  if (input) input.value = '';
-  const suggestions = document.getElementById('chat-suggestions');
-  if (suggestions) suggestions.style.display = 'none';
-  appendMessage('user', message);
-  CHAT_STATE.history.push({ role: 'user', content: message });
-  CHAT_STATE.sending = true;
-  setTyping(true);
-
-  try {
-    const reply = await getReply(message);
-    await new Promise(resolve => setTimeout(resolve, 220));
-    setTyping(false);
-    appendMessage('bot', reply);
-    CHAT_STATE.history.push({ role: 'assistant', content: reply });
-    CHAT_STATE.history = CHAT_STATE.history.slice(-12);
-  } catch (_) {
-    setTyping(false);
-    appendMessage('bot', currentLang() === 'en' ? 'Something went wrong. Please try again.' : 'Ada error. Coba kirim lagi ya.');
-  } finally {
-    CHAT_STATE.sending = false;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, language: lang(), history: CHAT.history.slice(-8), portfolioContext: buildContext() }),
+        signal: controller.signal
+      });
+      if (!response.ok) return null;
+      const data = await response.json();
+      return typeof data.reply === 'string' ? data.reply.trim() : null;
+    } catch (_) {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
   }
-}
 
-let chatOpen = false;
-
-function openChat() {
-  const panel = document.getElementById('chat-panel');
-  const fab = document.getElementById('chat-fab');
-  if (!panel || !fab) return;
-  chatOpen = true;
-  panel.classList.add('open');
-  panel.setAttribute('aria-hidden', 'false');
-  fab.setAttribute('aria-expanded', 'true');
-  const chatIcon = fab.querySelector('.fab-icon-chat');
-  const closeIcon = fab.querySelector('.fab-icon-close');
-  if (chatIcon) chatIcon.style.display = 'none';
-  if (closeIcon) closeIcon.style.display = 'flex';
-
-  const messages = document.getElementById('chat-messages');
-  if (messages && messages.children.length === 0) {
-    appendMessage('bot', currentLang() === 'en'
-      ? `Hello! 👋 I'm Diki's portfolio assistant. Ask about experience, marketplace skills, projects, GitHub work, availability, or contact details.`
-      : `Halo! 👋 Saya asisten portfolio **Diki Permana**. Tanya soal pengalaman, skill marketplace, project, GitHub, availability, atau cara kontak Diki.`, false);
-    renderSuggestions();
+  async function answer(message) {
+    await ensureProjects();
+    const local = localAnswer(message);
+    if (local) return local;
+    const remote = await remoteAnswer(message);
+    if (remote) return remote;
+    return lang() === 'en'
+      ? `I can answer anything **about Diki and this portfolio** from the live site data. Unrestricted general-AI questions require a secure AI backend. Try asking about projects, experience, marketplace work, skills, or contact details.`
+      : `Saya bisa jawab hampir semua hal **tentang Diki dan portfolio ini** dari data website. Untuk pertanyaan umum tanpa batas seperti AI penuh, perlu backend AI yang aman. Coba tanya project, pengalaman marketplace, skill, atau kontak Diki.`;
   }
-  ensureProjectsLoaded();
-  setTimeout(() => document.getElementById('chat-input')?.focus(), 100);
-}
 
-function closeChat() {
-  const panel = document.getElementById('chat-panel');
-  const fab = document.getElementById('chat-fab');
-  if (!panel || !fab) return;
-  chatOpen = false;
-  panel.classList.remove('open');
-  panel.setAttribute('aria-hidden', 'true');
-  fab.setAttribute('aria-expanded', 'false');
-  const chatIcon = fab.querySelector('.fab-icon-chat');
-  const closeIcon = fab.querySelector('.fab-icon-close');
-  if (chatIcon) chatIcon.style.display = 'flex';
-  if (closeIcon) closeIcon.style.display = 'none';
-}
+  function injectStyles() {
+    if (document.getElementById('diki-floating-ui-style')) return;
+    const style = document.createElement('style');
+    style.id = 'diki-floating-ui-style';
+    style.textContent = `
+      #chat-fab{position:fixed!important;right:24px!important;bottom:24px!important;width:58px!important;height:58px!important;border:0!important;border-radius:999px!important;background:#1b4d3e!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;cursor:pointer!important;z-index:2147483000!important;box-shadow:0 10px 30px rgba(27,77,62,.34)!important;visibility:visible!important;opacity:1!important;transform:none!important}
+      #chat-fab svg{width:24px;height:24px;pointer-events:none}
+      #chat-fab .fab-close{display:none}
+      #chat-fab.is-open .fab-chat{display:none}
+      #chat-fab.is-open .fab-close{display:block}
+      #chat-fab::after{content:'';position:absolute;inset:-4px;border:1px solid rgba(27,77,62,.28);border-radius:inherit;animation:dikiFabPulse 2.4s ease-out infinite;pointer-events:none}
+      @keyframes dikiFabPulse{0%{transform:scale(1);opacity:.8}70%,100%{transform:scale(1.35);opacity:0}}
+      #chat-panel{position:fixed!important;right:24px!important;bottom:94px!important;width:min(380px,calc(100vw - 32px))!important;height:min(560px,72vh)!important;background:#fff!important;border:1px solid rgba(27,77,62,.15)!important;border-radius:22px!important;box-shadow:0 24px 80px rgba(0,0,0,.18)!important;z-index:2147483001!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(14px) scale(.97)!important;transform-origin:bottom right!important;transition:.22s ease!important}
+      #chat-panel.open{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
+      .diki-chat-head{background:#1b4d3e;color:#fff;padding:14px 15px;display:flex;align-items:center;gap:10px}
+      .diki-chat-avatar{width:38px;height:38px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid #c5e84a;flex:none}
+      .diki-chat-avatar img{width:100%;height:100%;object-fit:contain}
+      .diki-chat-headcopy{min-width:0;flex:1}.diki-chat-headcopy strong{display:block;font-size:14px}.diki-chat-headcopy span{display:block;font-size:11px;opacity:.7;margin-top:2px}
+      #chat-close-btn{width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer}
+      #chat-messages{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#fbfaf7}
+      .chat-msg{max-width:88%;display:flex}.chat-msg-bot{align-self:flex-start}.chat-msg-user{align-self:flex-end}.chat-bubble{padding:10px 13px;border-radius:15px;font-size:13px;line-height:1.55;word-break:break-word}.chat-msg-bot .chat-bubble{background:#fff;border:1px solid #e0ded8;color:#171815}.chat-msg-user .chat-bubble{background:#1b4d3e;color:#fff}.chat-bubble a{color:#1b4d3e;text-decoration:underline;font-weight:700}.chat-msg-user .chat-bubble a{color:#fff}.chat-bubble strong{font-weight:700}
+      #chat-suggestions{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 10px;background:#fbfaf7}.suggestion-chip{border:1px solid rgba(27,77,62,.18);background:#edf4f1;color:#1b4d3e;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer}
+      .chat-input-area{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #e2e0da;background:#fff}.chat-input{min-width:0;flex:1;border:1px solid #d8d6d0;background:#f6f5f1;border-radius:999px;padding:10px 14px;font:inherit;font-size:13px;outline:none}.chat-input:focus{border-color:#1b4d3e}.chat-send-btn{width:38px;height:38px;border:0;border-radius:50%;background:#1b4d3e;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}.chat-typing{display:flex;gap:4px}.chat-typing i{width:6px;height:6px;background:#92968f;border-radius:50%;animation:dikiDot 1s infinite}.chat-typing i:nth-child(2){animation-delay:.12s}.chat-typing i:nth-child(3){animation-delay:.24s}@keyframes dikiDot{50%{transform:translateY(-4px);opacity:.45}}
+      #quick-nav{position:fixed;right:26px;bottom:100px;z-index:2147482990;display:flex;flex-direction:column;align-items:flex-end;gap:10px;transition:.2s ease}
+      #quick-nav.is-chat-open{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px)}
+      .quick-nav-menu{display:flex;flex-direction:column;gap:6px;padding:8px;border:2px solid #1b4d3e;border-radius:999px;background:rgba(255,255,255,.92);box-shadow:0 12px 28px rgba(0,0,0,.1);backdrop-filter:blur(10px)}
+      .quick-nav-link{position:relative;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1b4d3e;text-decoration:none;font:700 12px/1 Inter,sans-serif;transition:.18s ease}.quick-nav-link:hover,.quick-nav-link.active{background:#009c4b;color:#fff}.quick-nav-link span{position:absolute;right:52px;white-space:nowrap;background:#171815;color:#fff;border-radius:7px;padding:6px 9px;font-size:11px;opacity:0;transform:translateX(5px);pointer-events:none;transition:.16s ease}.quick-nav-link:hover span{opacity:1;transform:none}
+      #quick-nav-toggle{display:none;width:52px;height:52px;border:2px solid #1b4d3e;border-radius:50%;background:#fff;color:#1b4d3e;box-shadow:0 10px 26px rgba(0,0,0,.12);align-items:center;justify-content:center;cursor:pointer}
+      #quick-nav-toggle svg{width:22px;height:22px;transition:.2s ease}.quick-nav.open #quick-nav-toggle svg{transform:rotate(45deg)}
+      @media(max-width:768px){#chat-fab{right:16px!important;bottom:18px!important;width:54px!important;height:54px!important}#chat-panel{right:12px!important;bottom:82px!important;width:calc(100vw - 24px)!important;height:min(600px,72vh)!important;border-radius:18px!important}#quick-nav{right:17px;bottom:82px}#quick-nav-toggle{display:flex}.quick-nav-menu{position:absolute;right:0;bottom:62px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(14px) scale(.95);transform-origin:bottom right;transition:.2s ease}.quick-nav.open .quick-nav-menu{opacity:1;visibility:visible;pointer-events:auto;transform:none}.quick-nav-link span{display:none}}
+      @media(prefers-reduced-motion:reduce){#chat-fab::after,.chat-typing i{animation:none!important}#chat-panel,.quick-nav-menu{transition:none!important}}
+    `;
+    document.head.appendChild(style);
+  }
 
-function initChatbot() {
-  try {
-    buildChatbot();
-    ensureProjectsLoaded();
+  function chatShell() {
+    let fab = document.getElementById('chat-fab');
+    if (!fab) {
+      fab = document.createElement('button');
+      fab.id = 'chat-fab';
+      fab.type = 'button';
+      fab.setAttribute('aria-label', 'Buka chat asisten Diki');
+      fab.setAttribute('aria-expanded', 'false');
+      fab.innerHTML = `<span class="fab-chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="fab-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg></span>`;
+      document.body.appendChild(fab);
+    }
 
-    document.getElementById('chat-fab')?.addEventListener('click', () => chatOpen ? closeChat() : openChat());
+    let panel = document.getElementById('chat-panel');
+    if (!panel) {
+      panel = document.createElement('section');
+      panel.id = 'chat-panel';
+      panel.setAttribute('aria-hidden', 'true');
+      panel.innerHTML = `
+        <div class="diki-chat-head">
+          <div class="diki-chat-avatar"><img src="asset/header.png" alt="" /></div>
+          <div class="diki-chat-headcopy"><strong>Diki AI Assistant</strong><span>Online · Tanya tentang Diki & portfolio</span></div>
+          <button id="chat-close-btn" type="button" aria-label="Tutup chat">×</button>
+        </div>
+        <div id="chat-messages" aria-live="polite"></div>
+        <div id="chat-suggestions"></div>
+        <div class="chat-input-area">
+          <input id="chat-input" class="chat-input" type="text" maxlength="600" autocomplete="off" placeholder="Tanyakan sesuatu tentang Diki..." />
+          <button id="chat-send-btn" class="chat-send-btn" type="button" aria-label="Kirim"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>`;
+      document.body.appendChild(panel);
+    }
+    return { fab, panel };
+  }
+
+  function quickNavShell() {
+    if (document.getElementById('quick-nav')) return document.getElementById('quick-nav');
+    const nav = document.createElement('div');
+    nav.id = 'quick-nav';
+    nav.setAttribute('aria-label', 'Navigasi cepat');
+    const links = NAV_ITEMS
+      .filter(([id]) => document.getElementById(id))
+      .map(([id, label, letter]) => `<a class="quick-nav-link" href="#${id}" data-quick-section="${id}" aria-label="${label}">${letter}<span>${label}</span></a>`)
+      .join('');
+    nav.innerHTML = `<div class="quick-nav-menu">${links}</div><button id="quick-nav-toggle" type="button" aria-label="Buka navigasi cepat" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg></button>`;
+    document.body.appendChild(nav);
+    return nav;
+  }
+
+  function appendMessage(role, text) {
+    const messages = document.getElementById('chat-messages');
+    if (!messages) return;
+    const row = document.createElement('div');
+    row.className = `chat-msg chat-msg-${role}`;
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble';
+    if (role === 'user') bubble.textContent = text;
+    else bubble.innerHTML = renderMarkdown(text);
+    row.appendChild(bubble);
+    messages.appendChild(row);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function setTyping(show) {
+    const messages = document.getElementById('chat-messages');
+    if (!messages) return;
+    const existing = document.getElementById('chat-typing');
+    if (!show) { if (existing) existing.remove(); return; }
+    if (existing) return;
+    const row = document.createElement('div');
+    row.id = 'chat-typing';
+    row.className = 'chat-msg chat-msg-bot';
+    row.innerHTML = '<div class="chat-bubble chat-typing"><i></i><i></i><i></i></div>';
+    messages.appendChild(row);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function renderSuggestions() {
+    const el = document.getElementById('chat-suggestions');
+    if (!el) return;
+    const list = lang() === 'en'
+      ? ["Diki's latest projects?", 'Marketplace experience?', 'Technical skills?', 'How can I contact Diki?']
+      : ['Project terbaru Diki?', 'Pengalaman marketplace?', 'Skill teknis Diki?', 'Cara kontak Diki?'];
+    el.innerHTML = '';
+    list.forEach(text => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'suggestion-chip';
+      btn.textContent = text;
+      btn.addEventListener('click', () => sendMessage(text));
+      el.appendChild(btn);
+    });
+  }
+
+  function openChat() {
+    CHAT.open = true;
+    const panel = document.getElementById('chat-panel');
+    const fab = document.getElementById('chat-fab');
+    const quick = document.getElementById('quick-nav');
+    if (!panel || !fab) return;
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+    fab.classList.add('is-open');
+    fab.setAttribute('aria-expanded', 'true');
+    quick?.classList.add('is-chat-open');
+    const messages = document.getElementById('chat-messages');
+    if (messages && !messages.children.length) {
+      appendMessage('bot', lang() === 'en'
+        ? `Hello! 👋 I'm Diki's portfolio assistant. Ask me about **experience, marketplace work, projects, skills, or contact details**.`
+        : `Halo! 👋 Saya asisten portfolio **Diki Permana**. Tanya soal **pengalaman, marketplace, project, skill, atau kontak**.`);
+      renderSuggestions();
+    }
+    setTimeout(() => document.getElementById('chat-input')?.focus(), 120);
+  }
+
+  function closeChat() {
+    CHAT.open = false;
+    const panel = document.getElementById('chat-panel');
+    const fab = document.getElementById('chat-fab');
+    const quick = document.getElementById('quick-nav');
+    panel?.classList.remove('open');
+    panel?.setAttribute('aria-hidden', 'true');
+    fab?.classList.remove('is-open');
+    fab?.setAttribute('aria-expanded', 'false');
+    quick?.classList.remove('is-chat-open');
+  }
+
+  async function sendMessage(forced) {
+    if (CHAT.sending) return;
+    const input = document.getElementById('chat-input');
+    const text = String(forced || input?.value || '').trim();
+    if (!text) return;
+    if (input) input.value = '';
+    document.getElementById('chat-suggestions')?.replaceChildren();
+    appendMessage('user', text);
+    CHAT.history.push({ role: 'user', content: text });
+    CHAT.sending = true;
+    setTyping(true);
+    try {
+      const reply = await answer(text);
+      await new Promise(resolve => setTimeout(resolve, 180));
+      setTyping(false);
+      appendMessage('bot', reply);
+      CHAT.history.push({ role: 'assistant', content: reply });
+      CHAT.history = CHAT.history.slice(-12);
+    } catch (_) {
+      setTyping(false);
+      appendMessage('bot', lang() === 'en' ? 'Something went wrong. Please try again.' : 'Ada error saat menjawab. Coba kirim lagi.');
+    } finally {
+      CHAT.sending = false;
+    }
+  }
+
+  function bindChat() {
+    const fab = document.getElementById('chat-fab');
+    if (!fab || fab.dataset.bound === '1') return;
+    fab.dataset.bound = '1';
+    fab.addEventListener('click', () => CHAT.open ? closeChat() : openChat());
     document.getElementById('chat-close-btn')?.addEventListener('click', closeChat);
     document.getElementById('chat-send-btn')?.addEventListener('click', () => sendMessage());
     document.getElementById('chat-input')?.addEventListener('keydown', event => {
@@ -687,25 +512,78 @@ function initChatbot() {
         sendMessage();
       }
     });
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && chatOpen) closeChat();
+  }
+
+  function bindQuickNav() {
+    const nav = document.getElementById('quick-nav');
+    const toggle = document.getElementById('quick-nav-toggle');
+    if (!nav || nav.dataset.bound === '1') return;
+    nav.dataset.bound = '1';
+
+    toggle?.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Tutup navigasi cepat' : 'Buka navigasi cepat');
     });
-  } catch (error) {
-    if (!document.getElementById('chat-fab') && document.body) {
-      const fallback = document.createElement('button');
-      fallback.id = 'chat-fab';
-      fallback.type = 'button';
-      fallback.textContent = 'Chat';
-      fallback.setAttribute('aria-label', 'Chat');
-      document.body.appendChild(fallback);
+
+    nav.querySelectorAll('.quick-nav-link').forEach(link => {
+      link.addEventListener('click', event => {
+        const id = link.dataset.quickSection;
+        const target = document.getElementById(id);
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        nav.classList.remove('open');
+        toggle?.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        nav.querySelectorAll('.quick-nav-link').forEach(link => {
+          link.classList.toggle('active', link.dataset.quickSection === visible.target.id);
+        });
+      }, { rootMargin: '-30% 0px -55% 0px', threshold: [0, .1, .25, .5] });
+      NAV_ITEMS.forEach(([id]) => { const section = document.getElementById(id); if (section) observer.observe(section); });
     }
   }
-}
 
-window.addEventListener('languageChanged', renderSuggestions);
+  function boot() {
+    if (!document.body) return;
+    injectStyles();
+    chatShell();
+    quickNavShell();
+    bindChat();
+    bindQuickNav();
+    ensureProjects();
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initChatbot, { once: true });
-} else {
-  initChatbot();
-}
+    setTimeout(() => {
+      const fab = document.getElementById('chat-fab');
+      if (!fab) {
+        chatShell();
+        bindChat();
+      } else {
+        fab.style.setProperty('display', 'flex', 'important');
+        fab.style.setProperty('visibility', 'visible', 'important');
+        fab.style.setProperty('opacity', '1', 'important');
+      }
+    }, 1200);
+  }
+
+  window.DikiChat = { open: openChat, close: closeChat, send: sendMessage };
+
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    if (CHAT.open) closeChat();
+    document.getElementById('quick-nav')?.classList.remove('open');
+  });
+
+  window.addEventListener('languageChanged', renderSuggestions);
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
+  else boot();
+})();
