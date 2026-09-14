@@ -1,12 +1,18 @@
 /* ============================================================
-   VISUAL POLISH — editorial paper / newspaper texture
+   VISUAL POLISH V3 — editorial commerce / newspaper collage
    ------------------------------------------------------------
-   Intentionally partial. The whole site should NOT look like a
-   scrapbook. Paper fragments are used only as visual accents on
-   About, Portfolio, and Contact; the other sections stay clean.
+   Colors stay fixed. The improvement comes from hierarchy,
+   composition, asymmetry, and controlled paper texture.
    ============================================================ */
 
-/* Keep decorative layers behind real content. */
+:root {
+  --paper: #eee9df;
+  --paper-2: #e4ddd0;
+  --paper-ink: rgba(29, 29, 27, .22);
+  --paper-rule: rgba(29, 29, 27, .075);
+  --editorial-line: rgba(27, 77, 62, .16);
+}
+
 #about,
 #portfolio,
 #instagram,
@@ -28,405 +34,582 @@
   z-index: 3;
 }
 
-/* Shared newsprint recipe: warm paper + fake columns + ink noise. */
-:root {
-  --paper-warm: #e8e2d7;
-  --paper-light: #f3efe7;
-  --paper-ink: rgba(42, 40, 35, .23);
-  --paper-rule: rgba(42, 40, 35, .095);
+/* Shared paper grain. */
+#about::before,
+#portfolio::before,
+#contact::before {
+  background-color: var(--paper);
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 10px, var(--paper-rule) 10px 11px),
+    repeating-linear-gradient(90deg, transparent 0 112px, rgba(29,29,27,.048) 112px 113px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
 }
 
 /* ============================================================
-   ABOUT — one large newspaper clipping, not a full background
+   ABOUT — cleaner editorial spread
    ============================================================ */
 #about.about-section {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.18), transparent 34%),
-    var(--bg);
+  background: var(--bg);
 }
 
 #about::before {
   content: '';
   position: absolute;
   z-index: 0;
-  width: min(580px, 44vw);
-  height: 76%;
-  right: -6%;
-  top: 12%;
-  transform: rotate(2.1deg);
-  pointer-events: none;
-  opacity: .54;
+  width: min(520px, 39vw);
+  height: 68%;
+  right: -7%;
+  top: 18%;
+  opacity: .36;
+  transform: rotate(2deg);
   clip-path: polygon(
-    0 4%, 4% 2%, 9% 3%, 14% 1%, 20% 3%, 26% 1%, 32% 2%, 39% 0,
-    46% 2%, 54% 1%, 61% 3%, 68% 1%, 74% 3%, 81% 1%, 88% 2%, 94% 0, 100% 3%,
-    99% 94%, 95% 97%, 90% 96%, 84% 99%, 77% 97%, 70% 99%, 63% 96%, 56% 98%,
-    48% 96%, 41% 99%, 34% 97%, 27% 99%, 20% 96%, 13% 98%, 7% 96%, 1% 98%
+    0 3%, 7% 1%, 14% 4%, 21% 1%, 29% 3%, 37% 0, 45% 3%, 54% 1%, 63% 4%, 72% 1%, 81% 3%, 90% 1%, 100% 4%,
+    99% 95%, 92% 98%, 85% 96%, 77% 99%, 69% 96%, 61% 98%, 52% 96%, 44% 99%, 35% 96%, 27% 98%, 18% 95%, 9% 98%, 0 95%
   );
-  background-color: var(--paper-warm);
-  background-image:
-    /* broad headline bars */
-    linear-gradient(var(--paper-ink), var(--paper-ink)),
-    linear-gradient(var(--paper-ink), var(--paper-ink)),
-    /* newspaper columns */
-    repeating-linear-gradient(0deg, transparent 0 9px, var(--paper-rule) 9px 10px),
-    repeating-linear-gradient(90deg, transparent 0 104px, rgba(42,40,35,.075) 104px 105px),
-    /* subtle paper fibres */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-  background-size:
-    58% 14px,
-    34% 8px,
-    100% 100%,
-    100% 100%,
-    180px 180px;
-  background-position:
-    9% 12%,
-    9% 18%,
-    0 0,
-    0 0,
-    0 0;
-  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
-  box-shadow: 0 18px 44px rgba(33,29,24,.08);
+  pointer-events: none;
+  box-shadow: 0 22px 46px rgba(28,25,21,.06);
 }
 
 #about::after {
-  content: 'MARKETPLACE  /  CAMPAIGN  /  VISUAL  /  OPERATIONS';
+  content: '01 / PROFILE';
   position: absolute;
-  left: -42px;
-  bottom: 34px;
+  right: 3.2%;
+  top: 10.5%;
   z-index: 1;
-  width: 410px;
-  padding: 10px 22px 9px;
-  transform: rotate(-2deg);
-  pointer-events: none;
-  color: rgba(26,26,25,.54);
-  background: rgba(231,225,214,.86);
-  border-top: 1px solid rgba(26,26,25,.11);
-  border-bottom: 1px solid rgba(26,26,25,.11);
-  font-family: var(--font-main);
-  font-size: 9px;
+  color: rgba(27,77,62,.19);
+  font-family: var(--font-display);
+  font-size: clamp(54px, 8vw, 118px);
   font-weight: 700;
-  letter-spacing: .18em;
-  white-space: nowrap;
-  clip-path: polygon(0 17%, 5% 5%, 12% 14%, 18% 3%, 26% 13%, 33% 4%, 42% 13%, 50% 4%, 58% 14%, 67% 2%, 75% 13%, 84% 4%, 92% 13%, 100% 3%, 100% 87%, 94% 96%, 86% 86%, 77% 98%, 69% 87%, 60% 97%, 52% 87%, 43% 98%, 34% 87%, 25% 96%, 16% 87%, 8% 97%, 0 88%);
+  letter-spacing: -.06em;
+  line-height: .9;
+  pointer-events: none;
 }
 
-/* Stats stay readable and clean — only a hint of paper. */
+#about .about-grid {
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 72px;
+}
+
+#about .about-content {
+  max-width: 760px;
+  padding: 12px 0 24px;
+}
+
+#about .about-heading {
+  max-width: 700px;
+  font-size: clamp(28px, 3.7vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  margin-bottom: 30px;
+}
+
+#about .about-body {
+  max-width: 680px;
+}
+
 #about .stat-item {
   position: relative;
-  padding: 17px 17px 16px;
-  border: 1px solid rgba(45,42,36,.10);
-  border-radius: 5px;
-  background:
-    linear-gradient(rgba(255,255,255,.58), rgba(255,255,255,.58)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
-  box-shadow: 0 9px 24px rgba(33,29,24,.035);
+  padding: 16px 0 18px;
+  border: 0;
+  border-bottom: 1px solid rgba(27,77,62,.18);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
-#about .stat-item::after {
+#about .stat-item::before {
   content: '';
   position: absolute;
-  left: 16px;
+  left: 0;
   bottom: -1px;
-  width: 34%;
-  height: 2px;
+  width: 42px;
+  height: 3px;
   background: var(--green);
-  opacity: .48;
+}
+
+#about .stat-num {
+  font-size: 46px;
 }
 
 /* ============================================================
-   PORTFOLIO — partial torn paper strip behind the case studies
+   PORTFOLIO — magazine cover feel, texture only behind header
    ============================================================ */
 #portfolio.portfolio-section {
-  background: #f3f2ee;
+  background: #f4f3ef;
+  padding-top: 112px;
+  padding-bottom: 112px;
 }
 
 #portfolio::before {
   content: '';
   position: absolute;
   z-index: 0;
-  width: 56%;
-  height: 56%;
+  width: 67%;
+  height: 300px;
   left: -12%;
-  top: 20%;
-  transform: rotate(-2.4deg);
-  pointer-events: none;
-  opacity: .42;
-  background-color: #ddd6ca;
-  background-image:
-    linear-gradient(rgba(36,34,30,.18), rgba(36,34,30,.18)),
-    repeating-linear-gradient(0deg, transparent 0 8px, rgba(36,34,30,.085) 8px 9px),
-    repeating-linear-gradient(90deg, transparent 0 92px, rgba(36,34,30,.06) 92px 93px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
-  background-size: 44% 12px, 100% 100%, 100% 100%, 170px 170px;
-  background-position: 12% 12%, 0 0, 0 0, 0 0;
-  background-repeat: no-repeat, repeat, repeat, repeat;
+  top: 38px;
+  opacity: .28;
+  transform: rotate(-1.4deg);
   clip-path: polygon(
-    0 5%, 5% 2%, 11% 4%, 17% 1%, 23% 3%, 30% 0, 36% 3%, 43% 1%, 50% 4%,
-    58% 1%, 65% 3%, 72% 1%, 80% 4%, 87% 1%, 94% 3%, 100% 1%,
-    98% 93%, 93% 97%, 87% 95%, 81% 99%, 74% 96%, 67% 98%, 59% 95%, 52% 99%,
-    44% 96%, 37% 99%, 29% 95%, 21% 98%, 14% 95%, 7% 98%, 0 95%
+    0 8%, 5% 4%, 11% 7%, 17% 3%, 24% 6%, 31% 2%, 39% 7%, 47% 3%, 55% 6%, 63% 2%, 71% 7%, 80% 3%, 89% 6%, 100% 2%,
+    99% 91%, 94% 96%, 87% 93%, 79% 98%, 70% 94%, 61% 98%, 52% 94%, 43% 98%, 34% 94%, 25% 98%, 15% 94%, 7% 98%, 0 94%
   );
-  box-shadow: 0 20px 50px rgba(32,28,23,.06);
+  pointer-events: none;
 }
 
 #portfolio::after {
-  content: 'SELECTED / CASE STUDIES / 2026';
+  content: '02';
   position: absolute;
   z-index: 1;
-  right: -54px;
-  bottom: 72px;
-  width: 330px;
-  padding: 9px 22px;
-  transform: rotate(3.4deg);
-  pointer-events: none;
-  color: rgba(255,255,255,.76);
-  background: #1f4f40;
-  font-size: 9px;
+  right: 4%;
+  top: 42px;
+  color: rgba(27,77,62,.12);
+  font-family: var(--font-display);
+  font-size: clamp(90px, 13vw, 190px);
   font-weight: 700;
-  letter-spacing: .16em;
-  text-align: center;
-  clip-path: polygon(0 14%, 7% 4%, 13% 12%, 20% 2%, 28% 13%, 36% 4%, 43% 12%, 51% 3%, 60% 13%, 69% 4%, 78% 13%, 87% 3%, 94% 11%, 100% 4%, 100% 88%, 94% 97%, 86% 87%, 78% 98%, 69% 88%, 60% 97%, 51% 88%, 42% 98%, 33% 87%, 24% 97%, 15% 88%, 7% 98%, 0 87%);
+  line-height: .8;
+  letter-spacing: -.08em;
+  pointer-events: none;
+}
+
+#portfolio .section-header {
+  position: relative;
+  padding-bottom: 18px;
+  margin-bottom: 8px;
+}
+
+#portfolio .section-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--green) 0 88px, var(--border) 88px 100%);
+}
+
+#portfolio .portfolio-intro {
+  margin-top: 18px;
+  margin-bottom: 28px;
 }
 
 #portfolio .portfolio-feature-stage {
-  box-shadow: 0 18px 42px rgba(31,29,24,.10);
+  border-radius: 12px;
+  box-shadow: 0 20px 46px rgba(24,28,25,.13);
 }
 
 #portfolio .portfolio-side-link {
-  background: rgba(250,249,247,.92);
-  border-color: rgba(44,40,35,.10);
-  box-shadow: 0 9px 24px rgba(31,29,24,.045);
+  border-radius: 10px;
+  background: #faf9f7;
+  border-color: rgba(29,29,27,.11);
+  box-shadow: 0 10px 25px rgba(29,29,27,.05);
+}
+
+#portfolio .portfolio-side-thumb {
+  background: #dad8d1;
+}
+
+#portfolio .portfolio-showcase-dots {
+  padding-top: 12px;
+}
+
+#portfolio .behance-cta-block {
+  position: relative;
+  margin-top: 34px;
+  border-radius: 8px;
+  background: rgba(250,249,247,.86);
+  border-color: rgba(29,29,27,.11);
+  box-shadow: none;
+}
+
+#portfolio .behance-cta-block::before {
+  content: 'CASE STUDY INDEX';
+  position: absolute;
+  top: -9px;
+  left: 20px;
+  padding: 2px 8px;
+  background: #f4f3ef;
+  color: var(--green);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .16em;
 }
 
 /* ============================================================
-   INSTAGRAM — deliberately clean to create breathing room
+   INSTAGRAM — breathing room; visual feed is the decoration
    ============================================================ */
 #instagram.instagram-section {
   background: var(--bg);
 }
 
+#instagram .section-header {
+  position: relative;
+}
+
+#instagram .section-header::before {
+  content: '03 / CURRENT';
+  position: absolute;
+  right: 0;
+  top: -18px;
+  color: rgba(27,77,62,.25);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .15em;
+}
+
 #instagram .ig-embed-wrapper {
-  background: rgba(255,255,255,.74);
-  box-shadow: 0 12px 32px rgba(31,29,24,.055);
+  border-radius: 4px;
+  border-color: rgba(29,29,27,.12);
+  box-shadow: 0 14px 32px rgba(27,27,25,.055);
 }
 
 /* ============================================================
-   EXPERIENCE — clean editorial section, no decorative texture
+   EXPERIENCE — editorial ledger instead of repeated floating cards
    ============================================================ */
 #experience.experience-section {
-  background: var(--bg-alt);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 47px, rgba(27,77,62,.026) 47px 48px),
+    var(--bg-alt);
+}
+
+#experience::before {
+  content: 'CAREER / ARCHIVE';
+  position: absolute;
+  right: -58px;
+  top: 150px;
+  transform: rotate(90deg);
+  color: rgba(27,77,62,.17);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .28em;
+  pointer-events: none;
 }
 
 #experience .timeline-card {
-  background: rgba(250,249,248,.92);
-  box-shadow: 0 7px 22px rgba(31,29,24,.035);
+  border-radius: 5px;
+  background: rgba(250,249,247,.82);
+  border-color: rgba(29,29,27,.10);
+  box-shadow: 0 7px 18px rgba(27,27,25,.035);
 }
 
 #experience .timeline-card:hover {
-  box-shadow: 0 14px 34px rgba(31,29,24,.07);
+  border-color: rgba(27,77,62,.22);
+  box-shadow: 0 12px 26px rgba(27,27,25,.065);
+}
+
+#experience .timeline-dot {
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+#experience .timeline-dot.current {
+  box-shadow: 0 0 0 4px rgba(27,77,62,.10);
 }
 
 /* ============================================================
-   SKILLS — almost plain, only very subtle paper fibre
+   SKILLS — asymmetric bento, same palette
    ============================================================ */
 #skills.skills-section {
-  background:
-    linear-gradient(rgba(240,240,239,.94), rgba(240,240,239,.94)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E");
+  background: var(--bg);
+}
+
+#skills::before {
+  content: '04';
+  position: absolute;
+  left: -18px;
+  bottom: 8px;
+  color: rgba(27,77,62,.07);
+  font-family: var(--font-display);
+  font-size: 220px;
+  font-weight: 700;
+  line-height: .8;
+  letter-spacing: -.08em;
+  pointer-events: none;
+}
+
+#skills .skills-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
 }
 
 #skills .skill-card {
   position: relative;
+  min-height: 220px;
   overflow: hidden;
-  background: rgba(250,249,248,.94);
-  border-color: rgba(44,40,35,.10);
-  box-shadow: 0 9px 24px rgba(31,29,24,.04);
+  border-radius: 8px;
+  border-color: rgba(29,29,27,.105);
+  background: #faf9f7;
+  box-shadow: 0 9px 24px rgba(27,27,25,.045);
+}
+
+#skills .skill-card:nth-child(1) {
+  grid-column: span 3;
+  background: var(--green);
+  color: var(--white);
+}
+
+#skills .skill-card:nth-child(2) {
+  grid-column: span 3;
+  background:
+    linear-gradient(rgba(246,243,236,.9), rgba(246,243,236,.9)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+}
+
+#skills .skill-card:nth-child(3) {
+  grid-column: span 2;
+}
+
+#skills .skill-card:nth-child(4) {
+  grid-column: span 4;
+  background: #ecefea;
 }
 
 #skills .skill-card::before {
-  content: '';
+  content: attr(data-card-no);
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 44%;
-  height: 2px;
-  background: var(--green);
-  opacity: .55;
+  right: 18px;
+  top: 12px;
+  color: rgba(27,77,62,.18);
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+#skills .skill-card:nth-child(1)::before {
+  content: '01';
+  color: rgba(255,255,255,.16);
+}
+
+#skills .skill-card:nth-child(2)::before { content: '02'; }
+#skills .skill-card:nth-child(3)::before { content: '03'; }
+#skills .skill-card:nth-child(4)::before { content: '04'; }
+
+#skills .skill-card:nth-child(1) h3,
+#skills .skill-card:nth-child(1) li {
+  color: rgba(255,255,255,.9);
+}
+
+#skills .skill-card:nth-child(1) .skill-icon {
+  background: rgba(255,255,255,.12);
+  color: var(--lime);
+}
+
+#skills .skill-card:nth-child(1) li::before {
+  color: var(--lime);
 }
 
 #skills .skill-card:hover {
-  transform: translateY(-4px) rotate(-.15deg);
-  box-shadow: 0 15px 34px rgba(31,29,24,.075);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(27,27,25,.075);
 }
 
 /* ============================================================
-   CONTACT — torn newspaper clipping behind right-side graphic
+   CONTACT — editorial closing spread with one controlled paper block
    ============================================================ */
 #contact.contact-section {
-  background:
-    linear-gradient(180deg, #ecebe7 0%, #e8e6e0 100%);
+  padding-top: 110px;
+  padding-bottom: 110px;
+  background: #ecebe7;
 }
 
 #contact::before {
   content: '';
   position: absolute;
   z-index: 0;
-  width: 48%;
-  height: 82%;
-  right: -7%;
-  top: 8%;
-  transform: rotate(-1.7deg);
-  pointer-events: none;
-  opacity: .64;
-  background-color: #ded7ca;
-  background-image:
-    linear-gradient(rgba(40,37,32,.20), rgba(40,37,32,.20)),
-    linear-gradient(rgba(40,37,32,.11), rgba(40,37,32,.11)),
-    repeating-linear-gradient(0deg, transparent 0 8px, rgba(40,37,32,.085) 8px 9px),
-    repeating-linear-gradient(90deg, transparent 0 96px, rgba(40,37,32,.065) 96px 97px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.74' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.17'/%3E%3C/svg%3E");
-  background-size: 58% 15px, 32% 8px, 100% 100%, 100% 100%, 180px 180px;
-  background-position: 10% 10%, 10% 16%, 0 0, 0 0, 0 0;
-  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
+  width: 49%;
+  height: 78%;
+  right: -4%;
+  top: 11%;
+  opacity: .42;
+  transform: rotate(1.3deg);
   clip-path: polygon(
-    0 4%, 6% 2%, 12% 4%, 18% 1%, 25% 3%, 31% 1%, 38% 4%, 45% 1%, 52% 3%,
-    59% 1%, 66% 4%, 73% 1%, 80% 3%, 87% 1%, 94% 4%, 100% 2%,
-    99% 94%, 94% 97%, 88% 95%, 81% 98%, 74% 95%, 67% 99%, 60% 96%, 53% 98%,
-    46% 95%, 39% 99%, 32% 96%, 25% 98%, 18% 95%, 11% 98%, 5% 95%, 0 97%
+    0 4%, 8% 1%, 16% 4%, 24% 1%, 33% 4%, 42% 1%, 51% 4%, 60% 1%, 69% 4%, 78% 1%, 87% 4%, 100% 1%,
+    99% 95%, 92% 98%, 84% 95%, 76% 99%, 67% 96%, 58% 99%, 49% 95%, 40% 98%, 31% 95%, 22% 98%, 12% 95%, 0 98%
   );
-  box-shadow: 0 24px 54px rgba(32,28,23,.075);
+  pointer-events: none;
+  box-shadow: 0 20px 48px rgba(27,25,22,.07);
 }
 
 #contact::after {
-  content: 'OPEN FOR WORK  •  E-COMMERCE  •  MARKETPLACE';
+  content: 'OPEN TO WORK / E-COMMERCE / MARKETPLACE / VISUAL';
   position: absolute;
-  left: -24px;
-  top: 26%;
   z-index: 1;
-  padding: 8px 18px;
-  transform: rotate(-90deg) translateX(-50%);
-  transform-origin: left top;
-  pointer-events: none;
-  color: rgba(26,26,25,.43);
-  border-top: 1px solid rgba(26,26,25,.13);
-  border-bottom: 1px solid rgba(26,26,25,.13);
-  font-size: 8px;
+  left: -74px;
+  top: 58px;
+  transform: rotate(-90deg);
+  color: rgba(27,77,62,.21);
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: .18em;
-  white-space: nowrap;
+  letter-spacing: .2em;
+  pointer-events: none;
+}
+
+#contact .contact-inner {
+  align-items: stretch;
+}
+
+#contact .contact-left {
+  padding: 8px 0;
+}
+
+#contact .contact-heading {
+  max-width: 650px;
+  font-size: clamp(40px, 5.4vw, 66px);
+  line-height: 1.02;
+  letter-spacing: -.04em;
+}
+
+#contact .contact-links {
+  gap: 8px;
+  max-width: 610px;
 }
 
 #contact .contact-item {
-  background: rgba(250,249,248,.90);
-  border-color: rgba(44,40,35,.11);
-  box-shadow: 0 7px 20px rgba(31,29,24,.035);
+  border-radius: 5px;
+  background: rgba(250,249,247,.86);
+  border-color: rgba(29,29,27,.10);
+  box-shadow: none;
 }
 
 #contact .contact-item:hover {
-  box-shadow: 0 13px 30px rgba(31,29,24,.075);
+  transform: translateX(7px);
+  border-color: rgba(27,77,62,.28);
+  box-shadow: 0 8px 20px rgba(27,27,25,.05);
 }
 
 #contact .contact-card-deco {
-  border: 0;
+  align-self: center;
+  width: min(100%, 360px);
+  margin: auto;
+  aspect-ratio: 4 / 5;
   border-radius: 10px;
-  background:
-    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px),
-    #1b4d3e;
-  background-size: 24px 24px, 24px 24px, auto;
-  box-shadow: 0 18px 40px rgba(23,53,44,.17);
-  transform: rotate(1.4deg);
+  transform: rotate(1.8deg);
+  background: var(--green);
+  box-shadow: 18px 20px 0 rgba(27,77,62,.09), 0 18px 42px rgba(19,44,36,.16);
 }
 
 #contact .contact-card-deco::after {
   content: '';
   position: absolute;
-  width: 82px;
-  height: 24px;
   left: 50%;
-  top: -10px;
+  top: -16px;
+  width: 108px;
+  height: 30px;
   transform: translateX(-50%) rotate(-2deg);
-  background: rgba(221,213,196,.78);
-  border: 1px solid rgba(83,75,63,.08);
-  box-shadow: 0 2px 8px rgba(30,26,22,.08);
+  background: rgba(230,219,197,.76);
+  border: 1px solid rgba(63,55,43,.06);
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+
+#contact .ccd-text {
+  font-size: 46px;
+  letter-spacing: -.055em;
 }
 
 /* ============================================================
-   FOOTER — plain dark finish with a torn paper top edge
+   FOOTER — minimal newspaper edge
    ============================================================ */
 .footer {
   position: relative;
   background: #1a1a19;
-  margin-top: 0;
+  padding-top: 34px;
 }
 
 .footer::before {
   content: '';
   position: absolute;
-  top: -13px;
   left: 0;
   right: 0;
+  top: -13px;
   height: 15px;
   background: #1a1a19;
-  clip-path: polygon(0 62%, 2% 28%, 5% 55%, 8% 20%, 11% 57%, 14% 29%, 17% 62%, 20% 24%, 23% 58%, 26% 19%, 29% 61%, 32% 28%, 35% 55%, 38% 22%, 41% 62%, 44% 26%, 47% 58%, 50% 18%, 53% 61%, 56% 25%, 59% 56%, 62% 21%, 65% 62%, 68% 26%, 71% 57%, 74% 20%, 77% 61%, 80% 26%, 83% 56%, 86% 21%, 89% 62%, 92% 26%, 95% 57%, 98% 22%, 100% 56%, 100% 100%, 0 100%);
+  clip-path: polygon(0 55%, 2% 30%, 4% 67%, 7% 35%, 10% 62%, 13% 34%, 16% 67%, 20% 30%, 24% 64%, 28% 35%, 32% 68%, 37% 33%, 42% 66%, 48% 30%, 54% 66%, 60% 34%, 66% 68%, 72% 30%, 78% 65%, 84% 34%, 90% 68%, 95% 32%, 100% 58%, 100% 100%, 0 100%);
 }
 
 /* ============================================================
-   RESPONSIVE — fewer paper fragments on smaller screens
+   RESPONSIVE
    ============================================================ */
-@media (max-width: 900px) {
-  #about::before {
-    width: 56vw;
-    right: -18%;
-    opacity: .38;
+@media (max-width: 1024px) {
+  #about::after,
+  #portfolio::after,
+  #skills::before { opacity: .65; }
+
+  #skills .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  #portfolio::before {
-    width: 70%;
-    left: -24%;
-    opacity: .30;
+  #skills .skill-card:nth-child(n) {
+    grid-column: span 1;
   }
 
   #contact::before {
-    width: 60%;
-    right: -20%;
-    opacity: .46;
+    width: 58%;
+    right: -16%;
   }
 }
 
 @media (max-width: 768px) {
+  #about::before {
+    width: 58vw;
+    height: 42%;
+    right: -24%;
+    top: 6%;
+    opacity: .23;
+  }
+
   #about::after,
   #portfolio::after,
+  #skills::before,
+  #experience::before,
   #contact::after {
     display: none;
   }
 
-  #about::before {
-    width: 72%;
-    height: 48%;
-    right: -35%;
-    top: 40%;
-    opacity: .25;
+  #about .about-grid {
+    gap: 34px;
+  }
+
+  #about .stat-item {
+    background: rgba(250,249,247,.74);
+    padding: 14px 15px 15px;
+    border: 1px solid rgba(29,29,27,.09);
+    border-radius: 5px;
+  }
+
+  #portfolio.portfolio-section,
+  #contact.contact-section {
+    padding-top: 72px;
+    padding-bottom: 72px;
   }
 
   #portfolio::before {
-    width: 86%;
-    height: 44%;
-    left: -43%;
-    top: 30%;
-    opacity: .22;
+    width: 92%;
+    height: 220px;
+    left: -42%;
+    top: 24px;
+    opacity: .19;
+  }
+
+  #skills .skills-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #skills .skill-card {
+    min-height: 200px;
   }
 
   #contact::before {
     width: 78%;
-    height: 48%;
     right: -38%;
-    top: 46%;
-    opacity: .30;
+    opacity: .24;
   }
 
   #contact .contact-card-deco {
-    transform: rotate(.5deg);
+    max-width: 520px;
+    width: 100%;
+    aspect-ratio: 3 / 1;
+    transform: rotate(.7deg);
   }
 }
 
@@ -434,17 +617,26 @@
   #about::before,
   #portfolio::before,
   #contact::before {
-    opacity: .16;
+    opacity: .15;
   }
 
-  #about .stat-item,
-  #skills .skill-card,
-  #contact .contact-item {
-    box-shadow: none;
+  #about .about-heading {
+    font-size: 30px;
   }
 
-  .footer::before {
-    top: -9px;
-    height: 10px;
+  #skills .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #skills .skill-card {
+    min-height: 0;
+  }
+
+  #contact .contact-heading {
+    font-size: 38px;
+  }
+
+  #contact .contact-card-deco {
+    display: none;
   }
 }
