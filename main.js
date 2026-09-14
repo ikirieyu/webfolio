@@ -9,7 +9,6 @@
   if (!iframe || !fallback) return;
 
   if (iframe.src.includes('WIDGET_ID_KAMU')) {
-    // Belum diisi → sembunyikan iframe, tampilkan fallback
     iframe.style.display  = 'none';
     fallback.style.display = 'flex';
   }
@@ -21,27 +20,26 @@ const hamburger   = document.getElementById('hamburger');
 const mobileMenu  = document.getElementById('mobile-menu');
 
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 20) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
-  }
+  if (!nav) return;
+  if (window.scrollY > 20) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
 }, { passive: true });
 
-hamburger.addEventListener('click', () => {
-  const isOpen = mobileMenu.classList.toggle('open');
-  hamburger.classList.toggle('open', isOpen);
-  hamburger.setAttribute('aria-expanded', isOpen);
-});
-
-// Close mobile menu on link click
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    hamburger.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
   });
-});
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
 
 /* ---- PORTFOLIO DYNAMIC SYSTEM (TABS + CARDS) ---- */
 let activeCategory = 'ecommerce';
@@ -59,11 +57,11 @@ function renderPortfolioTabs() {
     const isGh     = cat.id === 'github' ? 'tab-btn-github' : '';
 
     return `
-      <button 
-        class="tab-btn ${isActive ? 'active' : ''} ${isGh}" 
-        role="tab" 
-        aria-selected="${isActive ? 'true' : 'false'}" 
-        data-tab="${cat.id}" 
+      <button
+        class="tab-btn ${isActive ? 'active' : ''} ${isGh}"
+        role="tab"
+        aria-selected="${isActive ? 'true' : 'false'}"
+        data-tab="${cat.id}"
         id="tab-${cat.id}">
         ${iconHtml}<span>${catName}</span>
       </button>
@@ -72,8 +70,7 @@ function renderPortfolioTabs() {
 
   tabsContainer.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      activeCategory = target;
+      activeCategory = btn.dataset.tab;
 
       tabsContainer.querySelectorAll('.tab-btn').forEach(b => {
         b.classList.remove('active');
@@ -82,7 +79,6 @@ function renderPortfolioTabs() {
 
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
-
       renderPortfolioCards(activeCategory);
     });
   });
@@ -94,23 +90,29 @@ function renderPortfolioCards(category = activeCategory) {
   if (!container || typeof PORTFOLIO_DATA === 'undefined') return;
 
   const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'id';
-  const filtered = PORTFOLIO_DATA.filter(item => item.category === category);
+  const filtered = PORTFOLIO_DATA.filter(item => item.category === category && item.published !== false);
 
   container.innerHTML = filtered.map((item, index) => {
     const titleText = item.title[currentLang] || item.title.id;
     const descText  = item.description[currentLang] || item.description.id;
-    const btnText   = category === 'github'
-      ? (currentLang === 'en' ? 'Lihat Repo →' : 'Lihat Repo →')
-      : (currentLang === 'en' ? 'Lihat Project →' : 'Lihat Project →');
+    const hasCaseStudy = Boolean(item.caseStudy);
+    const targetLink = hasCaseStudy
+      ? `project.html?id=${encodeURIComponent(item.id)}`
+      : item.link;
+    const btnText = hasCaseStudy
+      ? (currentLang === 'en' ? 'View Case Study →' : 'Lihat Case Study →')
+      : category === 'github'
+        ? (currentLang === 'en' ? 'View Repo →' : 'Lihat Repo →')
+        : (currentLang === 'en' ? 'View Project →' : 'Lihat Project →');
+    const externalAttrs = hasCaseStudy ? '' : 'target="_blank" rel="noopener noreferrer"';
     const isGhClass = category === 'github' ? 'card-link-gh' : '';
     const delay = (index % 3) * 80;
 
-    // Check if theme is custom inline color/gradient or preset CSS class
     const isCustomBg = item.theme && (item.theme.includes('#') || item.theme.includes('gradient') || item.theme.includes('rgb'));
     const styleAttr  = isCustomBg ? `style="background: ${item.theme};"` : '';
     const themeClass = (!item.image && !isCustomBg) ? (item.theme || 'ec-1') : '';
 
-    const thumbContent = item.image 
+    const thumbContent = item.image
       ? `<img src="${item.image}" alt="${titleText}" class="card-thumb-img" />`
       : `<div class="card-thumb-inner">
            <span class="thumb-label">${item.label || ''}</span>
@@ -120,21 +122,19 @@ function renderPortfolioCards(category = activeCategory) {
     const tagsHtml = (item.tags || []).map(tag => `<span>${tag}</span>`).join('');
 
     return `
-      <div class="portfolio-card aos-animate" data-aos="fade-up" data-aos-delay="${delay}">
+      <article class="portfolio-card aos-animate" data-aos="fade-up" data-aos-delay="${delay}">
         <div class="card-thumb ${item.image ? 'has-img' : themeClass}" ${styleAttr}>
           ${thumbContent}
           <div class="card-overlay">
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="card-link ${isGhClass}">${btnText}</a>
+            <a href="${targetLink}" ${externalAttrs} class="card-link ${isGhClass}">${btnText}</a>
           </div>
         </div>
         <div class="card-info">
           <h3>${titleText}</h3>
           <p>${descText}</p>
-          <div class="card-tags">
-            ${tagsHtml}
-          </div>
+          <div class="card-tags">${tagsHtml}</div>
         </div>
-      </div>
+      </article>
     `;
   }).join('');
 }
@@ -156,7 +156,6 @@ function initScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Respect transition-delay from CSS
         entry.target.classList.add('aos-animate');
         observer.unobserve(entry.target);
       }
@@ -169,11 +168,8 @@ function initScrollAnimations() {
   elements.forEach(el => observer.observe(el));
 }
 
-// Animate elements already in view on load
 window.addEventListener('load', () => {
   initScrollAnimations();
-
-  // Also trigger first portfolio panel cards immediately
   document.querySelectorAll('.portfolio-panel.active [data-aos]').forEach(el => {
     el.classList.add('aos-animate');
   });
@@ -205,8 +201,10 @@ function heroTypeEffect() {
   if (!roleEl) return;
 
   const currentLang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : 'id';
-  const text = currentLang === 'en' ? 'Graphic Designer' : 'Graphic Designer';
-  
+  const text = currentLang === 'en'
+    ? 'E-commerce & Marketplace Specialist'
+    : 'E-commerce & Marketplace Specialist';
+
   if (typingInterval) clearInterval(typingInterval);
   roleEl.textContent = '';
 
@@ -215,7 +213,7 @@ function heroTypeEffect() {
     roleEl.textContent += text[i];
     i++;
     if (i >= text.length) clearInterval(typingInterval);
-  }, 60);
+  }, 45);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
