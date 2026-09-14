@@ -35,6 +35,44 @@ const PROJECT_MODULES = [
 const registryScriptUrl = document.currentScript?.src || new URL('projects/registry.js', document.baseURI).href;
 const projectsBaseUrl = new URL('./', registryScriptUrl);
 
+/*
+ * Portfolio cards are injected asynchronously after the project modules finish loading.
+ * The site's original AOS initializer runs on window.load, so dynamically inserted
+ * showcase cards could keep opacity:0 forever and remain clickable but invisible.
+ * Observe the portfolio grid and mark newly-rendered AOS nodes as visible immediately.
+ */
+(function initDynamicPortfolioReveal() {
+  if (window.__portfolioDynamicRevealObserver) return;
+
+  const reveal = (root) => {
+    if (!root || root.nodeType !== 1) return;
+    if (root.matches?.('[data-aos]')) root.classList.add('aos-animate');
+    root.querySelectorAll?.('[data-aos]').forEach((el) => el.classList.add('aos-animate'));
+  };
+
+  const start = () => {
+    const grid = document.getElementById('portfolio-cards-grid');
+    if (!grid) return;
+
+    reveal(grid);
+
+    const observer = new MutationObserver((records) => {
+      records.forEach((record) => {
+        record.addedNodes.forEach(reveal);
+      });
+    });
+
+    observer.observe(grid, { childList: true, subtree: true });
+    window.__portfolioDynamicRevealObserver = observer;
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start, { once: true });
+  } else {
+    start();
+  }
+})();
+
 window.MODULAR_PORTFOLIO_DATA = [];
 window.PORTFOLIO_READY = (async () => {
   const loaded = await Promise.all(
