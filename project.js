@@ -9,7 +9,7 @@ let projectLang = localStorage.getItem('webfolio-lang') || 'id';
 
 function tr(value) {
   if (value == null) return '';
-  if (typeof value === 'string') return value;
+  if (typeof value === 'string' || typeof value === 'number') return String(value);
   return value[projectLang] || value.id || value.en || '';
 }
 
@@ -22,9 +22,23 @@ function escapeHtml(value) {
     .replaceAll("'", '&#039;');
 }
 
+function getProjectAssets(project) {
+  return project?.assets || project?.caseStudy?.assets || null;
+}
+
 function getProject() {
   if (typeof PORTFOLIO_DATA === 'undefined') return null;
-  return PORTFOLIO_DATA.find(item => item.id === projectId && item.caseStudy);
+  return PORTFOLIO_DATA.find(item =>
+    item.id === projectId &&
+    item.published !== false &&
+    (item.caseStudy || getProjectAssets(item))
+  );
+}
+
+function getCategoryName(project) {
+  if (typeof PORTFOLIO_CATEGORIES === 'undefined') return project?.category || 'Case Study';
+  const category = PORTFOLIO_CATEGORIES.find(item => item.id === project?.category);
+  return category ? tr(category.name) : (project?.category || 'Case Study');
 }
 
 function renderError() {
@@ -44,9 +58,9 @@ function renderError() {
 }
 
 /* ------------------------------------------------------------
-   OPTIONAL FILENAME-DRIVEN MEDIA SYSTEM
+   FILENAME-DRIVEN MEDIA SYSTEM
 
-   caseStudy.assets = {
+   assets: {
      folder: 'asset/case-studies/nova-desk',
      files: [
        '00-cover.webp',
@@ -60,7 +74,7 @@ function renderError() {
    }
 
    Rules:
-   00-cover.*          -> hero cover
+   00-cover.*          -> hero cover + homepage thumbnail
    NN-pair-XX.*        -> two-column pair block
    NN-slider-XX.*      -> one swipe/arrow slider block
    everything else    -> normal full-width image block
@@ -90,7 +104,11 @@ function buildMediaFromAssets(assets) {
     if (pairMatch) {
       const group = pairMatch[1];
       const groupFiles = rest.filter(candidate => new RegExp(`^${group}-pair-\\d+\\.`, 'i').test(candidate));
-      blocks.push({ type: 'pair', items: groupFiles.map(makeItem) });
+      blocks.push({
+        type: 'pair',
+        title: assets.blockTitles?.[group] || '',
+        items: groupFiles.map(makeItem)
+      });
       i += groupFiles.length;
       continue;
     }
@@ -100,25 +118,39 @@ function buildMediaFromAssets(assets) {
       const groupFiles = rest.filter(candidate => new RegExp(`^${group}-slider-\\d+\\.`, 'i').test(candidate));
       blocks.push({
         type: 'slider',
-        title: assets.sliderTitles?.[group] || '',
+        title: assets.sliderTitles?.[group] || assets.blockTitles?.[group] || '',
         slides: groupFiles.map(makeItem)
       });
       i += groupFiles.length;
       continue;
     }
 
-    blocks.push({ type: 'image', ...makeItem(file) });
+    const group = file.match(/^(\d+)-/)?.[1];
+    blocks.push({
+      type: 'image',
+      title: group ? (assets.blockTitles?.[group] || '') : '',
+      ...makeItem(file)
+    });
     i += 1;
   }
 
   return { cover, blocks };
 }
 
+function normalizeMediaItem(value) {
+  if (!value) return null;
+  if (typeof value === 'string') return { src: value, alt: '' };
+  return value;
+}
+
 function mediaImage(item, className = '') {
+  const media = normalizeMediaItem(item);
+  if (!media?.src) return '';
+
   return `
     <figure class="case-media-image ${className}">
-      <img src="${escapeHtml(item.src)}" alt="${escapeHtml(tr(item.alt))}" loading="lazy" />
-      ${item.caption ? `<figcaption>${escapeHtml(tr(item.caption))}</figcaption>` : ''}
+      <img src="${escapeHtml(media.src)}" alt="${escapeHtml(tr(media.alt))}" loading="lazy" />
+      ${media.caption ? `<figcaption>${escapeHtml(tr(media.caption))}</figcaption>` : ''}
     </figure>`;
 }
 
@@ -178,7 +210,11 @@ function renderBlock(block, index) {
   }
 
   if (block.type === 'image' || block.src) {
-    return `<section class="case-block">${mediaImage(block, block.size === 'contained' ? 'contained' : '')}</section>`;
+    return `
+      <section class="case-block">
+        ${block.title ? `<div class="case-block-head simple"><h2>${escapeHtml(tr(block.title))}</h2></div>` : ''}
+        ${mediaImage(block, block.size === 'contained' ? 'contained' : '')}
+      </section>`;
   }
 
   return '';
@@ -226,48 +262,105 @@ function initSliders() {
   });
 }
 
+function renderStory(project, cs) {
+  const stories = [];
+  const overviewBody = tr(cs.overview?.body || project.overview || project.description);
+  const challengeBody = tr(cs.challenge?.body || project.challenge);
+  const approachBody = tr(cs.approach?.body || project.approach);
+
+  if (overviewBody) {
+    stories.push({
+      title: tr(cs.overview?.title) || (projectLang === 'en' ? 'Overview' : 'Overview'),
+      body: overviewBody,
+      lead: true
+    });
+  }
+
+  if (challengeBody) {
+    stories.push({
+      title: tr(cs.challenge?.title) || 'Challenge',
+      body: challengeBody
+    });
+  }
+
+  if (approachBody) {
+    stories.push({
+      title: tr(cs.approach?.title) || 'Approach',
+      body: approachBody
+    });
+  }
+
+  if (!stories.length) return '';
+
+  return `
+    <section class="container case-story case-story-count-${stories.length}">
+      ${stories.map((story, index) => `
+        <article class="case-story-column ${story.lead ? 'case-story-lead' : ''}">
+          <span class="case-story-number">${String(index + 1).padStart(2, '0')}</span>
+          <${story.lead ? 'h2' : 'h3'}>${escapeHtml(story.title)}</${story.lead ? 'h2' : 'h3'}>
+          <p>${escapeHtml(story.body)}</p>
+        </article>`).join('')}
+    </section>`;
+}
+
 function renderProject() {
   const project = getProject();
   if (!project) return renderError();
 
-  const cs = project.caseStudy;
-  const title = tr(project.title);
+  const cs = project.caseStudy || {};
+  const assets = getProjectAssets(project);
+  const title = tr(project.title) || project.id;
   const description = tr(project.description);
-  const gallery = cs.gallery || [];
-  const generatedMedia = buildMediaFromAssets(cs.assets);
+  const gallery = cs.gallery || project.gallery || [];
+  const generatedMedia = buildMediaFromAssets(assets);
 
-  // Priority: explicit cover -> filename-driven cover -> first legacy gallery item.
-  const cover = cs.cover || generatedMedia.cover || gallery[0] || null;
+  const explicitCover = normalizeMediaItem(cs.cover || project.cover);
+  const projectImageCover = project.image ? { src: project.image, alt: title } : null;
+
+  // Priority: explicit cover -> 00-cover file -> first legacy gallery item -> project image.
+  const cover = explicitCover || generatedMedia.cover || gallery[0] || projectImageCover || null;
 
   // Priority: explicit blocks -> filename-driven blocks -> legacy gallery fallback.
-  const blocks = (cs.blocks && cs.blocks.length)
-    ? cs.blocks
+  const explicitBlocks = cs.blocks || project.blocks || [];
+  const blocks = explicitBlocks.length
+    ? explicitBlocks
     : generatedMedia.blocks.length
       ? generatedMedia.blocks
-      : gallery.slice(cover && !cs.cover ? 1 : 0).map(item => ({ type: 'image', ...item }));
+      : gallery.slice(cover && !explicitCover ? 1 : 0).map(item => ({ type: 'image', ...item }));
 
-  const metaHtml = (cs.meta || []).map(item => `
+  const meta = cs.meta || project.meta || [
+    project.label ? { label: { id: 'Fokus', en: 'Focus' }, value: project.label } : null,
+    project.year ? { label: { id: 'Tahun', en: 'Year' }, value: project.year } : null,
+    project.role ? { label: { id: 'Role', en: 'Role' }, value: project.role } : null
+  ].filter(Boolean);
+
+  const metaHtml = meta.map(item => `
     <div class="case-meta-item">
       <span class="case-meta-label">${escapeHtml(tr(item.label))}</span>
-      <span class="case-meta-value">${escapeHtml(item.value)}</span>
+      <span class="case-meta-value">${escapeHtml(tr(item.value))}</span>
     </div>`).join('');
 
   const blocksHtml = blocks.length
     ? blocks.map((block, index) => renderBlock(block, index)).join('')
     : '';
 
-  const external = cs.externalLink
-    ? `<a class="case-action secondary" href="${escapeHtml(cs.externalLink)}" target="_blank" rel="noopener noreferrer">${projectLang === 'en' ? 'View on Behance ↗' : 'Lihat di Behance ↗'}</a>`
+  const externalLink = cs.externalLink || project.externalLink || (project.link && /^https?:\/\//i.test(project.link) ? project.link : '');
+  const external = externalLink
+    ? `<a class="case-action secondary" href="${escapeHtml(externalLink)}" target="_blank" rel="noopener noreferrer">${projectLang === 'en' ? 'View external project ↗' : 'Lihat project eksternal ↗'}</a>`
     : '';
+
+  const eyebrow = tr(cs.eyebrow || project.eyebrow) || `${getCategoryName(project)} Case Study`;
+  const subtitle = tr(cs.subtitle || project.subtitle) || description;
+  const storyHtml = renderStory(project, cs);
 
   document.title = `${title} — Diki Permana`;
   projectRoot.innerHTML = `
     <section class="case-hero">
       <div class="container case-hero-inner">
-        <div class="case-eyebrow">${escapeHtml(tr(cs.eyebrow))}</div>
+        <div class="case-eyebrow">${escapeHtml(eyebrow)}</div>
         <h1 class="case-title">${escapeHtml(title)}</h1>
-        <p class="case-subtitle">${escapeHtml(tr(cs.subtitle) || description)}</p>
-        <div class="case-meta-grid">${metaHtml}</div>
+        ${subtitle ? `<p class="case-subtitle">${escapeHtml(subtitle)}</p>` : ''}
+        ${metaHtml ? `<div class="case-meta-grid">${metaHtml}</div>` : ''}
       </div>
     </section>
 
@@ -276,23 +369,7 @@ function renderProject() {
         ${mediaImage(cover, 'cover')}
       </section>` : ''}
 
-    <section class="container case-story">
-      <article class="case-story-column case-story-lead">
-        <span class="case-story-number">01</span>
-        <h2>${escapeHtml(tr(cs.overview?.title) || 'Overview')}</h2>
-        <p>${escapeHtml(tr(cs.overview?.body))}</p>
-      </article>
-      <article class="case-story-column">
-        <span class="case-story-number">02</span>
-        <h3>${escapeHtml(tr(cs.challenge?.title) || 'Challenge')}</h3>
-        <p>${escapeHtml(tr(cs.challenge?.body))}</p>
-      </article>
-      <article class="case-story-column">
-        <span class="case-story-number">03</span>
-        <h3>${escapeHtml(tr(cs.approach?.title) || 'Approach')}</h3>
-        <p>${escapeHtml(tr(cs.approach?.body))}</p>
-      </article>
-    </section>
+    ${storyHtml}
 
     ${blocksHtml ? `
       <section class="case-content container">
