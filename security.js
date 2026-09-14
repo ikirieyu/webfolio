@@ -1,67 +1,64 @@
 /**
- * Webfolio Security & Anti-Inspection Script
- * Protects site content, disables right-click, blocks inspect keyboard shortcuts,
- * traps browser debuggers, and prevents unauthorized source code manipulation.
+ * Webfolio light client-side protection + runtime recovery helpers.
+ *
+ * Important: this is a public GitHub Pages site, so frontend source can never
+ * be truly hidden. Keep protection lightweight so it does not interfere with
+ * the portfolio, accessibility, or chatbot runtime.
  */
 
 (function () {
   'use strict';
 
-  // 1. Block Context Menu (Right Click)
-  document.addEventListener('contextmenu', function (e) {
-    e.preventDefault();
-    return false;
+  // Block context menu.
+  document.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
   }, false);
 
-  // 2. Block Inspect & DevTools Shortcuts
-  document.addEventListener('keydown', function (e) {
-    // F12 key
-    if (e.keyCode === 123 || e.key === 'F12') {
-      e.preventDefault();
-      return false;
+  // Block a few common source/devtools shortcuts without running debugger traps.
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'F12') {
+      event.preventDefault();
+      return;
     }
 
-    // Ctrl+Shift+I / J / C / K / E / M / S / U or Cmd+Option+I / J / C
-    if (e.ctrlKey || e.metaKey) {
-      const key = (e.key ? e.key : String.fromCharCode(e.keyCode)).toLowerCase();
-      if (
-        (e.shiftKey && ['i', 'j', 'c', 'k', 'e', 'm'].includes(key)) ||
-        key === 'u' ||
-        key === 's'
-      ) {
-        e.preventDefault();
-        return false;
+    if (event.ctrlKey || event.metaKey) {
+      const key = String(event.key || '').toLowerCase();
+      if ((event.shiftKey && ['i', 'j', 'c'].includes(key)) || key === 'u') {
+        event.preventDefault();
       }
     }
   }, false);
 
-  // 3. Block Image & Element Dragging
-  document.addEventListener('dragstart', function (e) {
-    e.preventDefault();
-    return false;
+  // Prevent accidental dragging of portfolio imagery.
+  document.addEventListener('dragstart', function (event) {
+    if (event.target && event.target.closest && event.target.closest('img')) {
+      event.preventDefault();
+    }
   }, false);
 
-  // 4. Anti-Debugger Loop Trap
-  // Automatically triggers breakpoints when DevTools is opened, preventing inspecting code
-  function triggerDebuggerTrap() {
-    try {
-      (function () {
-        return false;
-      })
-      ["constructor"]("debugger")();
-    } catch (err) {}
+  /**
+   * Chatbot recovery loader
+   * ----------------------------------------------------------
+   * GitHub Pages/browser caching can leave an older broken chatbot.js in cache.
+   * The normal script still loads from index.html. If no FAB exists shortly
+   * after the page is ready, fetch chatbot.js again with a unique cache-buster.
+   */
+  function recoverChatbotIfNeeded() {
+    window.setTimeout(function () {
+      if (document.getElementById('chat-fab')) return;
+      if (document.querySelector('script[data-chatbot-recovery]')) return;
+
+      const script = document.createElement('script');
+      script.src = 'chatbot.js?v=' + Date.now();
+      script.dataset.chatbotRecovery = 'true';
+      script.async = false;
+      document.body.appendChild(script);
+    }, 700);
   }
 
-  setInterval(triggerDebuggerTrap, 250);
-
-  // 5. Suppress Browser Console Output
-  if (window.console) {
-    const noop = function () {};
-    window.console.log = noop;
-    window.console.warn = noop;
-    window.console.error = noop;
-    window.console.info = noop;
-    window.console.debug = noop;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', recoverChatbotIfNeeded, { once: true });
+  } else {
+    recoverChatbotIfNeeded();
   }
 })();
-
