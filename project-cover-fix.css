@@ -1,0 +1,34 @@
+/* ============================================================
+   CASE STUDY COVER — preserve the full artwork
+   Loaded after project.css so cover assets keep their native ratio.
+   Recommended source size for 00-cover: 1920x1080 (16:9).
+   ============================================================ */
+
+.case-media-image.cover {
+  aspect-ratio: auto;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.case-media-image.cover img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: min(72vh, 760px);
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 720px) {
+  .case-media-image.cover {
+    aspect-ratio: auto;
+    padding: 12px;
+  }
+
+  .case-media-image.cover img {
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    height: auto;
+  }
+}
