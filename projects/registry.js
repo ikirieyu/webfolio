@@ -10,10 +10,10 @@
    5. Tambahkan SATU baris file project di PROJECT_MODULES di bawah
 
    Setelah itu homepage + halaman case study membaca data otomatis.
-   Tidak perlu edit index.html, project.html, main.js, atau project.js renderer.
+   Tidak perlu edit index.html, project.html, main.js, atau renderer project.
 */
 
-window.PORTFOLIO_CATEGORIES = [
+window.MODULAR_PORTFOLIO_CATEGORIES = [
   { id: 'ecommerce', name: { id: 'E-commerce', en: 'E-commerce' } },
   { id: 'branding', name: { id: 'Branding & Print', en: 'Branding & Print' } },
   {
@@ -24,7 +24,7 @@ window.PORTFOLIO_CATEGORIES = [
 ];
 
 // FILE UTAMA UNTUK MENDAFTARKAN PROJECT.
-// Urutan visual di homepage tetap diatur lewat `featured` dan `order` di project.js masing-masing.
+// Tinggal tambah satu path di sini setelah copy folder _template.
 const PROJECT_MODULES = [
   'bungakebaya/project.js',
   'nova-desk/project.js',
@@ -35,7 +35,7 @@ const PROJECT_MODULES = [
 const registryScriptUrl = document.currentScript?.src || new URL('projects/registry.js', document.baseURI).href;
 const projectsBaseUrl = new URL('./', registryScriptUrl);
 
-window.PORTFOLIO_DATA = [];
+window.MODULAR_PORTFOLIO_DATA = [];
 window.PORTFOLIO_READY = (async () => {
   const loaded = await Promise.all(
     PROJECT_MODULES.map(async (relativePath) => {
@@ -50,6 +50,6 @@ window.PORTFOLIO_READY = (async () => {
     })
   );
 
-  window.PORTFOLIO_DATA = loaded.filter(Boolean);
-  return window.PORTFOLIO_DATA;
+  window.MODULAR_PORTFOLIO_DATA = loaded.filter(Boolean);
+  return window.MODULAR_PORTFOLIO_DATA;
 })();
