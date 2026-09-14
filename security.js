@@ -1,7 +1,6 @@
 /**
  * Lightweight client helpers for the public GitHub Pages portfolio.
- * Keeps floating UI reliable, refreshes the chatbot runtime, and polishes
- * the compact glass quick-navigation.
+ * Keeps the floating chatbot and quick navigation reliable.
  */
 (function () {
   'use strict';
@@ -16,43 +15,6 @@
     }
   }, false);
 
-  function loadFreshFloatingRuntime() {
-    if (window.__DIKI_CHATBOT_RUNTIME__ && document.getElementById('chat-fab')) return;
-    if (document.querySelector('script[data-diki-floating-runtime]')) return;
-
-    const script = document.createElement('script');
-    script.src = 'chatbot.js?v=20260914-1640';
-    script.dataset.dikiFloatingRuntime = 'true';
-    script.async = false;
-    script.onload = function () {
-      window.setTimeout(function () {
-        if (document.getElementById('chat-fab') || !document.body) return;
-
-        const fallback = document.createElement('button');
-        fallback.id = 'chat-fab';
-        fallback.type = 'button';
-        fallback.setAttribute('aria-label', 'Reload chat');
-        fallback.title = 'Reload chat';
-        fallback.innerHTML = '💬';
-        fallback.style.cssText = [
-          'position:fixed','right:24px','bottom:24px','width:58px','height:58px',
-          'border:0','border-radius:50%','background:#1b4d3e','color:#fff',
-          'font-size:22px','cursor:pointer','z-index:2147483000','display:flex',
-          'align-items:center','justify-content:center','box-shadow:0 10px 30px rgba(27,77,62,.35)'
-        ].join(';');
-        fallback.addEventListener('click', function () {
-          const retry = document.createElement('script');
-          retry.src = 'chatbot.js?v=' + Date.now();
-          retry.async = false;
-          document.body.appendChild(retry);
-        });
-        document.body.appendChild(fallback);
-      }, 900);
-    };
-
-    document.body.appendChild(script);
-  }
-
   const QUICK_NAV_ICONS = {
     hero: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8"/><path d="M5.5 9.8V21h13V9.8"/><path d="M9.5 21v-6h5v6"/></svg>',
     about: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5.7 20c.7-4 3-6 6.3-6s5.6 2 6.3 6"/></svg>',
@@ -63,7 +25,24 @@
     contact: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>'
   };
 
-  function injectQuickNavPolish() {
+  const TOGGLE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.2"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3"/></svg>';
+
+  function loadFreshFloatingRuntime() {
+    if (document.getElementById('chat-fab') && document.getElementById('quick-nav')) return;
+    if (document.querySelector('script[data-diki-floating-runtime]')) return;
+
+    if (window.__DIKI_CHATBOT_RUNTIME__ && !document.getElementById('chat-fab')) {
+      try { delete window.__DIKI_CHATBOT_RUNTIME__; } catch (_) { window.__DIKI_CHATBOT_RUNTIME__ = false; }
+    }
+
+    const script = document.createElement('script');
+    script.src = 'chatbot.js?v=20260914-1648';
+    script.dataset.dikiFloatingRuntime = 'true';
+    script.async = false;
+    document.body.appendChild(script);
+  }
+
+  function injectQuickNavStyle() {
     if (document.getElementById('quick-nav-polish-style')) return;
 
     const style = document.createElement('style');
@@ -72,6 +51,10 @@
       body #quick-nav {
         right: 24px !important;
         bottom: 96px !important;
+        z-index: 2147482990 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
         gap: 8px !important;
       }
 
@@ -157,16 +140,21 @@
         min-width: 46px !important;
         min-height: 46px !important;
         border: 1px solid rgba(27,77,62,.58) !important;
+        border-radius: 50% !important;
         background: rgba(239,241,236,.42) !important;
         color: #1b4d3e !important;
         -webkit-backdrop-filter: blur(15px) saturate(.9) !important;
         backdrop-filter: blur(15px) saturate(.9) !important;
         box-shadow: 0 9px 24px rgba(23,36,30,.10) !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
       }
 
       body #quick-nav #quick-nav-toggle svg {
         width: 18px !important;
         height: 18px !important;
+        pointer-events: none !important;
       }
 
       body #quick-nav.open #quick-nav-toggle {
@@ -175,21 +163,45 @@
         box-shadow: 0 0 0 2px rgba(197,232,74,.42), 0 9px 24px rgba(27,77,62,.20) !important;
       }
 
-      body #quick-nav.open #quick-nav-toggle svg {
-        transform: none !important;
+      @media (min-width: 769px) {
+        body #quick-nav #quick-nav-toggle { display: none !important; }
+        body #quick-nav .quick-nav-menu {
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+          transform: none !important;
+        }
       }
 
       @media (max-width: 768px) {
         body #quick-nav {
           right: 18px !important;
-          bottom: 80px !important;
+          bottom: 104px !important;
+        }
+
+        body #quick-nav #quick-nav-toggle {
+          display: flex !important;
         }
 
         body #quick-nav .quick-nav-menu {
+          position: absolute !important;
           right: 0 !important;
-          bottom: 54px !important;
+          bottom: 58px !important;
           gap: 4px !important;
           padding: 5px !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+          transform: translateY(12px) scale(.96) !important;
+          transform-origin: bottom right !important;
+          transition: opacity .18s ease, visibility .18s ease, transform .18s ease !important;
+        }
+
+        body #quick-nav.open .quick-nav-menu {
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+          transform: none !important;
         }
 
         body #quick-nav .quick-nav-link {
@@ -207,11 +219,6 @@
         body #quick-nav .quick-nav-link > span {
           display: none !important;
         }
-
-        body #quick-nav #quick-nav-toggle {
-          width: 46px !important;
-          height: 46px !important;
-        }
       }
     `;
     document.head.appendChild(style);
@@ -221,21 +228,20 @@
     const nav = document.getElementById('quick-nav');
     if (!nav) return false;
 
-    injectQuickNavPolish();
+    injectQuickNavStyle();
 
     nav.querySelectorAll('.quick-nav-link').forEach(function (link) {
       if (link.dataset.iconified === '1') return;
       const section = link.dataset.quickSection;
       const labelNode = link.querySelector('span');
       const label = labelNode ? labelNode.textContent : link.getAttribute('aria-label') || section;
-      const icon = QUICK_NAV_ICONS[section] || QUICK_NAV_ICONS.portfolio;
-      link.innerHTML = icon + '<span>' + label + '</span>';
+      link.innerHTML = (QUICK_NAV_ICONS[section] || QUICK_NAV_ICONS.portfolio) + '<span>' + label + '</span>';
       link.dataset.iconified = '1';
     });
 
     const toggle = document.getElementById('quick-nav-toggle');
     if (toggle && toggle.dataset.iconified !== '1') {
-      toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.2"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3"/></svg>';
+      toggle.innerHTML = TOGGLE_ICON;
       toggle.dataset.iconified = '1';
     }
 
@@ -247,10 +253,22 @@
   function bindReliableQuickNav() {
     const nav = document.getElementById('quick-nav');
     if (!nav) return false;
-    if (nav.dataset.reliableScroll === '1') return true;
-    nav.dataset.reliableScroll = '1';
+    if (nav.dataset.reliableControls === '1') return true;
+    nav.dataset.reliableControls = '1';
 
     nav.addEventListener('click', function (event) {
+      const clickedToggle = event.target && event.target.closest ? event.target.closest('#quick-nav-toggle') : null;
+      if (clickedToggle && nav.contains(clickedToggle)) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const shouldOpen = !nav.classList.contains('open');
+        nav.classList.toggle('open', shouldOpen);
+        clickedToggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+        clickedToggle.setAttribute('aria-label', shouldOpen ? 'Tutup navigasi cepat' : 'Buka navigasi cepat');
+        return;
+      }
+
       const link = event.target && event.target.closest ? event.target.closest('.quick-nav-link') : null;
       if (!link || !nav.contains(link)) return;
 
@@ -258,9 +276,6 @@
       const target = id ? document.getElementById(id) : null;
       if (!target) return;
 
-      // Capture the click before the older scrollIntoView handler. Native smooth
-      // scrolling can be ignored/interrupted when a previous animation is still
-      // running, which made Experience feel inconsistent.
       event.preventDefault();
       event.stopImmediatePropagation();
 
@@ -278,7 +293,6 @@
       const targetTop = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
       const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Cancel any scroll already in progress, then start a fresh deterministic one.
       window.scrollTo({ top: window.scrollY, behavior: 'auto' });
       window.requestAnimationFrame(function () {
         window.scrollTo({ top: targetTop, behavior: reducedMotion ? 'auto' : 'smooth' });
@@ -292,7 +306,6 @@
         window.history.replaceState(null, '', '#' + id);
       } catch (_) {}
 
-      // Safety net: if a browser/extension cancels smooth scrolling, finish it.
       navigationFallbackTimer = window.setTimeout(function () {
         const currentTop = target.getBoundingClientRect().top + window.scrollY - headerOffset;
         if (Math.abs(window.scrollY - currentTop) > 70) {
@@ -300,6 +313,14 @@
         }
       }, reducedMotion ? 80 : 950);
     }, true);
+
+    document.addEventListener('click', function (event) {
+      if (window.innerWidth > 768 || !nav.classList.contains('open')) return;
+      if (nav.contains(event.target)) return;
+      nav.classList.remove('open');
+      const toggle = document.getElementById('quick-nav-toggle');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    }, false);
 
     return true;
   }
@@ -325,10 +346,19 @@
   }
 
   function bootRecovery() {
-    window.setTimeout(loadFreshFloatingRuntime, 250);
-    window.setTimeout(loadFreshFloatingRuntime, 1200);
-    window.setTimeout(watchQuickNav, 300);
+    window.setTimeout(loadFreshFloatingRuntime, 180);
+    window.setTimeout(loadFreshFloatingRuntime, 1000);
+    window.setTimeout(watchQuickNav, 250);
   }
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape') return;
+    const nav = document.getElementById('quick-nav');
+    if (!nav) return;
+    nav.classList.remove('open');
+    const toggle = document.getElementById('quick-nav-toggle');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bootRecovery, { once: true });
