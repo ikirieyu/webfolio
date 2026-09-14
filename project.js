@@ -43,6 +43,77 @@ function renderError() {
     </div>`;
 }
 
+/* ------------------------------------------------------------
+   OPTIONAL FILENAME-DRIVEN MEDIA SYSTEM
+
+   caseStudy.assets = {
+     folder: 'asset/case-studies/nova-desk',
+     files: [
+       '00-cover.webp',
+       '01-brand.webp',
+       '02-pair-01.webp',
+       '02-pair-02.webp',
+       '03-slider-01.webp',
+       '03-slider-02.webp',
+       '04-final.webp'
+     ]
+   }
+
+   Rules:
+   00-cover.*          -> hero cover
+   NN-pair-XX.*        -> two-column pair block
+   NN-slider-XX.*      -> one swipe/arrow slider block
+   everything else    -> normal full-width image block
+   ------------------------------------------------------------ */
+function buildMediaFromAssets(assets) {
+  if (!assets?.folder || !Array.isArray(assets.files) || !assets.files.length) {
+    return { cover: null, blocks: [] };
+  }
+
+  const folder = assets.folder.replace(/\/$/, '');
+  const files = [...assets.files].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const makeItem = (file) => ({
+    src: `${folder}/${file}`,
+    alt: file.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ')
+  });
+
+  const coverFile = files.find(file => /^00-cover\./i.test(file));
+  const cover = coverFile ? makeItem(coverFile) : null;
+  const rest = files.filter(file => file !== coverFile);
+  const blocks = [];
+
+  for (let i = 0; i < rest.length;) {
+    const file = rest[i];
+    const pairMatch = file.match(/^(\d+)-pair-(\d+)\./i);
+    const sliderMatch = file.match(/^(\d+)-slider-(\d+)\./i);
+
+    if (pairMatch) {
+      const group = pairMatch[1];
+      const groupFiles = rest.filter(candidate => new RegExp(`^${group}-pair-\\d+\\.`, 'i').test(candidate));
+      blocks.push({ type: 'pair', items: groupFiles.map(makeItem) });
+      i += groupFiles.length;
+      continue;
+    }
+
+    if (sliderMatch) {
+      const group = sliderMatch[1];
+      const groupFiles = rest.filter(candidate => new RegExp(`^${group}-slider-\\d+\\.`, 'i').test(candidate));
+      blocks.push({
+        type: 'slider',
+        title: assets.sliderTitles?.[group] || '',
+        slides: groupFiles.map(makeItem)
+      });
+      i += groupFiles.length;
+      continue;
+    }
+
+    blocks.push({ type: 'image', ...makeItem(file) });
+    i += 1;
+  }
+
+  return { cover, blocks };
+}
+
 function mediaImage(item, className = '') {
   return `
     <figure class="case-media-image ${className}">
@@ -163,14 +234,17 @@ function renderProject() {
   const title = tr(project.title);
   const description = tr(project.description);
   const gallery = cs.gallery || [];
+  const generatedMedia = buildMediaFromAssets(cs.assets);
 
-  // Backward compatible: if no explicit cover is set, first gallery visual becomes the cover.
-  const cover = cs.cover || gallery[0] || null;
+  // Priority: explicit cover -> filename-driven cover -> first legacy gallery item.
+  const cover = cs.cover || generatedMedia.cover || gallery[0] || null;
 
-  // New preferred structure: `blocks`. Old gallery data still works automatically.
+  // Priority: explicit blocks -> filename-driven blocks -> legacy gallery fallback.
   const blocks = (cs.blocks && cs.blocks.length)
     ? cs.blocks
-    : gallery.slice(cover && !cs.cover ? 1 : 0).map(item => ({ type: 'image', ...item }));
+    : generatedMedia.blocks.length
+      ? generatedMedia.blocks
+      : gallery.slice(cover && !cs.cover ? 1 : 0).map(item => ({ type: 'image', ...item }));
 
   const metaHtml = (cs.meta || []).map(item => `
     <div class="case-meta-item">
@@ -253,7 +327,7 @@ function syncLanguageButtons() {
 document.addEventListener('click', (event) => {
   const button = event.target.closest('[data-project-lang]');
   if (!button) return;
-  projectLang = button.dataset.projectLang;
+  projectLang = button.dataset.lang || button.dataset.projectLang;
   localStorage.setItem('webfolio-lang', projectLang);
   syncLanguageButtons();
   renderProject();
