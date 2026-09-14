@@ -48,7 +48,22 @@ export default {
     en: 'Approach or strategy used.'
   },
 
-  // Opsional. Isi kalau project juga dipublish di Behance / sumber lain.
+  // Tambahkan section teks tambahan kalau perlu.
+  blocks: [
+    // {
+    //   type: 'text',
+    //   kicker: { id: 'Engineering', en: 'Engineering' },
+    //   title: { id: 'Technical Direction', en: 'Technical Direction' },
+    //   body: { id: 'Isi penjelasan.', en: 'Explanation.' }
+    // }
+  ],
+
+  // Untuk project GitHub: isi URL repository di sini.
+  // Halaman portfolio tetap membuka case study internal dulu,
+  // lalu visitor bisa lanjut ke repository dari tombol di bagian bawah.
+  repoUrl: '',
+
+  // Opsional untuk Behance / live demo / sumber eksternal lain.
   externalLink: '',
 
   assets: {
@@ -68,5 +83,9 @@ export default {
         en: 'Gallery'
       }
     }
-  }
+  },
+
+  // Biarkan object ini ada untuk project yang memang harus punya
+  // halaman penjelasan internal walaupun tidak punya banyak asset.
+  caseStudy: {}
 };
